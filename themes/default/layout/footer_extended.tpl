@@ -2,7 +2,7 @@
             </section>
         </div>
     </div>
-    <footer class="section-footer-top" id="footer">
+    <!-- <footer class="section-footer-top" id="footer">
         <div class="wraper">
             <div class="container">
                 <div class="row">
@@ -13,7 +13,7 @@
 
             </div>
         </div>
-    </footer>
+    </footer> -->
     {ADMINTOOLBAR}
     <!-- SiteModal Required!!! -->
     <div id="sitemodal" class="modal fade" role="dialog">
