@@ -56,6 +56,13 @@ if ($nv_Request->isset_request('submit', 'post')) {
                 } else {
                     nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Action-note', 'ID: ' . $row['id'], $user_info['userid']);
                 }
+                // $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=listaction';
+                // $contents = nv_theme_alert($lang_module['success'], $lang_module['waiting_redirect'], 'success', $redirect, $lang_module['redirect'], 1);
+                // include NV_ROOTDIR . '/includes/header.php';
+                // echo nv_site_theme($contents);
+                // include NV_ROOTDIR . '/includes/footer.php';
+                // exit();
+
                 nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
             }
         } catch (PDOException $e) {

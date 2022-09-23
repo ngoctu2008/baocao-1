@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
+
 $row = [];
 $error = [];
 $row['id'] = $nv_Request->get_int('id', 'post,get', 0);
@@ -122,7 +123,14 @@ if ($nv_Request->isset_request('submit', 'post')) {
                 } else {
                     nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Report', 'ID: ' . $row['id'], $user_info['userid']);
                 }
-                nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
+
+                $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main';
+                $contents = nv_theme_alert($lang_module['success'], $lang_module['waiting_redirect'], 'success', $redirect, $lang_module['redirect'], 1);
+                include NV_ROOTDIR . '/includes/header.php';
+                echo nv_site_theme($contents);
+                include NV_ROOTDIR . '/includes/footer.php';
+                exit();
+                // nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
             }
         } catch (PDOException $e) {
             trigger_error($e->getMessage());

@@ -90,3 +90,7 @@ $lang_module['listaction'] = 'Danh sách Action Note';
 $lang_module['q_date'] = 'Lọc theo ngày';
 $lang_module['total'] = 'TỔNG CỘNG';
 $lang_module['filter'] = 'Bộ lọc';
+
+$lang_module['success'] = 'Ghi dữ liệu thành công';
+$lang_module['waiting_redirect'] = 'Vui lòng chờ giây lát để hệ thống chuyển hướng';
+$lang_module['redirect'] = 'Chuyển trang';
