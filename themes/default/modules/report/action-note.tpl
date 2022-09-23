@@ -25,17 +25,22 @@
                 </div>
         </div>
     </div>
+    <!-- BEGIN: select_code -->
     <div class="form-group">
-        <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.code}</strong> <span class="red">(*)</span></label>
+        <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.sale_name}</strong> <span class="red">(*)</span></label>
         <div class="col-sm-19 col-md-20">
             <select class="form-control" name="code">
                 <option value=""> --- </option>
-                <!-- BEGIN: select_code -->
+                <!-- BEGIN: loop -->
                 <option value="{OPTION.key}" {OPTION.selected}>{OPTION.title}</option>
-                <!-- END: select_code -->
+                <!-- END: loop -->
             </select>
         </div>
     </div>
+    <!-- END: select_code -->
+    <!-- BEGIN: input_code -->
+    <input type="hidden" name="code" value="{SALE_CODE}" />
+    <!-- END: input_code -->
     <div class="form-group">
         <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.note}</strong> <span class="red">(*)</span></label>
         <div class="col-sm-19 col-md-20">

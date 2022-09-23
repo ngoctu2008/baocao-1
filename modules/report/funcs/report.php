@@ -45,6 +45,15 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['credit_app'] = $nv_Request->get_int('credit_app', 'post', 0);
     $row['credit_loan'] = $nv_Request->get_int('credit_loan', 'post', 0);
 
+
+    //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
+    $_sql = 'SELECT code, date FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows where code = "' . $row['code'] . '" AND date = ' . $row['date'];
+    $_row = $db->query($_sql)->fetch();
+
+    if (!empty($_row)) {
+        $error[] = sprintf($lang_module['error_duplicated'], $row['code'], nv_date('d/m/Y', $row['date']));
+    }
+
     if (empty($row['date'])) {
         $error[] = $lang_module['error_required_date'];
     } elseif (empty($row['code'])) {

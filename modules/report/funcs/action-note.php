@@ -28,10 +28,18 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['code'] = $nv_Request->get_title('code', 'post', '');
     $row['note'] = $nv_Request->get_textarea('note', '', NV_ALLOWED_HTML_TAGS);
 
+    //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
+    $_sql = 'SELECT code, date FROM ' . NV_PREFIXLANG . '_' . $module_data . '_actions where code = "' . $row['code'] . '" AND date = ' . $row['date'];
+    $_row = $db->query($_sql)->fetch();
+
+    if (!empty($_row)) {
+        $error[] = sprintf($lang_module['error_duplicated'], $row['code'], nv_date('d/m/Y', $row['date']));
+    }
+
     if (empty($row['date'])) {
         $error[] = $lang_module['error_required_date'];
     } elseif (empty($row['code'])) {
-        $error[] = $lang_module['error_required_code'];
+        $error[] = $lang_module['error_required_sale'];
     } elseif (empty($row['note'])) {
         $error[] = $lang_module['error_required_note'];
     }
@@ -111,13 +119,19 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
-foreach ($array_code_users as $value) {
-    $xtpl->assign('OPTION', [
-        'key' => $value['code'],
-        'title' => $value['last_name'] . ' ' . $value['first_name'] . ' (' . $value['code'] . ')',
-        'selected' => ($value['code'] == $row['code']) ? ' selected="selected"' : ''
-    ]);
+if ($leader_team > 0) {
+    foreach ($array_code_users as $value) {
+        $xtpl->assign('OPTION', [
+            'key' => $value['code'],
+            'title' => $value['last_name'] . ' ' . $value['first_name'] . ' (' . $value['code'] . ')',
+            'selected' => ($value['code'] == $row['code']) ? ' selected="selected"' : ''
+        ]);
+        $xtpl->parse('main.select_code.loop');
+    }
     $xtpl->parse('main.select_code');
+} else {
+    $xtpl->assign('SALE_CODE', $array_infor_users[$user_info['userid']]['code']);
+    $xtpl->parse('main.input_code');
 }
 
 if (!empty($error)) {
