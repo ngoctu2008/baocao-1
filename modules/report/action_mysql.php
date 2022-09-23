@@ -5,7 +5,7 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2022 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
- * @Createdate Thu, 22 Sep 2022 04:11:33 GMT
+ * @Createdate Fri, 23 Sep 2022 05:34:09 GMT
  */
 
 if (!defined('NV_IS_FILE_MODULES')) {
