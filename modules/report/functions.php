@@ -105,3 +105,41 @@ function get_field_rows()
     }
     return $fields;
 }
+
+function render_data_total($type = 'month')
+{
+    global $db, $module_data;
+
+    if ($type == 'month') {
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), 1, intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)) + 1, 1, intval(date("Y", NV_CURRENTTIME)));
+    } else {
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    }
+
+    $where = 'date >= ' . $from_time . ' AND date <= ' . $to_time;
+    $db->sqlreset()
+        ->select('*')
+        ->from('' . NV_PREFIXLANG . '_' . $module_data . '_rows')
+        ->where($where)
+        ->order('id DESC');
+    $sth = $db->prepare($db->sql());
+    $sth->execute();
+
+    $fields = get_field_rows();
+    $totals = [];
+    while ($view = $sth->fetch()) {
+        foreach ($fields as $key => $_field) {
+            $totals[$_field] = empty($totals[$_field]) ? 0 + $view[$_field] : $totals[$_field] + $view[$_field];
+        }
+    }
+    $totals_field = [];
+    //Tách riêng tổng theo từng Sản phẩm
+    foreach ($totals as $key => $_value) {
+        $_field = explode('_', $key);
+        $totals_field[$_field[0]][$_field[1]] = empty($totals_field[$_field[0]][$_field[1]]) ? 0 + $_value : $totals_field[$_field[0]][$_field[1]] + $_value;
+    }
+
+    return $totals_field;
+}

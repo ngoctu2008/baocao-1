@@ -115,7 +115,6 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['credit_loan'] = 0;
 }
 
-
 // Fetch Limit
 $show_view = false;
 if (!$nv_Request->isset_request('id', 'post,get')) {
@@ -141,33 +140,9 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
-$fields = get_field_rows();
-
-$totals = [];
-
-$totals_groups = [];
-// foreach ($fields as $key => $_field) {
-//     $total[$_field] = 10;
-// }
-
-while ($view = $sth->fetch()) {
-    foreach ($fields as $key => $_field) {
-        $totals[$_field] = empty($totals[$_field]) ? 0 + $view[$_field] : $totals[$_field] + $view[$_field];
-    }
-
-    // $xtpl->assign('VIEW', $view);
-    // $xtpl->parse('main.view.loop');
-}
-
-$totals_field = [];
-//Tách riêng tổng theo từng Sản phẩm
-foreach ($totals as $key => $_value) {
-    $_field = explode('_', $key);
-    $totals_field[$_field[0]][$_field[1]] = empty($totals_field[$_field[0]][$_field[1]]) ? 0 + $_value : $totals_field[$_field[0]][$_field[1]] + $_value;
-}
-
-//Hiển thị
-foreach ($totals_field as $key => $_group_value) {
+//Hiển thị Số liệu tổng ngày
+$totals_day = render_data_total('day');
+foreach ($totals_day as $key => $_group_value) {
     foreach ($_group_value as $subkey => $subvalue) {
         $xtpl->assign('sub_label', $subkey == 'sale' ? $lang_module['vnd'] : $lang_module[$subkey]);
         $xtpl->assign('TOTAL', $subvalue);
@@ -176,12 +151,23 @@ foreach ($totals_field as $key => $_group_value) {
     $xtpl->assign('label', $lang_module[$key]);
     $xtpl->parse('main.TOTAL_DAILY.row');
 }
-
 $xtpl->parse('main.TOTAL_DAILY');
 
-// echo displayArray($totals_field);
-// die();
-
+//Hiển thị số liệu tổng tháng
+$totals_month = render_data_total('month');
+foreach ($totals_month as $key => $_group_value) {
+    foreach ($_group_value as $subkey => $subvalue) {
+        $xtpl->assign('sub_label', $subkey == 'sale' ? $lang_module['vnd'] : $lang_module[$subkey]);
+        $xtpl->assign('TOTAL', $subvalue);
+        $xtpl->parse('main.TOTAL_MONTH.row.loop');
+    }
+    if (count($_group_value) < 3) {
+        $xtpl->parse('main.TOTAL_MONTH.row.td');
+    }
+    $xtpl->assign('label', $lang_module[$key]);
+    $xtpl->parse('main.TOTAL_MONTH.row');
+}
+$xtpl->parse('main.TOTAL_MONTH');
 
 if (!empty($error)) {
     $xtpl->assign('ERROR', implode('<br />', $error));

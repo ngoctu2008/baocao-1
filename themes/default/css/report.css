@@ -54,8 +54,24 @@ th {
 .field-monitor {
     text-align: left;
     font-weight: bold;
+    visibility: middle !important;
 }
 
 .title-block {
     text-transform: uppercase;
+}
+
+.small-text {
+    font-size: 11px;
+}
+.green {
+    color: green;
+    font-style: italic;
+}
+.bg-gray {
+    background-color: lightgray;
+}
+
+.panel-body {
+    padding: 8px !important;
 }

@@ -49,6 +49,13 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
 </div>
 
 <div class="col-md-14">
@@ -69,7 +76,7 @@
                         <!-- BEGIN: loop -->
                         <td><strong class="text-hightlight fr">{TOTAL}</strong></td>
                         <td class="fl">
-                            {sub_label}
+                            <sub> {sub_label}</sub>
                         </td>
                         <!-- END: loop -->
                     </tr>
@@ -78,6 +85,49 @@
             </table>
         </div>
         <!-- END: TOTAL_DAILY -->
+    </div>
+
+    <div class="panel panel-info box-monitor">
+        <div class="panel-heading title-block">
+            <strong> MTD </strong>
+        </div>
+        <!-- BEGIN: TOTAL_MONTH -->
+        <div class="panel-body">
+            <table class="table table-monitor table-sm">
+                <tbody>
+                    <!-- BEGIN: row -->
+                    <tr>
+                        <td class="field-monitor w100">
+                            {label}
+                        </td>
+                        <!-- BEGIN: loop -->
+                        <td class="text-center">
+                            <strong class="text-hightlight">{TOTAL}</strong>
+                            <sub> {sub_label}</sub> </br>
+                            <div class="bg-gray">
+                                <div class="small-text">P: <strong class="green"> {p_value} 0.00</strong> </div>
+                            </div>
+                        </td>
+                        <!-- END: loop -->
+                        <!-- BEGIN: td -->
+                        <td> </td>
+                        <!-- END: td -->
+                        <td>
+                            <strong class="text-hightlight">0.00%</strong>
+                            <sub>TARGET</sub> </br>
+                            <div class="bg-gray">
+                                <div class="small-text">
+                                    <strong class="green"> {KPI} 0.00</strong> KPI
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <!-- END: row -->
+                </tbody>
+            </table>
+        </div>
+        <!-- END: TOTAL_MONTH -->
     </div>
 </div>
 
