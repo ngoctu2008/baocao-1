@@ -97,7 +97,7 @@
                 <tbody>
                     <!-- BEGIN: row -->
                     <tr>
-                        <td class="field-monitor w100">
+                        <td class="field-monitor w10">
                             {label}
                         </td>
                         <!-- BEGIN: loop -->

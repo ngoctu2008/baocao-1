@@ -54,7 +54,7 @@ th {
 .field-monitor {
     text-align: left;
     font-weight: bold;
-    visibility: middle !important;
+    vertical-align: middle !important;
 }
 
 .title-block {
