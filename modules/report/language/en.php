@@ -90,3 +90,6 @@ $lang_module['list-actions'] = 'list-actions';
 
 //Lang for function listaction
 $lang_module['listaction'] = 'listaction';
+
+//Lang for function monitor
+$lang_module['monitor'] = 'monitor';
