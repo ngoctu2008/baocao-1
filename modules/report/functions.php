@@ -86,3 +86,22 @@ function displayArray($array, $tab = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp', $indent =
     }
     return $returnvalues;
 }
+
+function get_field_rows()
+{
+    global $db, $module_data;
+    $accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit']; //Các trường chưa dữ liệu
+    $fields = array();
+    $_sql = "SHOW COLUMNS FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows LIKE '%\_%'";
+    $_query = $db->query($_sql);
+
+    // echo $_sql;
+    while ($_row = $_query->fetch()) {
+        $field_full = explode('_', $_row['field']);
+        if (in_array($field_full[0], $accepted)) {
+            // echo "<br>Field name: " . $field_full[0];
+            $fields[] = $_row['field'];
+        }
+    }
+    return $fields;
+}

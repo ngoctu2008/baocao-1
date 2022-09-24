@@ -42,6 +42,7 @@ $lang_module['check'] = 'SL Check';
 $lang_module['dn'] = 'Doanh nghiệp';
 $lang_module['hd'] = 'HĐ';
 $lang_module['sale'] = 'Doanh thu';
+$lang_module['vnd'] = 'VND';
 $lang_module['lead'] = 'Lead';
 
 $lang_module['xstu'] = 'XSTU';

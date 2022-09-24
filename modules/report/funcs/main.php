@@ -13,20 +13,14 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
-if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_request('delete_checkss', 'get')) {
-    $id = $nv_Request->get_int('delete_id', 'get');
-    $delete_checkss = $nv_Request->get_string('delete_checkss', 'get');
-    if ($id > 0 and $delete_checkss == md5($id . NV_CACHE_PREFIX . $client_info['session_id'])) {
-        $db->query('DELETE FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows  WHERE id = ' . $db->quote($id));
-        $nv_Cache->delMod($module_name);
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'Delete Monitor', 'ID: ' . $id, $admin_info['userid']);
-        nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
-    }
-}
-
 $row = [];
 $error = [];
 $row['id'] = $nv_Request->get_int('id', 'post,get', 0);
+
+$sale_code = $array_infor_users[$user_info['userid']]['code'];
+$team_id = '';
+
+//Sửa, thêm -> Xóa nếu không cần sử dụng
 if ($nv_Request->isset_request('submit', 'post')) {
     $row['date'] = $nv_Request->get_int('date', 'post', 0);
     $row['code'] = $nv_Request->get_title('code', 'post', '');
@@ -121,6 +115,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['credit_loan'] = 0;
 }
 
+
 // Fetch Limit
 $show_view = false;
 if (!$nv_Request->isset_request('id', 'post,get')) {
@@ -146,18 +141,46 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
+$fields = get_field_rows();
 
-if ($show_view) {
-    $number = 0;
-    while ($view = $sth->fetch()) {
-        $view['number'] = $number++;
-        $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;id=' . $view['id'];
-        $view['link_delete'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;delete_id=' . $view['id'] . '&amp;delete_checkss=' . md5($view['id'] . NV_CACHE_PREFIX . $client_info['session_id']);
-        $xtpl->assign('VIEW', $view);
-        $xtpl->parse('main.view.loop');
+$totals = [];
+
+$totals_groups = [];
+// foreach ($fields as $key => $_field) {
+//     $total[$_field] = 10;
+// }
+
+while ($view = $sth->fetch()) {
+    foreach ($fields as $key => $_field) {
+        $totals[$_field] = empty($totals[$_field]) ? 0 + $view[$_field] : $totals[$_field] + $view[$_field];
     }
-    $xtpl->parse('main.view');
+
+    // $xtpl->assign('VIEW', $view);
+    // $xtpl->parse('main.view.loop');
 }
+
+$totals_field = [];
+//Tách riêng tổng theo từng Sản phẩm
+foreach ($totals as $key => $_value) {
+    $_field = explode('_', $key);
+    $totals_field[$_field[0]][$_field[1]] = empty($totals_field[$_field[0]][$_field[1]]) ? 0 + $_value : $totals_field[$_field[0]][$_field[1]] + $_value;
+}
+
+//Hiển thị
+foreach ($totals_field as $key => $_group_value) {
+    foreach ($_group_value as $subkey => $subvalue) {
+        $xtpl->assign('sub_label', $subkey == 'sale' ? $lang_module['vnd'] : $lang_module[$subkey]);
+        $xtpl->assign('TOTAL', $subvalue);
+        $xtpl->parse('main.TOTAL_DAILY.row.loop');
+    }
+    $xtpl->assign('label', $lang_module[$key]);
+    $xtpl->parse('main.TOTAL_DAILY.row');
+}
+
+$xtpl->parse('main.TOTAL_DAILY');
+
+// echo displayArray($totals_field);
+// die();
 
 
 if (!empty($error)) {

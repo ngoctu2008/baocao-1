@@ -33,17 +33,12 @@ th {
     font-weight: bold;
 }
 
-.box {
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5px !important;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    line-height: 1.5em;
-}
-
-.table-monitor> th, td {
-    padding-left: 2px !important;
-    padding-right: 2px !important;
+.box-monitor {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    padding: 2px !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+    line-height: 1.5em !important;
 }
 
 .text-hightlight {
@@ -51,6 +46,16 @@ th {
     color: red;
 }
 
-.block-monitor {
-    font-size: 80%;
+.table-monitor>tbody>tr>td {
+    border-top: 0 !important;
+    padding: 4px 2px !important;
+}
+
+.field-monitor {
+    text-align: left;
+    font-weight: bold;
+}
+
+.title-block {
+    text-transform: uppercase;
 }
