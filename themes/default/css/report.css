@@ -40,6 +40,9 @@ th {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
     line-height: 1.5em !important;
 }
+.red-box {
+    border-color: red !important;
+}
 
 .text-hightlight {
     font-weight: bold;
@@ -55,6 +58,7 @@ th {
     text-align: left;
     font-weight: bold;
     vertical-align: middle !important;
+    font-size: 13px !important;
 }
 
 .title-block {
@@ -74,4 +78,14 @@ th {
 
 .panel-body {
     padding: 8px !important;
+}
+
+.w15p {
+    width: 15%;
+}
+.w20p {
+    width: 20%;
+}
+.w25p {
+    width: 25%;
 }

@@ -93,3 +93,6 @@ $lang_module['listaction'] = 'listaction';
 
 //Lang for function monitor
 $lang_module['monitor'] = 'monitor';
+
+//Lang for function extract
+$lang_module['extract'] = 'extract';

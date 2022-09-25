@@ -3,17 +3,18 @@
 <div class="well">
     <div class="panel-heading">
         <h1 style="text-transform: uppercase;"> {LANG.listaction} </h1>
+        <a href="{link_add}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới </a>
     </div>
 
 <form action="{NV_BASE_SITEURL}index.php" method="get">
     <input type="hidden" name="{NV_LANG_VARIABLE}"  value="{NV_LANG_DATA}" />
     <input type="hidden" name="{NV_NAME_VARIABLE}"  value="{MODULE_NAME}" />
     <input type="hidden" name="{NV_OP_VARIABLE}"  value="{OP}" />
-    <div class="row">
+    <div class="row" style="margin-top:8px;">
         <div class="col-xs-24 col-md-24">
             <div class="form-group">
-                <label class="col-xs-6 col-sm-5 col-md-6 control-label"><strong>{LANG.q_date}</strong></label>
-                <div class="col-xs-10 col-sm-8 col-md-6">
+                <label class="col-xs-8 col-sm-5 col-md-8 control-label"><strong>{LANG.q_date}</strong></label>
+                <div class="col-xs-10 col-sm-10 col-md-8">
                     <div class="input-group">
                         <input class="form-control" readonly type="text" value="{q_date_show}" name="q_date" id="q_date" maxlength="255" placeholder="{q_date_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
                         <span class="input-group-btn">
@@ -23,11 +24,12 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-xs-8 col-sm-4 col-md-6">
+                <div class="col-xs-6 col-sm-4 col-md-6">
                     <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
                 </div>
             </div>
         </div>
+
     </div>
 </form>
 </div>
@@ -58,9 +60,7 @@
                     <td> {VIEW.sale} </td>
                     <td> {VIEW.note} </td>
                     <td class="text-center">
-                        <i class="fa fa-edit fa-lg">&nbsp;</i> <a href="{VIEW.link_edit}#edit">{LANG.edit}</a> -
-                        <em class="fa fa-trash-o fa-lg">&nbsp;</em>
-                        <a href="{VIEW.link_delete}" onclick="return confirm(nv_is_del_confirm[0]);">{LANG.delete}</a>
+                        <i class="fa fa-edit fa-lg">&nbsp;</i> <a href="{VIEW.link_edit}#edit">{LANG.edit}</a>
                     </td>
                 </tr>
                 <!-- END: loop -->

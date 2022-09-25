@@ -75,7 +75,7 @@ $lang_module['error_required_courier_app'] = 'Lỗi: bạn cần nhập dữ li�
 $lang_module['error_required_courier_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Courier LOAN';
 $lang_module['error_required_credit_app'] = 'Lỗi: bạn cần nhập dữ liệu cho Credit Card APP';
 $lang_module['error_required_credit_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Credit Card LOAN';
-$lang_module['error_duplicated'] = 'Lỗi: dữ liệu cho sale %s vào ngày %s đã tồn tại, không thể tạo dữ liệu 2 lần cho 1 sale trên 1 ngày';
+$lang_module['error_duplicated'] = 'Lỗi: dữ liệu cho sale %s vào ngày %s đã tồn tại, không thể tạo dữ liệu 2 lần cho 1 DSA trên 1 ngày';
 $lang_module['save'] = 'Ghi lại';
 
 //Lang for function actions
