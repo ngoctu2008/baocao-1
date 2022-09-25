@@ -12,10 +12,16 @@ if (!defined('NV_MAINFILE')) {
     exit('Stop!!!');
 }
 
-function export_dailyreport($room_booking, $DateArray)
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+
+function export_dailyreport()
 {
-    global $module_name, $room_array, $lang_module;
-    $objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load(NV_ROOTDIR . '/modules/booking/weekreport.xlsx');
+
+    global $module_name, $lang_module;
+    $objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load(NV_ROOTDIR . '/modules/report/dailyreport.xlsx');
     $objWorksheet = $objPHPExcel->getActiveSheet();
 
     // Begin Set page orientation and size
@@ -68,23 +74,26 @@ function export_dailyreport($room_booking, $DateArray)
     );
 
     $file_folder_path = NV_ROOTDIR . "/" . NV_TEMP_DIR . "/" . $module_name . "/";
-    if (file_exists($file_folder_path)) {
-        $check = nv_deletefile($file_folder_path, true);
-        if ($check[0] != 1) {
-            $error = $check[1];
-        }
-    }
-    if (empty($error)) {
-        $check = nv_mkdir(NV_ROOTDIR . '/' . NV_TEMP_DIR, $module_name);
-        if ($check[0] != 1) {
-            $error = $check[1];
-        }
-    }
+    // if (file_exists($file_folder_path)) {
+    //     $check = nv_deletefile($file_folder_path, true);
+    //     if ($check[0] != 1) {
+    //         $error = $check[1];
+    //     }
+    // }
+    // if (empty($error)) {
+    //     $check = nv_mkdir(NV_ROOTDIR . '/' . NV_TEMP_DIR, $module_name);
+    //     if ($check[0] != 1) {
+    //         $error = $check[1];
+    //     }
+    // }
+
     // Kiểm tra tồn tại của file tạm
     if (!file_exists($file_folder_path)) {
+        echo $file_folder_path;
+        die();
         $error = $lang_module['export_error_fileexists'];
     }
-    $file_export = $file_folder_path . '/daylyreport.xlsx';
+    $file_export = $file_folder_path . 'dailyreport.xlsx';
 
     $objWorksheet->setCellValue('A1', "Room");
     $objWorksheet->setCellValue('B1', "Time");
@@ -94,65 +103,65 @@ function export_dailyreport($room_booking, $DateArray)
     $r = 1;
 
     // fill label
-    foreach ($DateArray as $key => $day) {
-        $c++;
-        $objWorksheet->setCellValueByColumnAndRow($c, $r, nv_date('d-M', $day));
-        $objWorksheet->getStyle(col_name($c) . $r)->applyFromArray($table_head);
-        $objWorksheet->getStyleByColumnAndRow($c, $r)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $objWorksheet->getStyleByColumnAndRow($c, $r)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $objWorksheet->getColumnDimensionByColumn($c)->setAutoSize(true);
-    }
+    // foreach ($DateArray as $key => $day) {
+    //     $c++;
+    //     $objWorksheet->setCellValueByColumnAndRow($c, $r, nv_date('d-M', $day));
+    //     $objWorksheet->getStyle(col_name($c) . $r)->applyFromArray($table_head);
+    //     $objWorksheet->getStyleByColumnAndRow($c, $r)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    //     $objWorksheet->getStyleByColumnAndRow($c, $r)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+    //     $objWorksheet->getColumnDimensionByColumn($c)->setAutoSize(true);
+    // }
 
-    $c = 2;
-    $r = 0;
+    // $c = 2;
+    // $r = 0;
 
-    foreach ($room_booking as $roomid => $arr_bookingDate) { // duyệt từng phòng
-        $c = 2;
-        $r += 2;
-        $objWorksheet->mergeCells('A' . $r . ':A' . ($r + 1));
-        $objWorksheet->setCellValue('A' . $r, "[" . $room_array[$roomid]['type'] . "] \n" . $room_array[$roomid]['name']);
-        $objWorksheet->setCellValue('B' . $r, 'Morning');
-        $objWorksheet->setCellValue('B' . ($r + 1), 'Afternoon');
-        $objWorksheet->getStyle('A' . $r . ':B' . ($r + 1))->applyFromArray($left_label);
-        foreach ($DateArray as $key => $day) { // duyệt từng ngày
-            $c++;
-            $date = nv_date('j', $day);
-            $count1 = 0;
-            $count2 = 0;
-            $morning = '';
-            $afternoon = '';
-            if (!empty($arr_bookingDate[$date])) {
-                // echo displayArray($arr_bookingDate[$date]); exit();
-                foreach ($arr_bookingDate[$date] as $booking) {
-                    $booking_content = $booking['booking_content'];
-                    $booking_content .= ' (' . $booking['usergroup'] . ' - ' . $booking['username'] . ') ';
-                    if ($booking['time'] == 1) {
-                        $morning .= $count1 >= 1 ? "\n" . "-------------------" . "\n" : '';
-                        $morning .= $booking_content;
-                        $count1++;
-                    } else {
-                        $afternoon .= $count2 >= 1 ? "\n" . "-------------------" . "\n" : '';
-                        $afternoon .= $booking_content;
-                        $count2++;
-                    }
-                }
-            }
-            $objWorksheet->getStyle(col_name($c) . $r . ':' . col_name($c) . ($r + 1))->applyFromArray($borderStyle);
-            /*
-             * $objWorksheet->getStyle(col_name($c) . $r . ':' . col_name($c) . ($r+1))->getBorders()
-             * ->getAllBorders()
-             * ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-             */
-            $objWorksheet->setCellValueByColumnAndRow($c, $r, $morning);
-            $objWorksheet->setCellValueByColumnAndRow($c, ($r + 1), $afternoon);
-        }
-    }
+    // foreach ($room_booking as $roomid => $arr_bookingDate) { // duyệt từng phòng
+    //     $c = 2;
+    //     $r += 2;
+    //     $objWorksheet->mergeCells('A' . $r . ':A' . ($r + 1));
+    //     $objWorksheet->setCellValue('A' . $r, "[" . $room_array[$roomid]['type'] . "] \n" . $room_array[$roomid]['name']);
+    //     $objWorksheet->setCellValue('B' . $r, 'Morning');
+    //     $objWorksheet->setCellValue('B' . ($r + 1), 'Afternoon');
+    //     $objWorksheet->getStyle('A' . $r . ':B' . ($r + 1))->applyFromArray($left_label);
+    //     foreach ($DateArray as $key => $day) { // duyệt từng ngày
+    //         $c++;
+    //         $date = nv_date('j', $day);
+    //         $count1 = 0;
+    //         $count2 = 0;
+    //         $morning = '';
+    //         $afternoon = '';
+    //         if (!empty($arr_bookingDate[$date])) {
+    //             // echo displayArray($arr_bookingDate[$date]); exit();
+    //             foreach ($arr_bookingDate[$date] as $booking) {
+    //                 $booking_content = $booking['booking_content'];
+    //                 $booking_content .= ' (' . $booking['usergroup'] . ' - ' . $booking['username'] . ') ';
+    //                 if ($booking['time'] == 1) {
+    //                     $morning .= $count1 >= 1 ? "\n" . "-------------------" . "\n" : '';
+    //                     $morning .= $booking_content;
+    //                     $count1++;
+    //                 } else {
+    //                     $afternoon .= $count2 >= 1 ? "\n" . "-------------------" . "\n" : '';
+    //                     $afternoon .= $booking_content;
+    //                     $count2++;
+    //                 }
+    //             }
+    //         }
+    //         $objWorksheet->getStyle(col_name($c) . $r . ':' . col_name($c) . ($r + 1))->applyFromArray($borderStyle);
+    //         /*
+    //          * $objWorksheet->getStyle(col_name($c) . $r . ':' . col_name($c) . ($r+1))->getBorders()
+    //          * ->getAllBorders()
+    //          * ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    //          */
+    //         $objWorksheet->setCellValueByColumnAndRow($c, $r, $morning);
+    //         $objWorksheet->setCellValueByColumnAndRow($c, ($r + 1), $afternoon);
+    //     }
+    // }
 
     $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objPHPExcel, 'Xlsx');
     $objWriter->save($file_export);
 
     // Download file
-    $download = new NukeViet\Files\Download($file_export, NV_ROOTDIR . "/" . NV_TEMP_DIR, "daylyreport.xlsx");
+    $download = new NukeViet\Files\Download($file_export, NV_ROOTDIR . "/" . NV_TEMP_DIR, "dailyreport2.xlsx");
     $download->download_file();
     exit();
 }

@@ -14,6 +14,11 @@ if (!defined('NV_IS_MOD_REPORT')) {
 }
 
 
+if ($nv_Request->isset_request('export', 'get')) {
+    export_dailyreport();
+    die();
+}
+
 if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_request('delete_checkss', 'get')) {
     $id = $nv_Request->get_int('delete_id', 'get');
     $delete_checkss = $nv_Request->get_string('delete_checkss', 'get');

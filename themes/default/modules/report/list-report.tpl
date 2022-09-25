@@ -22,7 +22,7 @@
                     <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary btn-xs" href="#export=1">Extract to excel</a>
+                    <button class="btn btn-primary btn-xs" name="export" id="export">Extract to excel</button>
                 </div>
             </div>
         </div>
