@@ -85,7 +85,6 @@ $lang_module['action_note'] = 'Action note';
 
 //Lang for function action-note
 $lang_module['error_required_note'] = 'Lỗi: bạn cần nhập dữ liệu cho Nội dung';
-
 $lang_module['creat_by'] = 'Tạo bởi';
 
 //Lang for function listaction
@@ -101,22 +100,5 @@ $lang_module['no_permission'] = 'Bạn không có quyền để thực hiện th
 $lang_module['redirect'] = 'Chuyển trang';
 
 //Lang for function monitor
-$lang_module['monitor'] = 'monitor';
-$lang_module['pl_app'] = 'PL APP';
-$lang_module['pl_loan'] = 'PL LOAN';
-$lang_module['dn_app'] = 'Doanh nghiep APP';
-$lang_module['dn_loan'] = 'Doanh nghiep LOAN';
-$lang_module['xstu_check'] = 'XSTU check';
-$lang_module['xstu_app'] = 'XSTU APP';
-$lang_module['xstu_loan'] = 'XSTU LOAN';
-$lang_module['ipp_app'] = 'IPP/GNN APP';
-$lang_module['ipp_loan'] = 'IPP/GNN LOAN';
-$lang_module['banca_hd'] = 'BANCA APP';
-$lang_module['banca_sale'] = 'BANCA LOAN';
-$lang_module['ubank_app'] = 'UBANK APP';
-$lang_module['ubank_loan'] = 'UBANK LOAN';
-$lang_module['courier_lead'] = 'Courier APP';
-$lang_module['courier_app'] = 'Courier APP';
-$lang_module['courier_loan'] = 'Courier LOAN';
-$lang_module['credit_app'] = 'Credit Card APP';
-$lang_module['credit_loan'] = 'Credit Card LOAN';
+$lang_module['monitor'] = 'Tổng quát';
+$lang_module['report_statics'] = 'Tình hình báo cáo';

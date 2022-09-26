@@ -52,7 +52,7 @@
     <!-- BEGIN: REPORT_STATICS -->
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">
-            <strong> {LANG.report_statics} </strong>
+            <strong> Số DSA vùng báo cáo </strong>
         </div>
         <div class="panel-body">
             <!-- BEGIN: ROW -->

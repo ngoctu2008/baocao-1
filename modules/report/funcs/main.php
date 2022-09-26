@@ -13,18 +13,25 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
-$row = [];
 $error = [];
-$row['id'] = $nv_Request->get_int('id', 'post,get', 0);
 
 $sale_code = $array_infor_users[$user_info['userid']]['code'];
-$team_id = '';
+$team_id = $array_infor_users[$user_info['userid']]['group_id'];
 
-if (defined('NV_IS_MODADMIN') or $leader_team > 0) {
-    $contents = nv_theme_report_main_manager();
+// echo displayArray($array_team_users[$team_id]);
+// exit();
+
+if (defined('NV_IS_MODADMIN')) {
+    $level = 'admin';
+    $list_code = '';
+} elseif ($leader_team > 0) {
+    $level = 'team_manager';
+    $list_code = $array_team_users[$team_id];
 } else {
-    $contents = nv_theme_report_main_sales();
+    $level = 'sale';
+    $list_code = $sale_code;
 }
+$contents = nv_theme_report_main($level, $list_code);
 
 $page_title = $lang_module['monitor'];
 

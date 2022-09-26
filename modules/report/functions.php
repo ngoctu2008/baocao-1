@@ -68,6 +68,7 @@ function export_dailyreport($array_data)
     //Kiểm tra thư mục chứa file tạm
     if (!file_exists($file_folder_path)) {
         $error = $lang_module['export_error_fileexists'];
+        mkdir($file_folder_path);
     }
     //Xóa các file tạm cũ đi tránh trùng
     if (file_exists($file_export_tmp)) {

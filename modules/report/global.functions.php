@@ -76,7 +76,7 @@ function get_field_rows()
     return $fields;
 }
 
-function render_data_total($type = 'month')
+function render_data_total($type = 'month', $arr_codes)
 {
     global $db, $module_data;
 
@@ -87,8 +87,14 @@ function render_data_total($type = 'month')
         $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
         $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
     }
-
     $where = 'date >= ' . $from_time . ' AND date <= ' . $to_time;
+    if (is_array($arr_codes)) {
+        $listcode = implode('","', $arr_codes);
+        $where .= ' AND code IN ("' . $listcode . '")';
+    } elseif (!empty($arr_codes)) {
+        $where .= ' AND code = "' . $arr_codes . '"';
+    }
+
     $db->sqlreset()
         ->select('*')
         ->from('' . NV_PREFIXLANG . '_' . $module_data . '_rows')
@@ -113,8 +119,7 @@ function render_data_total($type = 'month')
 
     return $totals_field;
 }
-
-function check_report_static()
+function check_report_static_team($team_id)
 {
     global $module_data, $db;
 
@@ -131,7 +136,26 @@ function check_report_static()
         // echo nv_date('d/m/Y', $_row['date']);
         // print_r($_row);
     }
+    return $result;
+}
 
+function check_report_static_area()
+{
+    global $module_data, $db;
+
+    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+
+    $where = ' WHERE date >= ' . $from_time . ' AND date <= ' . $to_time;
+    $_sql = "SELECT code FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows " . $where;
+    $_query = $db->query($_sql);
+
+    $result = [];
+    while ($_row = $_query->fetch()) {
+        $result[] = $_row['code'];
+        // echo nv_date('d/m/Y', $_row['date']);
+        // print_r($_row);
+    }
     return $result;
 }
 
