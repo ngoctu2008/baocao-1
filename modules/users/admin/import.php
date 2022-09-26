@@ -29,7 +29,7 @@ $startRow = 5;
 
 function nv_users_field_check($custom_fields, $check = 1, $info_table = 0)
 {
-    global $db, $global_config, $lang_module;
+    global $db, $lang_module;
 
     $query_field = $array_error = array();
     $array_field_config = array();

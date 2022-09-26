@@ -27,12 +27,12 @@ if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_reques
 $row = [];
 $error = [];
 
-$array_code_users = [];
-$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
-$_query = $db->query($_sql);
-while ($_row = $_query->fetch()) {
-    $array_code_users[$_row['code']] = $_row;
-}
+// $array_code_users = [];
+// $_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
+// $_query = $db->query($_sql);
+// while ($_row = $_query->fetch()) {
+//     $array_code_users[$_row['code']] = $_row;
+// }
 
 $q = $nv_Request->get_title('q', 'post,get');
 
@@ -61,6 +61,17 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
         ->from('' . NV_PREFIXLANG . '_' . $module_data . '_actions');
 
     $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
+    if (defined('NV_IS_MODADMIN')) {
+        $where .= ''; //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
+    } elseif ($leader_team < 1) {
+        $where .= ' AND code = "' . $array_infor_users[$user_info['userid']]['code']  . '"';
+    } else {
+        //Nếu là quản lý thì lấy thành viên của nhóm mình
+        $in_group = $array_infor_users[$user_info['userid']]['group_id'];
+        $list_code_in_group = implode(',', $array_team_users[$in_group]);
+        $arr_code_in_group = $array_team_users[$in_group];
+        $where .= ' AND code IN ("' . implode('","', $arr_code_in_group) . '") ';
+    }
     if (!empty($q)) {
         $where .= ' AND date LIKE :q_date OR code LIKE :q_code OR note LIKE :q_note OR creat_by LIKE :q_creat_by';
     }

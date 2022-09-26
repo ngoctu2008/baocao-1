@@ -97,12 +97,11 @@
 </div>
 
 <div class="col-md-14">
+    <!-- BEGIN: TOTAL_DAILY -->
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">
             <strong> NGÀY HÔM NAY </strong>
         </div>
-
-        <!-- BEGIN: TOTAL_DAILY -->
         <div class="panel-body">
             <table class="table table-monitor table-sm">
                 <tbody>
@@ -122,8 +121,8 @@
                 </tbody>
             </table>
         </div>
-        <!-- END: TOTAL_DAILY -->
     </div>
+    <!-- END: TOTAL_DAILY -->
 
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">

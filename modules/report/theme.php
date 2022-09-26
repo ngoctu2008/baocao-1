@@ -20,7 +20,7 @@ if (!defined('NV_IS_MOD_REPORT')) {
  */
 function nv_theme_report_main_manager()
 {
-    global $module_info, $lang_module, $user_info, $op, $module_file, $db, $module_data;
+    global $module_info, $lang_module, $user_info, $op, $module_file, $db, $module_data, $module_name;
 
     // Fetch Limit
     $db->sqlreset()
@@ -51,6 +51,7 @@ function nv_theme_report_main_manager()
         $xtpl->assign('label', $lang_module[$key]);
         $xtpl->parse('main.TOTAL_DAILY.row');
     }
+    // $xtpl->assign('link_export', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report?export=1');
     $xtpl->parse('main.TOTAL_DAILY');
 
     //Hiển thị số liệu tổng tháng

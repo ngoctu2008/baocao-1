@@ -46,7 +46,7 @@ th {
 
 .text-hightlight {
     font-weight: bold;
-    color: red;
+    color: red !important;
 }
 
 .table-monitor>tbody>tr>td {

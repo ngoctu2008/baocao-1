@@ -13,10 +13,61 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
-
 if ($nv_Request->isset_request('export', 'get')) {
-    export_dailyreport();
-    die();
+    if (defined('NV_IS_MODADMIN')) { //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
+        //Lọc các bản ghi trong ngày
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
+
+        $_sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows WHERE ' . $where . ' ORDER BY code';
+        $_query = $db->query($_sql);
+
+        $array_data = [];
+        while ($_row = $_query->fetch()) {
+            $group_id = $array_code_users[$_row['code']]['group_id'];
+            $_row['team'] = $array_group_info[$group_id]['title'];
+            $_row['sale_name'] = $array_code_users[$_row['code']]['last_name'] . ' ' . $array_code_users[$_row['code']]['first_name'];
+            $_row['action_note'] = str_replace('</br>', '. ', get_action_note($array_code_users[$_row['code']]['userid'], 0));
+            $array_data[] = $_row;
+        }
+
+        export_dailyreport($array_data);
+    } elseif ($leader_team < 1) {
+        //Không phải là leader, không được xuất file
+        $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report';
+        $contents = nv_theme_alert($lang_module['warning'], $lang_module['no_permission'], 'warning', $redirect, $lang_module['redirect'], 1);
+        include NV_ROOTDIR . '/includes/header.php';
+        echo nv_site_theme($contents);
+        include NV_ROOTDIR . '/includes/footer.php';
+        exit();
+    } else {
+        //Lọc các bản ghi trong ngày
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
+        foreach ($array_team_users[$leader_team] as $_userid => $_code) {
+            if (!empty($_code)) {
+                $_arr_code[] = '"' . $_code . '"';
+            }
+        }
+        $list_code = implode(',', $_arr_code);
+        $where .= ' AND code IN (' . $list_code . ') ';
+
+        $_sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows WHERE ' . $where;
+        $_query = $db->query($_sql);
+
+        $array_data = [];
+        while ($_row = $_query->fetch()) {
+            $group_id = $array_code_users[$_row['code']]['group_id'];
+            $_row['team'] = $array_group_info[$group_id]['title'];
+            $_row['sale_name'] = $array_code_users[$_row['code']]['last_name'] . ' ' . $array_code_users[$_row['code']]['first_name'];
+            $_row['action_note'] = str_replace('</br>', '. ', get_action_note($array_code_users[$_row['code']]['userid'], 0));
+            $array_data[] = $_row;
+        }
+
+        export_dailyreport($array_data);
+    }
 }
 
 if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_request('delete_checkss', 'get')) {
@@ -61,7 +112,10 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
         ->from('' . NV_PREFIXLANG . '_' . $module_data . '_rows');
 
     $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
-    if ($leader_team == 0) {
+
+    if (defined('NV_IS_MODADMIN')) { //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
+        $where .= '';
+    } elseif ($leader_team < 1) {
         $where .= ' AND code = "' . $array_infor_users[$user_info['userid']]['code'] . '"';
     } else {
         $_arr_code = [];
@@ -107,16 +161,6 @@ $xtpl->assign('ROW', $row);
 $xtpl->assign('q_date_show', nv_date('d/m/Y', $q_date));
 
 if ($show_view) {
-    //Lấy dữ liệu user
-    $array_code_users = [];
-    $_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
-    $_query = $db->query($_sql);
-    while ($_row = $_query->fetch()) {
-        $_row['fullname'] = $_row['last_name'] . ' ' . $_row['first_name'];
-        $array_code_users[$_row['code']] = $_row;
-    }
-
-
     $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
     if (!empty($q_date)) {
         $base_url .= '&q_date=' . $q_date;
@@ -133,7 +177,7 @@ if ($show_view) {
     while ($view = $sth->fetch()) {
         $view['number'] = $number++;
         $view['date'] = nv_date('d/m/Y', $view['date']);
-        $view['sale_name'] =  $array_code_users[$view['code']]['fullname'] . ' (' . $view['code'] . ')';
+        $view['sale_name'] =  $array_code_users[$view['code']]['last_name'] . ' ' . $array_code_users[$view['code']]['first_name'] . ' (' . $view['code'] . ')';
 
         foreach ($arr_field as $field) {
             if (empty($total[$field])) {

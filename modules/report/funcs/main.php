@@ -20,7 +20,7 @@ $row['id'] = $nv_Request->get_int('id', 'post,get', 0);
 $sale_code = $array_infor_users[$user_info['userid']]['code'];
 $team_id = '';
 
-if (defined(NV_IS_MODADMIN) or $leader_team > 0) {
+if (defined('NV_IS_MODADMIN') or $leader_team > 0) {
     $contents = nv_theme_report_main_manager();
 } else {
     $contents = nv_theme_report_main_sales();

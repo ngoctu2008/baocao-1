@@ -5,7 +5,7 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2022 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
- * @Createdate Fri, 23 Sep 2022 05:34:09 GMT
+ * @Createdate Sun, 25 Sep 2022 16:21:39 GMT
  */
 
 if (!defined('NV_IS_FILE_MODULES')) {
@@ -28,8 +28,8 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
 
 $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_rows(
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  code varchar(11) NOT NULL DEFAULT '''''' COMMENT 'Mã nhân viên',
   date int(11) unsigned DEFAULT current_timestamp() COMMENT 'Ngày',
-  code varchar(11) NOT NULL DEFAULT '' COMMENT 'Mã nhân viên',
   pl_app int(11) NOT NULL DEFAULT 0 COMMENT 'PL APP',
   pl_loan int(11) NOT NULL DEFAULT 0 COMMENT 'PL LOAN',
   dn_app int(11) NOT NULL DEFAULT 0 COMMENT 'Doanh nghiep APP',

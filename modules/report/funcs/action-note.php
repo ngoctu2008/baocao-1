@@ -99,12 +99,12 @@ if (empty($row['date'])) {
 
 $row['note'] = nv_htmlspecialchars(nv_br2nl($row['note']));
 
-$array_code_users = [];
-$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
-$_query = $db->query($_sql);
-while ($_row = $_query->fetch()) {
-    $array_code_users[$_row['userid']] = $_row;
-}
+// $array_code_users = [];
+// $_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
+// $_query = $db->query($_sql);
+// while ($_row = $_query->fetch()) {
+//     $array_code_users[$_row['userid']] = $_row;
+// }
 
 $xtpl = new XTemplate('action-note.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
@@ -119,16 +119,16 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
-$in_group = $array_code_users[$user_info['userid']]['group_id'];
+$in_group = $array_infor_users[$user_info['userid']]['group_id'];
 $list_code_in_group = implode(',', $array_team_users[$in_group]);
-
+$arr_code_in_group = $array_team_users[$in_group];
 if ($leader_team > 0) {
-    foreach ($array_code_users as $value) {
-        if (in_array($value['code'], $array_team_users[$in_group])) {
+    foreach ($arr_code_in_group as $_userid => $_code) {
+        if (!empty($array_code_users[$_code])) {
             $xtpl->assign('OPTION', [
-                'key' => $value['code'],
-                'title' => $value['last_name'] . ' ' . $value['first_name'] . ' (' . $value['code'] . ')',
-                'selected' => ($value['code'] == $row['code']) ? ' selected="selected"' : ''
+                'key' => $_code,
+                'title' => $array_code_users[$_code]['last_name'] . ' ' . $array_code_users[$_code]['first_name'] . ' (' . $_code . ')',
+                'selected' => ($_code == $row['code']) ? ' selected="selected"' : ''
             ]);
             $xtpl->parse('main.select_code.loop');
         }

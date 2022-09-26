@@ -95,7 +95,9 @@ $lang_module['total'] = 'TỔNG CỘNG';
 $lang_module['filter'] = 'Bộ lọc';
 
 $lang_module['success'] = 'Ghi dữ liệu thành công';
+$lang_module['warning'] = 'Cảnh báo';
 $lang_module['waiting_redirect'] = 'Vui lòng chờ giây lát để hệ thống chuyển hướng';
+$lang_module['no_permission'] = 'Bạn không có quyền để thực hiện thao tác này!';
 $lang_module['redirect'] = 'Chuyển trang';
 
 //Lang for function monitor

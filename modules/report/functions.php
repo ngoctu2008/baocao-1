@@ -11,14 +11,18 @@
 if (!defined('NV_SYSTEM')) {
     die('Stop!!!');
 }
-global $module_name, $nv_Cache;
 define('NV_IS_MOD_REPORT', true);
-require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
 if (!defined('NV_IS_USER')) {
     nv_redirect_location($global_config['site_url'] . '/users/login/', 301, true);
 }
+require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
+
+/**
+ * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader
+ * $leader_team = 0 nếu không phải leader
+ */
 //Kiểm tra chức vụ, lấy thông tin
 $leader_team = 0;
 $is_leader_group = array();
@@ -33,158 +37,98 @@ if (!empty($check_leader)) {
         }
     }
 }
-
-//Lấy thông tin cá nhân nhân viên
-$array_infor_users = [];
-$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != "" ';
-$array_infor_users = $nv_Cache->db($_sql, 'userid', $module_name, '', 86400 * 7);
-
-//Lấy danh sách nhân sự của từng Team -> Lưu cache
-$array_team_users = [];
-$_sql = 'SELECT userid,group_id FROM ' . $db_config['prefix'] . '_users_groups_users WHERE 1 ORDER BY group_id DESC';
-$_list = $nv_Cache->db($_sql, '', $module_name, '', 86400 * 7);
-
-$cache_file = NV_LANG_DATA . '_array_team_users.cache';
-if ($nv_Cache->getItem($module_name, $cache_file) == false) {
-    foreach ($_list as $values) {
-        $values['code'] = $array_infor_users[$values['userid']]['code'];
-        $array_team_users[$values['group_id']][$values['userid']] = $values['code'];
+//Kiểm tra xem user có nằm trong các nhóm cấp Admin không (1,2,3)
+foreach ($user_info['in_groups'] as $_group) {
+    if ($_group <= 3 and !defined('NV_IS_MODADMIN')) {
+        define('NV_IS_MODADMIN', true);
+        break;
     }
-    $cache = serialize($array_team_users);
-    $set_cache = $nv_Cache->setItem($module_name, $cache_file, $cache, 86400 * 7);
-} else {
-    $array_team_users = unserialize($nv_Cache->getItem($module_name, $cache_file));
 }
 
-// echo displayArray($array_team_users);
-// exit();
 
 
-function check_number($value)
+/** XUẤT FILE EXCEL */
+
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+
+function export_dailyreport($array_data)
 {
-    $return = false;
-    if (is_numeric($value)) {
-        $return = true;
+    global $module_name, $lang_module, $user_info;
+    $objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load(NV_ROOTDIR . '/modules/report/dailyreport.xlsx');
+    $objWorksheet = $objPHPExcel->getActiveSheet();
+
+    $file_folder_path = NV_ROOTDIR . "/" . NV_TEMP_DIR . "/" . $module_name . "/";
+    $username = $user_info['username']; //tên team hoặc tên sale
+    $file_name_export = 'dailyreport_' . $username . '.xlsx';
+    $file_export_tmp = $file_folder_path . $file_name_export;
+
+    //Kiểm tra thư mục chứa file tạm
+    if (!file_exists($file_folder_path)) {
+        $error = $lang_module['export_error_fileexists'];
     }
-    return $return;
-}
-
-function displayArray($array, $tab = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp', $indent = 0)
-{
-    $curtab = "";
-    $returnvalues = "";
-    while (list($key, $value) = each($array)) {
-        for ($i = 0; $i < $indent; $i++) {
-            $curtab .= $tab;
-        }
-        if (is_array($value)) {
-            $returnvalues .= "$curtab$key : Array: <br />$curtab{<br />\n";
-            $returnvalues .= displayArray($value, $tab, $indent + 1) . "$curtab}<br />\n";
-        } else {
-            $returnvalues .= "$curtab$key => $value<br />\n";
-        }
-        $curtab = null;
-    }
-    return $returnvalues;
-}
-
-function get_field_rows()
-{
-    global $db, $module_data;
-    $accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit']; //Các trường chưa dữ liệu
-    $fields = array();
-    $_sql = "SHOW COLUMNS FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows LIKE '%\_%'";
-    $_query = $db->query($_sql);
-
-    // echo $_sql;
-    while ($_row = $_query->fetch()) {
-        $field_full = explode('_', $_row['field']);
-        if (in_array($field_full[0], $accepted)) {
-            // echo "<br>Field name: " . $field_full[0];
-            $fields[] = $_row['field'];
+    //Xóa các file tạm cũ đi tránh trùng
+    if (file_exists($file_export_tmp)) {
+        $check = nv_deletefile($file_export_tmp, true);
+        if ($check[0] != 1) {
+            $error = $check[1];
         }
     }
-    return $fields;
-}
 
-function render_data_total($type = 'month')
-{
-    global $db, $module_data;
+    // $objWorksheet->setCellValue('F5', "Room");
+    // $objWorksheet->setCellValue('B1', "Time");
+    // $objWorksheet->getStyle('A1:B1')->applyFromArray($table_head);
 
-    if ($type == 'month') {
-        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), 1, intval(date("Y", NV_CURRENTTIME)));
-        $to_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)) + 1, 1, intval(date("Y", NV_CURRENTTIME)));
-    } else {
-        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    }
-
-    $where = 'date >= ' . $from_time . ' AND date <= ' . $to_time;
-    $db->sqlreset()
-        ->select('*')
-        ->from('' . NV_PREFIXLANG . '_' . $module_data . '_rows')
-        ->where($where)
-        ->order('id DESC');
-    $sth = $db->prepare($db->sql());
-    $sth->execute();
-
-    $fields = get_field_rows();
-    $totals = [];
-    while ($view = $sth->fetch()) {
-        foreach ($fields as $key => $_field) {
-            $totals[$_field] = empty($totals[$_field]) ? 0 + $view[$_field] : $totals[$_field] + $view[$_field];
+    //Lấy danh sách các Trường chứa dữ liệu để fill
+    $arr_label = get_field_extract(get_field_rows());
+    // fill label
+    $c = 6;
+    $r = 4;
+    foreach ($arr_label as $key => $parent_label) {
+        $objWorksheet->setCellValueByColumnAndRow($c, $r, $lang_module[$key]);
+        // $objWorksheet->setCellValue('A' . $r, "[" . $room_array[$roomid]['type'] . "] \n" . $room_array[$roomid]['name']);
+        // $objWorksheet->mergeCells('A' . $r . ':A' . ($r + 1));
+        foreach ($parent_label as $sub_label) {
+            $objWorksheet->setCellValueByColumnAndRow($c, $r + 1, $lang_module[$sub_label]);
+            // $objWorksheet->getStyle(col_name($c) . $r)->applyFromArray($table_head);
+            $objWorksheet->getStyleByColumnAndRow($c, $r + 1)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $objWorksheet->getStyleByColumnAndRow($c, $r + 1)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            $objWorksheet->getColumnDimensionByColumn($c)->setAutoSize(true);
+            $c++;
         }
     }
-    $totals_field = [];
-    //Tách riêng tổng theo từng Sản phẩm
-    foreach ($totals as $key => $_value) {
-        $_field = explode('_', $key);
-        $totals_field[$_field[0]][$_field[1]] = empty($totals_field[$_field[0]][$_field[1]]) ? 0 + $_value : $totals_field[$_field[0]][$_field[1]] + $_value;
+
+    $r = 5;
+    $num = 0;
+
+    foreach ($array_data as $row) {
+        $num++;
+        $r++;
+        $c = 1;
+        $list_ignore = ['id', 'team', 'sale_name'];
+        $objWorksheet->setCellValueByColumnAndRow($c, $r, $num); //Thứ tự
+        $objWorksheet->setCellValueByColumnAndRow($c + 1, $r, $row['team']); //Team
+        $objWorksheet->setCellValueByColumnAndRow($c + 2, $r, $row['sale_name']); //Sale name
+        $c = 4;
+        foreach ($row as $label => $value) {
+            if (in_array($label, $list_ignore)) {
+                continue;
+            }
+            if ($label == 'date') {
+                $value = nv_date('d/m/Y', $value);
+            }
+            $objWorksheet->setCellValueByColumnAndRow($c, $r, $value);
+            $c++;
+        }
     }
 
-    return $totals_field;
-}
+    $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objPHPExcel, 'Xlsx');
+    $objWriter->save($file_export_tmp); //lưu vào file tạm trên server
 
-function check_report_static()
-{
-    global $module_data, $db;
-
-    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-
-    $where = ' WHERE date >= ' . $from_time . ' AND date <= ' . $to_time;
-    $_sql = "SELECT code FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows " . $where;
-    $_query = $db->query($_sql);
-
-    $result = [];
-    while ($_row = $_query->fetch()) {
-        $result[] = $_row['code'];
-        // echo nv_date('d/m/Y', $_row['date']);
-        // print_r($_row);
-    }
-
-    return $result;
-}
-
-function get_action_note($userid)
-{
-    global $global_config, $array_infor_users, $module_data, $db, $module_name;
-    //ACTION_NOTE
-    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-
-    $where = ' date >= ' . $from_time . ' AND date <= ' . $to_time;
-    $where .= " AND code = '" . $array_infor_users[$userid]['code'] . "'";
-
-    $_sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_actions WHERE " . $where;
-    $_action = $db->query($_sql)->fetch();
-
-    if (empty($_action)) {
-        $link_add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=action-note';
-        $_action['note'] = '<a href="' . $link_add_action . '" class="btn btn-success text-center"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Action Note </i> </a>';
-    } else {
-        $_action['note'] = nv_nl2br(nv_htmlspecialchars($_action['note']), '</br>');
-    }
-
-    return $_action['note'];
+    // Download file
+    $download = new NukeViet\Files\Download($file_export_tmp, NV_ROOTDIR . "/" . NV_TEMP_DIR, $file_name_export);
+    $download->download_file();
+    exit();
 }
