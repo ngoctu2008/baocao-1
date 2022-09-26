@@ -10,12 +10,13 @@
 </div>
 
 <div class="col-md-10">
+    <!-- BEGIN: INCOME -->
     <div class="panel panel-info box-monitor">
         <div class="panel-body">
             <div class="col-xs-16 col-sm-17 col-md-17">
-                Thu nhập hôm nay của Team bạn là:</br>
-                Thu nhập MTD của TEAM bạn là:</br>
-                <strong> Tổ quốc ghi công NO LOAN</strong>
+                {label_income_date}</br>
+                {label_income_month}</br>
+                <strong> {LANG.income_noloan}</strong>
             </div>
             <div class="col-xs-8 col-sm-7 col-md-7 text-right text-hightlight">
                 0.000.000 đ</br>
@@ -24,7 +25,7 @@
             </div>
         </div>
     </div>
-
+    <!-- END: INCOME -->
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">
             <strong> Đánh giá </strong>

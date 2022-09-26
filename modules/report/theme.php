@@ -51,6 +51,18 @@ function nv_theme_report_main($level, $codes)
     $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
     $xtpl->assign('OP', $op);
 
+    //Hiển thị Bảng thu nhập
+    if ($level == 'admin') {
+        $appellation = 'Vùng';
+    } elseif ($level == 'team_manager') {
+        $appellation = 'Team';
+    }
+
+    $xtpl->assign('label_income_date', sprintf($lang_module['income_date'], $appellation));
+    $xtpl->assign('label_income_month', sprintf($lang_module['income_month'], $appellation));
+    $xtpl->parse('main.INCOME');
+
+
     //Hiển thị Số liệu tổng ngày
     $totals_day = render_data_total('day', $codes);
     foreach ($totals_day as $key => $_group_value) {
