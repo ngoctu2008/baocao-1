@@ -31,7 +31,7 @@ $array_group_info = $nv_Cache->db($_sql, 'group_id', $module_name, '', 0);
 
 //Lấy danh sách nhân sự của từng Team -> Lưu cache
 $array_team_users = [];
-$_sql = 'SELECT userid,group_id FROM ' . $db_config['prefix'] . '_users_groups_users WHERE 1 ORDER BY group_id DESC';
+$_sql = 'SELECT userid,group_id FROM ' . $db_config['prefix'] . '_users_groups_users WHERE is_leader = 0 ORDER BY group_id DESC'; //Không lấy trưởng nhóm
 $_list = $nv_Cache->db($_sql, '', $module_name, '', 86400 * 7);
 
 $cache_file = NV_LANG_DATA . '_array_team_users.cache';
@@ -75,13 +75,13 @@ foreach ($user_info['in_groups'] as $_group) {
 
 //Lấy danh sách code nhân viên cấp dưới mình quản lý
 if (defined('NV_IS_MODADMIN')) {
-    $level = '1'; //ASM, Administrator
+    $level = 1; //ASM, Administrator
     $codes_in_team = '';
 } elseif ($leader_team > 0) {
-    $level = '2'; //Team Manager
-    $codes_in_team = $array_team_users[$team_id];
+    $level = 2; //Team Manager
+    $codes_in_team = $array_team_users[$user_info['group_id']];
 } else {
-    $level = '3'; //sale
+    $level = 3; //sale
     $codes_in_team = $sale_code;
 }
 

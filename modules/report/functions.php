@@ -204,6 +204,7 @@ function render_data_total($type = 'month', $arr_codes)
         $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
     }
     $where = 'date >= ' . $from_time . ' AND date <= ' . $to_time;
+
     if (is_array($arr_codes)) {
         $listcode = implode('","', $arr_codes);
         $where .= ' AND code IN ("' . $listcode . '")';
