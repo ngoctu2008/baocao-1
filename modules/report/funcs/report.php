@@ -13,9 +13,16 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
-$now_time = nv_date('h:i:s', NV_CURRENTTIME);
-echo $now_time;
-exit();
+$now_time = intval(nv_date('H', NV_CURRENTTIME));
+if ($now_time >= 21 or $now_time < 8) {
+    $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report';
+    $contents = nv_theme_alert($lang_module['over_time'], $lang_module['waiting_redirect'], 'warning', $redirect, $lang_module['redirect'], 2);
+    include NV_ROOTDIR . '/includes/header.php';
+    echo nv_site_theme($contents);
+    include NV_ROOTDIR . '/includes/footer.php';
+    exit();
+}
+
 
 $row = [];
 $error = [];

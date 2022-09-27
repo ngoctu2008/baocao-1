@@ -98,6 +98,7 @@ $lang_module['warning'] = 'Cảnh báo';
 $lang_module['waiting_redirect'] = 'Vui lòng chờ giây lát để hệ thống chuyển hướng';
 $lang_module['no_permission'] = 'Bạn không có quyền để thực hiện thao tác này!';
 $lang_module['redirect'] = 'Chuyển trang';
+$lang_module['over_time'] = 'Chức năng chỉ được sử dụng từ 8h - 21h hàng ngày';
 
 //Lang for function monitor
 $lang_module['monitor'] = 'Tổng quát';
