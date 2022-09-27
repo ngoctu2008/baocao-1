@@ -141,8 +141,8 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
     $sth = $db->prepare($db->sql());
     $sth->execute();
 
-    echo $sth->fetchColumn();
-    die();
+    // echo $sth->fetchColumn();
+    // die();
 
     $db->select('*')
         ->limit($per_page)
