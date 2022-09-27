@@ -108,21 +108,23 @@ function nv_theme_report_main()
     }
     $xtpl->parse('main.TOTAL_MONTH');
 
-    //Trạng thái báo cáo -> Dành cho ASM, Team manager
-    $report_statics = check_report_static_area($level);
-    $area_num_sale = 0; //Số sale đã báo cáo
-    $area_total_sale = 0; //Số sale toàn area
-    if (!empty($report_statics)) {
-        foreach ($report_statics as $row) {
-            $area_num_sale += $row['num_sale'];
-            $area_total_sale += $row['total'];
-            $xtpl->assign('STATIC', $row);
-            $xtpl->parse('main.REPORT_STATICS.ROW');
+    //Trạng thái báo cáo -> Dành cho ASM
+    if ($level == 1) {
+        $report_statics = check_report_static_area($level);
+        $area_num_sale = 0; //Số sale đã báo cáo
+        $area_total_sale = 0; //Số sale toàn area
+        if (!empty($report_statics)) {
+            foreach ($report_statics as $row) {
+                $area_num_sale += $row['num_sale'];
+                $area_total_sale += $row['total'];
+                $xtpl->assign('STATIC', $row);
+                $xtpl->parse('main.REPORT_STATICS.ROW');
+            }
+            $xtpl->assign('num_sale', $area_num_sale);
+            $xtpl->assign('total_sale', $area_total_sale);
+            $xtpl->assign('percent', number_format($area_num_sale / $area_total_sale, 2) * 100);
+            $xtpl->parse('main.REPORT_STATICS');
         }
-        $xtpl->assign('num_sale', $area_num_sale);
-        $xtpl->assign('total_sale', $area_total_sale);
-        $xtpl->assign('percent', number_format($area_num_sale / $area_total_sale, 2) * 100);
-        $xtpl->parse('main.REPORT_STATICS');
     }
 
     //ACTION_NOTE
