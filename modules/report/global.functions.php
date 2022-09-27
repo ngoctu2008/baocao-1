@@ -14,6 +14,8 @@ if (!defined('NV_MAINFILE')) {
 
 global $module_name, $nv_Cache;
 
+$time_over = [8, 21];
+
 //Lấy thông tin toàn bộ user, key là code
 $array_code_users = [];
 $_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';

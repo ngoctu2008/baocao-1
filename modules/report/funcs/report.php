@@ -14,8 +14,8 @@ if (!defined('NV_IS_MOD_REPORT')) {
 }
 
 $now_time = intval(nv_date('H', NV_CURRENTTIME));
-if ($now_time >= 21 or $now_time < 8) {
-    $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report';
+if ($now_time >= $time_over[1] or $now_time < $time_over[0]) {
+    $redirect = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report', true);
     $contents = nv_theme_alert($lang_module['over_time'], $lang_module['waiting_redirect'], 'warning', $redirect, $lang_module['redirect'], 2);
     include NV_ROOTDIR . '/includes/header.php';
     echo nv_site_theme($contents);
@@ -143,7 +143,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
                     nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Report', 'ID: ' . $row['id'], $user_info['userid']);
                 }
 
-                $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main';
+                $redirect = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main', true);
                 $contents = nv_theme_alert($lang_module['success'], $lang_module['waiting_redirect'], 'success', $redirect, $lang_module['redirect'], 1);
                 include NV_ROOTDIR . '/includes/header.php';
                 echo nv_site_theme($contents);

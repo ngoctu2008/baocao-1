@@ -177,6 +177,7 @@ if ($nv_Request->isset_request('gid, getuserid', 'post, get')) {
             } else {
                 $db->query('DELETE FROM ' . NV_MOD_TABLE . ' WHERE userid=' . $row['userid']);
             }
+            $nv_Cache->delMod($module_name);
         }
 
         exit('OK');
@@ -765,7 +766,7 @@ if ($nv_Request->isset_request('listUsers', 'get')) {
     }
 
     if (!empty($group_users)) {
-        $sql = 'SELECT userid, username, first_name, last_name, email, idsite FROM ' . NV_MOD_TABLE . ' WHERE userid IN (' . implode(',', $array_userid) . ')';
+        $sql = 'SELECT t1.userid, t1.username, t1.first_name, t1.last_name, t1.email, t1.idsite, t2.code, t2.phone FROM ' . NV_MOD_TABLE . ' as t1 INNER JOIN ' . NV_MOD_TABLE . '_info as t2 ON t1.userid = t2.userid WHERE t1.userid IN (' . implode(',', $array_userid) . ')';
         $result = $db->query($sql);
         $array_userid = [];
         while ($row = $result->fetch()) {

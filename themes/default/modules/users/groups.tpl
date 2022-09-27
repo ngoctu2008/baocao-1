@@ -110,14 +110,14 @@ $(".denied").click(function() {
 			<thead>
 				<tr>
 					<th class="text-center">{LANG.STT}</th>
-					<th>{LANG.account} ({LANG.nametitle})</th>
+					<th>{LANG.nametitle} ({LANG.account})</th>
 				</tr>
 			</thead>
 			<tbody>
 				<!-- BEGIN: loop -->
 				<tr>
 					<td class="text-center"> {LOOP.stt} </td>
-					<td>{LOOP.username} ({LOOP.full_name})</td>
+					<td> <strong> {LOOP.full_name}</strong> ({LOOP.username})</td>
 				</tr>
 				<!-- END: loop -->
 			</tbody>
@@ -138,7 +138,8 @@ $(".denied").click(function() {
 			<thead>
 				<tr>
 					<th class="text-center">{LANG.STT}</th>
-					<th>{LANG.account} ({LANG.nametitle})</th>
+					<th>{LANG.nametitle} ({LANG.account}) - {LANG.code}</th>
+                    <th>{LANG.phone}</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -146,7 +147,8 @@ $(".denied").click(function() {
 				<!-- BEGIN: loop -->
 				<tr>
 					<td class="text-center">{LOOP.stt}</td>
-					<td>{LOOP.username} ({LOOP.full_name})</td>
+					<td><strong>{LOOP.full_name}</strong> ({LOOP.username}) - {LOOP.code} </td>
+                    <td>{LOOP.phone}</td>
 					<td class="text-right">
 					<!-- BEGIN: tools -->
     	                <!-- BEGIN: edituser -->
@@ -300,7 +302,7 @@ $(".deletemember").click(function() {
 <script>
 	$(function() {
 		$("div#pageContent").load("{MODULE_URL}={OP}&listUsers={GID}&random=" + nv_randomPassword(10));
-        
+
         $("[name=addUser]").click(function() {
     		var a = $("#ablist select[name=uid]").val(), a = intval(a);
     		a == 0 && ( a = "");
@@ -344,7 +346,7 @@ $(".deletemember").click(function() {
                 <input type="text" class="form-control required" placeholder="{LANG.group_title}" value="{DATA.title}" name="group_title" id="group_title" maxlength="240" onkeypress="validErrorHidden(this);" data-mess="">
             </div>
         </div>
-        
+
         <div class="form-group">
             <label for="group_desc" class="control-label col-sm-7 col-md-6 text-normal">{LANG.group_desc}</label>
             <div class="col-sm-17 col-md-18">

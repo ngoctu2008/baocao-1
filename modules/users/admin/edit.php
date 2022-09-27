@@ -278,6 +278,7 @@ if ($nv_Request->isset_request('confirm', 'post')) {
             } catch (PDOException $e) {
                 trigger_error(print_r($e, true));
             }
+            $nv_Cache->delMod($module_name);
         }
     } else {
         $in_groups[] = 4;
