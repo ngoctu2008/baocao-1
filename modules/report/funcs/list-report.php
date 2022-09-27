@@ -136,8 +136,15 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
     $sth->execute();
     $num_items = $sth->fetchColumn();
 
+    //Tính tổng từng cột
+    $db->select('sum(pl_app) as total_pl_ap');
+    $sth = $db->prepare($db->sql());
+    $sth->execute();
+
+    echo $sth->fetchColumn();
+    die();
+
     $db->select('*')
-        ->order('date DESC')
         ->limit($per_page)
         ->offset(($page - 1) * $per_page);
     $sth = $db->prepare($db->sql());

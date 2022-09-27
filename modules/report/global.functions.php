@@ -84,8 +84,6 @@ if (defined('NV_IS_MODADMIN')) {
     $level = 3; //sale
     $codes_in_team = $array_infor_users[$user_info['userid']]['code'];
 }
-// echo displayarray($codes_in_team);
-// die();
 
 function get_field_extract($field_array)
 {
