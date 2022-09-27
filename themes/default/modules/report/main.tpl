@@ -57,21 +57,21 @@
         </div>
         <div class="panel-body">
             <!-- BEGIN: ROW -->
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <strong>{STATIC.title}</strong>
+            <div class="col-xs-14 col-sm-14 col-md-14">
+                <strong>{STATIC.leader_name}</strong> <sub>{STATIC.title_group}</sub>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-right ">
-                <strong class="text-hightlight small"> {STATIC.num_sale}/{STATIC.total} DSA </strong> ~
-                <strong class="text-hightlight small"> {STATIC.percent}% làm việc </strong>
+            <div class="col-xs-10 col-sm-10 col-md-10 text-right ">
+                <strong class="text-hightlight small"> {STATIC.num_sale}/{STATIC.total} DSA </strong>
+                <sub class="small"> ({STATIC.percent}%) </sub>
             </div>
             <!-- END: ROW -->
             <div class="row clearfix">
-                <div class="col-xs-10 col-sm-10 col-md-10">
+                <div class="col-xs-10 col-sm-10 col-md-10 text-center">
                     <strong class="text-hightlight"> TỔNG ASM </strong>
                 </div>
                 <div class="col-xs-14 col-sm-14 col-md-14 text-right">
-                    <strong class="text-hightlight"> {num_sale}/{total_sale} DSA </strong> ~
-                    <strong class="text-hightlight"> {percent}% làm việc </strong>
+                    <strong class="text-hightlight"> {num_sale}/{total_sale} DSA </strong>
+                    <sub class="small text-hightlight"> ({percent}%) </sub>
                 </div>
             </div>
 

@@ -130,7 +130,8 @@ function check_report_static_area()
         $teams[$group_id]['percent'] =  number_format($teams[$group_id]['num_sale'] / $teams[$group_id]['total'], 2, '.', ',') * 100; //Tỉ lệ %
 
         if (empty($teams[$group_id]['title'])) {
-            $teams[$group_id]['title'] = displayName($array_infor_users[$row['leader_id']]);
+            $teams[$group_id]['leader_name'] = displayName($array_infor_users[$row['leader_id']]);
+            $teams[$group_id]['title_group'] = $row['title'];
         }
     }
     return $teams;
