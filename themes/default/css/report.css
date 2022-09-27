@@ -89,3 +89,6 @@ th {
 .w25p {
     width: 25%;
 }
+.less-text {
+    font-size: 12px !important;
+}

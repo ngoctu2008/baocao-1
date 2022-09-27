@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <!-- BEGIN: REPORT_STATICS -->
+    <!-- BEGIN: REPORT_STATICS_AREA -->
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">
             <strong> {LANG.report_statics} </strong>
@@ -77,7 +77,34 @@
 
         </div>
     </div>
-    <!-- END: REPORT_STATICS -->
+    <!-- END: REPORT_STATICS_AREA -->
+
+    <!-- BEGIN: REPORT_STATICS_TEAM -->
+    <div class="panel panel-info box-monitor">
+        <div class="panel-heading title-block">
+            <strong> {LANG.not_reported} </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <!-- BEGIN: loop -->
+                <div class="col-xs-12 col-sm-12 col-md-12 less-text">
+                    <strong>{sale_name}</strong> <sub>{sale_code}</sub>
+                </div>
+                <!-- END: loop -->
+            </div>
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                    <strong class="text-hightlight"> Số DSA chưa báo cáo </strong>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                    <strong class="text-hightlight"> {num}/{total} DSA </strong>
+                    <sub class="small text-hightlight"> ({percent}%) </sub>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END: REPORT_STATICS_TEAM -->
 
     <!-- BEGIN: ACTION_NOTE -->
     <div class="panel panel-info box-monitor red-box">

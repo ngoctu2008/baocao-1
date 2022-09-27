@@ -21,7 +21,8 @@ if (!defined('NV_IS_MOD_REPORT')) {
  */
 function nv_theme_report_main()
 {
-    global $module_info, $lang_module, $user_info, $op, $module_file, $db, $module_data, $codes_in_team, $level;
+    global $module_info, $lang_module, $user_info, $op, $module_file, $db, $module_data, $codes_in_team, $level, $array_infor_users;
+    global $leader_team, $array_team_users;
 
     if (is_array($codes_in_team)) {
         $listcode = implode('","', $codes_in_team);
@@ -65,7 +66,7 @@ function nv_theme_report_main()
     $xtpl->parse('main.INCOME');
 
 
-    //Hiển thị Số liệu tổng ngày
+    /** BEGIN: BLOCK Hiển thị số liệu tổng NGÀY */
     $totals_day = render_data_total('day', $codes_in_team);
     foreach ($totals_day as $key => $_group_value) {
         foreach ($_group_value as $subkey => $subvalue) {
@@ -85,7 +86,7 @@ function nv_theme_report_main()
     // $xtpl->assign('link_export', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report?export=1');
     $xtpl->parse('main.TOTAL_DAILY');
 
-    //Hiển thị số liệu tổng tháng
+    /** BEGIN: BLOCK Hiển thị số liệu tổng THÁNG */
     $totals_month = render_data_total('month', $codes_in_team);
     foreach ($totals_month as $key => $_group_value) {
         foreach ($_group_value as $subkey => $subvalue) {
@@ -107,9 +108,9 @@ function nv_theme_report_main()
     }
     $xtpl->parse('main.TOTAL_MONTH');
 
-    //Trạng thái báo cáo -> Dành cho ASM
-    if ($level == 1) {
-        $report_statics = check_report_static_area($level);
+    /** BEGIN: BLOCK TRẠNG THÁI BÁO CÁO */
+    if ($level == 1) { //ADMIN
+        $report_statics = check_report_static_area();
         $area_num_sale = 0; //Số sale đã báo cáo
         $area_total_sale = 0; //Số sale toàn area
         if (!empty($report_statics)) {
@@ -117,19 +118,34 @@ function nv_theme_report_main()
                 $area_num_sale += $row['num_sale'];
                 $area_total_sale += $row['total'];
                 $xtpl->assign('STATIC', $row);
-                $xtpl->parse('main.REPORT_STATICS.ROW');
+                $xtpl->parse('main.REPORT_STATICS_AREA.ROW');
             }
             $xtpl->assign('num_sale', $area_num_sale);
             $xtpl->assign('total_sale', $area_total_sale);
             $xtpl->assign('percent', number_format($area_num_sale / $area_total_sale, 2) * 100);
-            $xtpl->parse('main.REPORT_STATICS');
+            $xtpl->parse('main.REPORT_STATICS_AREA');
         }
+    } elseif ($level == 2) { //Team Manager
+        $report_statics = check_report_static_team();
+        $num = 0;
+        foreach ($report_statics as $_userid => $_code) {
+            $num++;
+            $xtpl->assign('sale_name', displayName($array_infor_users[$_userid]));
+            $xtpl->assign('sale_code', $_code);
+            $xtpl->parse('main.REPORT_STATICS_TEAM.loop');
+        }
+        $total = count($array_team_users[$leader_team]); //lấy số lượng thành viên trong team
+        $xtpl->assign('num', $num);
+        $xtpl->assign('total', $total);
+        $xtpl->assign('percent', number_format($num / $total, 2) * 100);
+        $xtpl->parse('main.REPORT_STATICS_TEAM');
     }
 
-    //ACTION_NOTE
+    /** BEGIN: BLOCK ACTION NOTE */
     $action_content = get_action_note($user_info['userid']);
     $xtpl->assign('CONTENT_NOTE', $action_content);
     $xtpl->parse('main.ACTION_NOTE');
+
 
     if (!empty($error)) {
         $xtpl->assign('ERROR', implode('<br />', $error));

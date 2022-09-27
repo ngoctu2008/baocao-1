@@ -29,7 +29,11 @@ $array_group_info = [];
 $_sql = 'SELECT t1.group_id, t1.title, t2.userid as leader_id FROM ' . $db_config['prefix'] . '_users_groups_detail as t1 INNER JOIN ' . $db_config['prefix'] . '_users_groups_users as t2 ON t1.group_id = t2.group_id WHERE t1.group_id > 12 and t2.is_leader = 1';
 $array_group_info = $nv_Cache->db($_sql, 'group_id', $module_name, '', 0);
 
-//Lấy danh sách nhân sự của từng Team -> Lưu cache
+/**
+ * Lấy danh sách nhân sự của từng Team -> Lưu cache 
+ * Result: Array[group_id][userid] = code;
+ */
+
 $array_team_users = [];
 $_sql = 'SELECT userid,group_id FROM ' . $db_config['prefix'] . '_users_groups_users WHERE is_leader = 0 ORDER BY group_id DESC'; //Không lấy trưởng nhóm
 $_list = $nv_Cache->db($_sql, '', $module_name, '', 86400 * 7);
@@ -45,7 +49,8 @@ if ($nv_Cache->getItem($module_name, $cache_file) == false) {
 } else {
     $array_team_users = unserialize($nv_Cache->getItem($module_name, $cache_file));
 }
-
+// echo displayArray($array_team_users);
+// die();
 
 /**
  * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader

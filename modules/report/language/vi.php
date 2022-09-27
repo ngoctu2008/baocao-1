@@ -102,6 +102,7 @@ $lang_module['redirect'] = 'Chuyển trang';
 //Lang for function monitor
 $lang_module['monitor'] = 'Tổng quát';
 $lang_module['report_statics'] = 'Tình hình báo cáo';
+$lang_module['not_reported'] = 'DSA chưa gửi báo cáo hôm nay';
 $lang_module['income_date'] = 'Thu nhập hôm nay của %s bạn là:';
 $lang_module['income_month'] = 'Thu nhập MTD của %s bạn là:';
 $lang_module['income_noloan'] = 'Tổ quốc ghi công NO LOAN:';

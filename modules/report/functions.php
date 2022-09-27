@@ -119,6 +119,7 @@ function check_report_static_area()
 
     $result_team = [];
     while ($_row = $_query->fetch()) {
+        echo $_row['code'] . '-';
         $team_id = $array_code_users[$_row['code']]['group_id'];
         $result_team[$team_id]['num_sale'] = empty($result_team[$team_id]['num_sale']) ? 1 : $result_team[$team_id]['num_sale'] + 1;
     }
@@ -126,7 +127,7 @@ function check_report_static_area()
     $teams = [];
     foreach ($array_group_info as $group_id => $row) {
         $teams[$group_id]['total'] = count($array_team_users[$group_id]); //tổng số sale trong nhóm
-        $teams[$group_id]['num_sale'] = empty($result_team[$group_id]['num_sale']) ? 0 : $result_team[$group_id]['num_sale'] + 1; //số sale đã báo cáo
+        $teams[$group_id]['num_sale'] = empty($result_team[$group_id]['num_sale']) ? 0 : $result_team[$group_id]['num_sale']; //số sale đã báo cáo
         $teams[$group_id]['percent'] =  number_format($teams[$group_id]['num_sale'] / $teams[$group_id]['total'], 2, '.', ',') * 100; //Tỉ lệ %
 
         if (empty($teams[$group_id]['title'])) {
@@ -144,25 +145,19 @@ function check_report_static_team($level = 2)
     $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
     $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
     $where = ' WHERE date >= ' . $from_time . ' AND date <= ' . $to_time;
-
-    if ($level == 1) {
-        $where .= '';
-    } elseif ($level == 2) {
-        $list_code = $array_team_users[$leader_team];
-        $where .= ' AND code IN ("' . implode('","', $list_code) . '")';
+    if ($level == 2) {
+        $arr_list_code = $array_team_users[$leader_team];
+        $where .= ' AND code IN ("' . implode('","', $arr_list_code) . '")';
     } else {
-        return ''; //nếu không phải cấp quản lý thì không build 
+        $where .= ' AND FALSE'; // Chỉ buil cho Team Manager;
     }
     $_sql = "SELECT code FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows " . $where;
-    $_query = $db->query($_sql);
+    $_query = $db->query($_sql)->fetchAll();
+    $arr_was_report = array_column($_query, 'code'); //mảng các code đã báo cáo
 
-    $result = [];
-    while ($_row = $_query->fetch()) {
-        $result[] = $_row['code'];
-        // echo nv_date('d/m/Y', $_row['date']);
-        // print_r($_row);
-    }
-    return $result;
+    $sale_not_report = array_diff($arr_list_code, $arr_was_report);
+
+    return $sale_not_report;
 }
 
 function get_action_note($userid, $for_display = 1)
