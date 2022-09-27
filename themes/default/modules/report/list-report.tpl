@@ -76,6 +76,12 @@
             </tfoot>
             <!-- END: generate_page -->
             <tbody>
+                <tr>
+                    <td colspan="3" class="total">{LANG.total}</td>
+                    <!-- BEGIN: TOTAL -->
+                    <td class="total"> {TOTAL} </td>
+                    <!-- END: TOTAL -->
+                </tr>
                 <!-- BEGIN: loop -->
                 <tr>
                     <td class="text-center"> {VIEW.number} <a href="{VIEW.link_edit}#edit"><i class="fa fa-edit fa-lg">&nbsp;</i></a>
@@ -104,27 +110,6 @@
                     </td>
                 </tr>
                 <!-- END: loop -->
-                <tr>
-                    <td colspan="3" class="total">{LANG.total}</td>
-                    <td class="total"> {TOTAL.pl_app} </td>
-                    <td class="total"> {TOTAL.pl_loan} </td>
-                    <td class="total"> {TOTAL.dn_app} </td>
-                    <td class="total"> {TOTAL.dn_loan} </td>
-                    <td class="total"> {TOTAL.xstu_check} </td>
-                    <td class="total"> {TOTAL.xstu_app} </td>
-                    <td class="total"> {TOTAL.xstu_loan} </td>
-                    <td class="total"> {TOTAL.ipp_app} </td>
-                    <td class="total"> {TOTAL.ipp_loan} </td>
-                    <td class="total"> {TOTAL.banca_hd} </td>
-                    <td class="total"> {TOTAL.banca_sale} </td>
-                    <td class="total"> {TOTAL.ubank_app} </td>
-                    <td class="total"> {TOTAL.ubank_loan} </td>
-                    <td class="total"> {TOTAL.courier_lead} </td>
-                    <td class="total"> {TOTAL.courier_app} </td>
-                    <td class="total"> {TOTAL.courier_loan} </td>
-                    <td class="total"> {TOTAL.credit_app} </td>
-                    <td class="total"> {TOTAL.credit_loan} </td>
-                </tr>
             </tbody>
         </table>
     </div>
