@@ -136,7 +136,7 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
     $sth->execute();
     $num_items = $sth->fetchColumn();
 
-    //Tính tổng từng cột
+    //Tính tổng các cột
     $total = array();
     $arr_field = ['pl_app', 'pl_loan', 'dn_app', 'dn_loan', 'xstu_check', 'xstu_app', 'xstu_loan', 'ipp_app', 'ipp_loan', 'banca_hd', 'banca_sale', 'ubank_app', 'ubank_loan', 'courier_lead', 'courier_app', 'courier_loan', 'credit_app', 'credit_loan'];
     $_sql = [];
@@ -193,6 +193,7 @@ if ($show_view) {
     while ($view = $sth->fetch()) {
         $view['number'] = $number++;
         $view['date'] = nv_date('d/m/Y', $view['date']);
+        $view['banca_sale'] = empty($view['banca_sale']) ? 0 : number_format($view['banca_sale'], 0, ',', '.');
         $view['sale_name'] =  $array_code_users[$view['code']]['last_name'] . ' ' . $array_code_users[$view['code']]['first_name'] . ' (' . $view['code'] . ')';
         // $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
         // $view['link_delete'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;delete_id=' . $view['id'] . '&amp;delete_checkss=' . md5($view['id'] . NV_CACHE_PREFIX . $client_info['session_id']);
@@ -202,7 +203,7 @@ if ($show_view) {
 
     //Fill dòng tổng cộng
     foreach ($_arr_total as $total_field => $total_value) {
-        $total_value = empty($total_value) ? 0 : $total_value;
+        $total_value = empty($total_value) ? 0 : number_format($total_value, 0, ',', '.');
         $xtpl->assign('TOTAL', $total_value);
         $xtpl->parse('main.view.TOTAL');
     }
