@@ -25,6 +25,8 @@ function nv_theme_report_main()
 
     if (is_array($codes_in_team)) {
         $listcode = implode('","', $codes_in_team);
+    } else {
+        $listcode = $codes_in_team;
     }
 
     if ($level == 'admin') {

@@ -55,7 +55,7 @@ function signin_result($array)
 {
     global $nv_redirect;
 
-    $array['redirect'] = 'http://baocaon3.my/report/'; //nv_redirect_decrypt($nv_redirect);
+    $array['redirect'] = NV_BASE_SITEURL . 'report/'; //nv_redirect_decrypt($nv_redirect);
     nv_jsonOutput($array);
 }
 
