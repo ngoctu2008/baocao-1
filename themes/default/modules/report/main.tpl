@@ -26,6 +26,7 @@
         </div>
     </div>
     <!-- END: INCOME -->
+    <!-- BEGIN: JUSGE -->
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">
             <strong> Đánh giá </strong>
@@ -49,6 +50,7 @@
             </div>
         </div>
     </div>
+    <!-- END: JUSGE -->
 
     <!-- BEGIN: REPORT_STATICS_AREA -->
     <div class="panel panel-info box-monitor">
@@ -131,6 +133,12 @@
             <strong> NGÀY HÔM NAY </strong>
         </div>
         <div class="panel-body">
+            <!-- BEGIN: empty -->
+            <div class="text-center">
+                {btn_add_report}
+                {warning}
+            </div>
+            <!-- END: empty -->
             <table class="table table-monitor table-sm">
                 <tbody>
                     <!-- BEGIN: row -->

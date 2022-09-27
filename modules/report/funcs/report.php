@@ -13,6 +13,9 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
+$now_time = nv_date('h:i:s', NV_CURRENTTIME);
+echo $now_time;
+exit();
 
 $row = [];
 $error = [];

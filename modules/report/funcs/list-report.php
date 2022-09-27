@@ -201,6 +201,15 @@ if ($show_view) {
         $xtpl->parse('main.view.loop');
     }
 
+    if ($level == 1) {
+        $xtpl->parse('main.view.extract_button');
+        // $xtpl->parse('main.view.report_button');
+    } elseif ($level == 2) {
+        $xtpl->parse('main.view.extract_button');
+    } else {
+        $xtpl->parse('main.view.report_button');
+    }
+
     //Fill dòng tổng cộng
     foreach ($_arr_total as $total_field => $total_value) {
         $total_value = empty($total_value) ? 0 : number_format($total_value, 0, ',', '.');

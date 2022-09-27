@@ -22,7 +22,12 @@
                     <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
                 </div>
                 <div class="pull-right">
+                    <!-- BEGIN: extract_button -->
                     <button class="btn btn-primary btn-xs" name="export" id="export">Extract to excel</button>
+                    <!-- END: extract_button -->
+                    <!-- BEGIN: report_button -->
+                    <div class="text-center"> <a href="' . $link_add_report . '" class="btn btn-success"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Report </i> </a> </div>
+                    <!-- END: report_button -->
                 </div>
             </div>
         </div>

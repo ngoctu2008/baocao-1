@@ -83,6 +83,15 @@ function nv_theme_report_main()
         $xtpl->assign('label', $lang_module[$key]);
         $xtpl->parse('main.TOTAL_DAILY.row');
     }
+    if (empty($totals_day)) {
+        if ($level == 3) {
+            $link_add_report = NV_BASE_SITEURL . 'report/report/';
+            $xtpl->assign('btn_add_report', '<div class="text-center"> <a href="' . $link_add_report . '" class="btn btn-success"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Report </i> </a> </div>');
+        } else {
+            $xtpl->assign('warning', 'Hôm nay chưa có số liệu để hiển thị!');
+        }
+        $xtpl->parse('main.TOTAL_DAILY.empty');
+    }
     // $xtpl->assign('link_export', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report?export=1');
     $xtpl->parse('main.TOTAL_DAILY');
 
