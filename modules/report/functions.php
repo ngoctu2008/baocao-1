@@ -19,34 +19,6 @@ if (!defined('NV_IS_USER')) {
 require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
 
-/**
- * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader
- * $leader_team = 0 nếu không phải leader
- */
-//Kiểm tra chức vụ, lấy thông tin
-$leader_team = 0;
-$is_leader_group = array();
-$_sql = 'SELECT is_leader, group_id FROM ' . $db_config['prefix'] . '_users_groups_users where userid = ' . $user_info['userid'] . ' ORDER BY time_approved DESC';
-$check_leader = $nv_Cache->db($_sql, '', $module_name, '', 86400);
-
-if (!empty($check_leader)) {
-    foreach ($check_leader as $value) {
-        if ($value['is_leader'] == 1) {
-            $leader_team = $value['group_id']; //lấy group_id mới nhất làm leader, tránh trường hợp chuyển team mà chưa hạ cấp ở team cũ
-            break;
-        }
-    }
-}
-//Kiểm tra xem user có nằm trong các nhóm cấp Admin không (1,2,3)
-foreach ($user_info['in_groups'] as $_group) {
-    if ($_group <= 3 and !defined('NV_IS_MODADMIN')) {
-        define('NV_IS_MODADMIN', true);
-        break;
-    }
-}
-
-
-
 /** XUẤT FILE EXCEL */
 
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -132,4 +104,133 @@ function export_dailyreport($array_data)
     $download = new NukeViet\Files\Download($file_export_tmp, NV_ROOTDIR . "/" . NV_TEMP_DIR, $file_name_export);
     $download->download_file();
     exit();
+}
+
+function check_report_static_area()
+{
+    global $module_data, $db, $array_code_users, $array_group_info, $array_team_users, $array_infor_users;
+
+    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $where = ' WHERE date >= ' . $from_time . ' AND date <= ' . $to_time;
+
+    $_sql = "SELECT code FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows " . $where;
+    $_query = $db->query($_sql);
+
+    $result_team = [];
+    while ($_row = $_query->fetch()) {
+        $team_id = $array_code_users[$_row['code']]['group_id'];
+        $result_team[$team_id]['total'] = empty($result_team[$team_id]['total']) ? 1 : $result_team[$team_id]['total'] + 1;
+    }
+    $teams = [];
+    $total_area = 0;
+    foreach ($array_group_info as $group_id => $row) {
+        $teams[$group_id]['num_sale'] = count($array_team_users[$group_id]); //tổng số sale trong nhóm
+        $teams[$group_id]['total'] = empty($result_team[$group_id]['total']) ? 0 : $result_team[$group_id]['total']; //số sale đã báo cáo
+        $teams[$group_id]['percent'] =  number_format($result_team[$group_id]['total'] / $teams[$group_id]['num_sale'], 2, '.', ',') * 100; //Tỉ lệ %
+
+        if (empty($teams[$group_id]['title'])) {
+            $teams[$group_id]['title'] = displayName($array_infor_users[$row['leader_id']]);
+        }
+    }
+    return $teams;
+}
+
+function check_report_static_team($level = 2)
+{
+    global $module_data, $db, $array_team_users, $leader_team, $user_info;
+
+    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $where = ' WHERE date >= ' . $from_time . ' AND date <= ' . $to_time;
+
+    if ($level == 1) {
+        $where .= '';
+    } elseif ($level == 2) {
+        $list_code = $array_team_users[$leader_team];
+        $where .= ' AND code IN ("' . implode('","', $list_code) . '")';
+    } else {
+        return ''; //nếu không phải cấp quản lý thì không build 
+    }
+    $_sql = "SELECT code FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows " . $where;
+    $_query = $db->query($_sql);
+
+    $result = [];
+    while ($_row = $_query->fetch()) {
+        $result[] = $_row['code'];
+        // echo nv_date('d/m/Y', $_row['date']);
+        // print_r($_row);
+    }
+    return $result;
+}
+
+function get_action_note($userid, $for_display = 1)
+{
+    global $global_config, $array_infor_users, $module_data, $db, $module_name;
+    //ACTION_NOTE
+    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+
+    $where = ' date >= ' . $from_time . ' AND date <= ' . $to_time;
+    $where .= " AND code = '" . $array_infor_users[$userid]['code'] . "'";
+
+    $_sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_actions WHERE " . $where;
+    $_action = $db->query($_sql)->fetch();
+
+    if (empty($_action)) {
+        $_action['note'] = '';
+        if ($for_display) {
+            $link_add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=action-note';
+            $_action['note'] = '<a href="' . $link_add_action . '" class="btn btn-success text-center"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Action Note </i> </a>';
+        }
+    } else {
+        $_action['note'] = nv_nl2br(nv_htmlspecialchars($_action['note']), '</br>');
+    }
+
+    return $_action['note'];
+}
+
+
+function render_data_total($type = 'month', $arr_codes)
+{
+    global $db, $module_data;
+
+    if ($type == 'month') {
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), 1, intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)) + 1, 1, intval(date("Y", NV_CURRENTTIME)));
+    } else {
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    }
+    $where = 'date >= ' . $from_time . ' AND date <= ' . $to_time;
+    if (is_array($arr_codes)) {
+        $listcode = implode('","', $arr_codes);
+        $where .= ' AND code IN ("' . $listcode . '")';
+    } elseif (!empty($arr_codes)) {
+        $where .= ' AND code = "' . $arr_codes . '"';
+    }
+
+    $db->sqlreset()
+        ->select('*')
+        ->from('' . NV_PREFIXLANG . '_' . $module_data . '_rows')
+        ->where($where)
+        ->order('id DESC');
+    $sth = $db->prepare($db->sql());
+    $sth->execute();
+
+    $fields = get_field_rows();
+    $totals = [];
+    while ($view = $sth->fetch()) {
+        foreach ($fields as $key => $_field) {
+            $totals[$_field] = empty($totals[$_field]) ? 0 + $view[$_field] : $totals[$_field] + $view[$_field];
+        }
+    }
+    $totals_field = [];
+    //Tách riêng tổng theo từng Sản phẩm
+    foreach ($totals as $key => $_value) {
+        $_field = explode('_', $key);
+        $totals_field[$_field[0]][$_field[1]] = empty($totals_field[$_field[0]][$_field[1]]) ? 0 + $_value : $totals_field[$_field[0]][$_field[1]] + $_value;
+    }
+
+    return $totals_field;
 }

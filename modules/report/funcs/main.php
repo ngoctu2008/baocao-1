@@ -21,17 +21,17 @@ $team_id = $array_infor_users[$user_info['userid']]['group_id'];
 // echo displayArray($array_team_users[$team_id]);
 // exit();
 
-if (defined('NV_IS_MODADMIN')) {
-    $level = 'admin';
-    $list_code = '';
-} elseif ($leader_team > 0) {
-    $level = 'team_manager';
-    $list_code = $array_team_users[$team_id];
-} else {
-    $level = 'sale';
-    $list_code = $sale_code;
-}
-$contents = nv_theme_report_main($level, $list_code);
+// if (defined('NV_IS_MODADMIN')) {
+//     $level = 'admin';
+//     $list_code = '';
+// } elseif ($leader_team > 0) {
+//     $level = 'team_manager';
+//     $list_code = $array_team_users[$team_id];
+// } else {
+//     $level = 'sale';
+//     $list_code = $sale_code;
+// }
+$contents = nv_theme_report_main();
 
 $page_title = $lang_module['monitor'];
 
