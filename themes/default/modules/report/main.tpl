@@ -61,7 +61,7 @@
                 <strong>{STATIC.title}</strong>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-right ">
-                <strong class="text-hightlight small"> {STATIC.total}/{STATIC.num_sale} DSA </strong> ~
+                <strong class="text-hightlight small"> {STATIC.num_sale}/{STATIC.total} DSA </strong> ~
                 <strong class="text-hightlight small"> {STATIC.percent}% làm việc </strong>
             </div>
             <!-- END: ROW -->
@@ -70,8 +70,8 @@
                     <strong class="text-hightlight"> TỔNG ASM </strong>
                 </div>
                 <div class="col-xs-14 col-sm-14 col-md-14 text-right">
-                    <strong class="text-hightlight"> 0/0 DSA </strong> ~
-                    <strong class="text-hightlight"> 0% làm việc </strong>
+                    <strong class="text-hightlight"> {num_sale}/{total_sale} DSA </strong> ~
+                    <strong class="text-hightlight"> {percent}% làm việc </strong>
                 </div>
             </div>
 

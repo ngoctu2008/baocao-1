@@ -120,14 +120,14 @@ function check_report_static_area()
     $result_team = [];
     while ($_row = $_query->fetch()) {
         $team_id = $array_code_users[$_row['code']]['group_id'];
-        $result_team[$team_id]['total'] = empty($result_team[$team_id]['total']) ? 1 : $result_team[$team_id]['total'] + 1;
+        $result_team[$team_id]['num_sale'] = empty($result_team[$team_id]['num_sale']) ? 1 : $result_team[$team_id]['num_sale'] + 1;
     }
+
     $teams = [];
-    $total_area = 0;
     foreach ($array_group_info as $group_id => $row) {
-        $teams[$group_id]['num_sale'] = count($array_team_users[$group_id]); //tổng số sale trong nhóm
-        $teams[$group_id]['total'] = empty($result_team[$group_id]['total']) ? 0 : $result_team[$group_id]['total']; //số sale đã báo cáo
-        $teams[$group_id]['percent'] =  number_format($result_team[$group_id]['total'] / $teams[$group_id]['num_sale'], 2, '.', ',') * 100; //Tỉ lệ %
+        $teams[$group_id]['total'] = count($array_team_users[$group_id]); //tổng số sale trong nhóm
+        $teams[$group_id]['num_sale'] = empty($result_team[$group_id]['num_sale']) ? 0 : $result_team[$group_id]['num_sale'] + 1; //số sale đã báo cáo
+        $teams[$group_id]['percent'] =  number_format($teams[$group_id]['num_sale'] / $teams[$group_id]['total'], 2, '.', ',') * 100; //Tỉ lệ %
 
         if (empty($teams[$group_id]['title'])) {
             $teams[$group_id]['title'] = displayName($array_infor_users[$row['leader_id']]);
