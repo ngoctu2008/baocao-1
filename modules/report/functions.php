@@ -182,7 +182,7 @@ function get_action_note($userid, $for_display = 1)
         $_action['note'] = '';
         if ($for_display) {
             $link_add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=action-note';
-            $_action['note'] = '<a href="' . $link_add_action . '" class="btn btn-success text-center"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Action Note </i> </a>';
+            $_action['note'] = '<div class="text-center"> <a href="' . $link_add_action . '" class="btn btn-success"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Action Note </i> </a> </div>';
         }
     } else {
         $_action['note'] = nv_nl2br(nv_htmlspecialchars($_action['note']), '</br>');

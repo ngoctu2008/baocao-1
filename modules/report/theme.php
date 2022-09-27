@@ -87,7 +87,6 @@ function nv_theme_report_main()
 
     //Hiển thị số liệu tổng tháng
     $totals_month = render_data_total('month', $codes_in_team);
-
     foreach ($totals_month as $key => $_group_value) {
         foreach ($_group_value as $subkey => $subvalue) {
             if ($subkey == 'sale') {
