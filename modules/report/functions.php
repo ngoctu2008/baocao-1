@@ -119,7 +119,7 @@ function check_report_static_area()
 
     $result_team = [];
     while ($_row = $_query->fetch()) {
-        echo $_row['code'] . '-';
+        // echo $_row['code'] . '-';
         $team_id = $array_code_users[$_row['code']]['group_id'];
         $result_team[$team_id]['num_sale'] = empty($result_team[$team_id]['num_sale']) ? 1 : $result_team[$team_id]['num_sale'] + 1;
     }
