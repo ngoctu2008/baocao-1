@@ -200,7 +200,7 @@ if ($show_view) {
         $xtpl->assign('VIEW', $view);
         $xtpl->parse('main.view.loop');
     }
-
+    $xtpl->assign('link_add_report', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report');
     if ($level == 1) {
         $xtpl->parse('main.view.extract_button');
         // $xtpl->parse('main.view.report_button');
