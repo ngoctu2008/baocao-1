@@ -32,7 +32,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $_sql = 'SELECT code, date FROM ' . NV_PREFIXLANG . '_' . $module_data . '_actions where code = "' . $row['code'] . '" AND date = ' . $row['date'];
     $_row = $db->query($_sql)->fetch();
 
-    if (!empty($_row)) {
+    if (!empty($_row) and empty($row['id'])) { //Nếu tồn tại nhưng không phải trạng thái sửa thì báo lỗi
         $error[] = sprintf($lang_module['error_duplicated'], $row['code'], nv_date('d/m/Y', $row['date']));
     }
 

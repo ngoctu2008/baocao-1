@@ -137,7 +137,7 @@ if ($show_view) {
         $view['note'] = nv_nl2br(nv_htmlspecialchars($view['note']), '</br>');
         $view['date'] = (empty($view['date'])) ? '' : nv_date('d/m/Y', $view['date']);
         $view['sale'] = $array_code_users[$view['code']]['last_name'] . ' ' . $array_code_users[$view['code']]['first_name'] . ' (' . $array_code_users[$view['code']]['code'] . ')';
-        // $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note&amp;id=' . $view['id'];
+        $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note&amp;id=' . $view['id'];
         $xtpl->assign('VIEW', $view);
         $xtpl->parse('main.view.loop');
     }
