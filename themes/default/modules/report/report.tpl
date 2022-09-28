@@ -38,10 +38,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="pl_app" value="{ROW.pl_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="pl_app" value="{ROW.pl_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="pl_loan" value="{ROW.pl_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="pl_loan" value="{ROW.pl_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
@@ -52,10 +52,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="dn_app" value="{ROW.dn_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="dn_app" value="{ROW.dn_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="dn_loan" value="{ROW.dn_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="dn_loan" value="{ROW.dn_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
@@ -66,13 +66,13 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="xstu_check" value="{ROW.xstu_check}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.check}" />
+                                    <input class="form-control" type="text" name="xstu_check" value="{ROW.xstu_check}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.check}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="xstu_app" value="{ROW.xstu_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  required="required" placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="xstu_app" value="{ROW.xstu_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"   placeholder="{LANG.app}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="xstu_loan" value="{ROW.xstu_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="xstu_loan" value="{ROW.xstu_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"   placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
@@ -83,10 +83,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="ipp_app" value="{ROW.ipp_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="ipp_app" value="{ROW.ipp_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="ipp_loan" value="{ROW.ipp_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="ipp_loan" value="{ROW.ipp_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
@@ -97,10 +97,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="banca_hd" value="{ROW.banca_hd}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.hd}" />
+                                    <input class="form-control" type="text" name="banca_hd" value="{ROW.banca_hd}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.hd}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="banca_sale" value="{ROW.banca_sale}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.sale}" />
+                                    <input class="form-control" type="text" name="banca_sale" value="{ROW.banca_sale}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.sale}" />
                                 </div>
                             </div>
                         </td>
@@ -111,10 +111,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="ubank_app" value="{ROW.ubank_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="ubank_app" value="{ROW.ubank_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="ubank_loan" value="{ROW.ubank_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="ubank_loan" value="{ROW.ubank_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
@@ -124,13 +124,13 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="courier_lead" value="{ROW.courier_lead}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.lead}" />
+                                    <input class="form-control" type="text" name="courier_lead" value="{ROW.courier_lead}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.lead}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="courier_app" value="{ROW.courier_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="courier_app" value="{ROW.courier_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="courier_loan" value="{ROW.courier_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="courier_loan" value="{ROW.courier_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
@@ -140,10 +140,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="credit_app" value="{ROW.credit_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.app}"/>
+                                    <input class="form-control" type="text" name="credit_app" value="{ROW.credit_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}"/>
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="credit_loan" value="{ROW.credit_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')" required="required" placeholder="{LANG.loan}" />
+                                    <input class="form-control" type="text" name="credit_loan" value="{ROW.credit_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
                                 </div>
                             </div>
                         </td>
