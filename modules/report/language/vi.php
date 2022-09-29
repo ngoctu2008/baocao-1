@@ -107,3 +107,6 @@ $lang_module['not_reported'] = 'DSA chưa gửi báo cáo hôm nay';
 $lang_module['income_date'] = 'Thu nhập hôm nay của %s bạn là:';
 $lang_module['income_month'] = 'Thu nhập MTD của %s bạn là:';
 $lang_module['income_noloan'] = 'Tổ quốc ghi công NO LOAN:';
+
+//Lang for function test
+$lang_module['test'] = 'test';

@@ -139,6 +139,24 @@ if ($leader_team > 0) {
     $xtpl->parse('main.input_code');
 }
 
+// if ($leader_team > 0) {
+//     foreach ($arr_code_in_group as $_userid => $_code) {
+//         if (!empty($array_code_users[$_code])) {
+//             $xtpl->assign('OPTION', [
+//                 'key' => $_code,
+//                 'title' => displayName($array_code_users[$_code]) . ' <sub> ' . $_code . '</sub>',
+//                 'checked' => ($_code == $row['code']) ? ' checked="checked"' : ''
+//             ]);
+//             $xtpl->parse('main.checkbox_code.loop');
+//         }
+//     }
+//     $xtpl->parse('main.checkbox_code');
+// } else {
+//     $xtpl->assign('SALE_CODE', $array_infor_users[$user_info['userid']]['code']);
+//     $xtpl->parse('main.input_code');
+// }
+
+
 if (!empty($error)) {
     $xtpl->assign('ERROR', implode('<br />', $error));
     $xtpl->parse('main.error');

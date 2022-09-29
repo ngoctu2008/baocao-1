@@ -100,7 +100,7 @@
                                     <input class="form-control" type="text" name="banca_hd" value="{ROW.banca_hd}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.hd}" />
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="banca_sale" value="{ROW.banca_sale}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.sale}" />
+                                    <input class="form-control" type="text" name="banca_sale" value="{ROW.banca_sale}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.sale}" onkeyup="this.value=FormatNumber(this.value);"/>
                                 </div>
                             </div>
                         </td>

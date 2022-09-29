@@ -96,3 +96,6 @@ $lang_module['monitor'] = 'monitor';
 
 //Lang for function extract
 $lang_module['extract'] = 'extract';
+
+//Lang for function test
+$lang_module['test'] = 'test';
