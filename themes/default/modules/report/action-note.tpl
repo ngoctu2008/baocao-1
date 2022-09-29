@@ -27,7 +27,7 @@
     </div>
     <!-- BEGIN: checkbox_code -->
     <div class="form-group">
-        <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.sale_name}</strong> <span class="red">(*)</span></label>        
+        <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.sale_name}</strong> <span class="red">(*)</span></label>
         <div class="col-xs-24 col-sm-8 col-md-20">
             <!-- BEGIN: loop -->
             <div class="col-xs-12 col-sm-12 col-md-8">
@@ -58,13 +58,15 @@
     <input type="hidden" name="code" value="{SALE_CODE}" />
     <!-- END: input_code -->
 
-    <div class="form-group col-xs-24 col-sm-5 col-md-4">
+    <div class="form-group">
         <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.note}</strong> <span class="red">(*)</span></label>
         <div class="col-sm-19 col-md-20">
             <textarea class="form-control" style="height:100px;" cols="75" rows="5" name="note">{ROW.note}</textarea>
         </div>
     </div>
-    <div class="form-group col-xs-24 col-sm-5 col-md-4" style="text-align: center"><input class="btn btn-primary" name="submit" type="submit" value="{LANG.save}" /></div>
+    <div class="form-group" style="text-align: center">
+        <input class="btn btn-primary" name="submit" type="submit" value="{LANG.save}" />
+    </div>
 </form>
 </div></div>
 
