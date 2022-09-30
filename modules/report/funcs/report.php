@@ -47,7 +47,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['ipp_loan'] = $nv_Request->get_int('ipp_loan', 'post', 0);
     $row['banca_hd'] = $nv_Request->get_int('banca_hd', 'post', 0);
     $row['banca_sale'] = str_replace('.', '', $nv_Request->get_title('banca_sale', 'post', 0));
-    $row['banca_sale'] = str_replace(',', '', $nv_Request->get_title('banca_sale', 'post', 0));
+    // $row['banca_sale'] = str_replace(',', '', $nv_Request->get_title('banca_sale', 'post', 0));
 
     $row['ubank_app'] = $nv_Request->get_int('ubank_app', 'post', 0);
     $row['ubank_loan'] = $nv_Request->get_int('ubank_loan', 'post', 0);
@@ -57,14 +57,6 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['credit_app'] = $nv_Request->get_int('credit_app', 'post', 0);
     $row['credit_loan'] = $nv_Request->get_int('credit_loan', 'post', 0);
 
-
-    //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
-    $_sql = 'SELECT code, date FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows where code = "' . $row['code'] . '" AND date = ' . $row['date'];
-    $_row = $db->query($_sql)->fetch();
-
-    if (!empty($_row)) {
-        $error[] = sprintf($lang_module['error_duplicated'], $row['code'], nv_date('d/m/Y', $row['date']));
-    }
 
     if (empty($row['date'])) {
         $error[] = $lang_module['error_required_date'];
@@ -106,6 +98,14 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $error[] = $lang_module['error_required_credit_app'];
     } elseif (!check_number($row['credit_loan'])) {
         $error[] = $lang_module['error_required_credit_loan'];
+    }
+
+    //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
+    $_sql = 'SELECT code, date FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows where code = "' . $row['code'] . '" AND date = ' . $row['date'];
+    $_row = $db->query($_sql)->fetch();
+
+    if (!empty($_row) and empty($row['id'])) { //Nếu tồn tại nhưng không phải trạng thái sửa thì báo lỗi
+        $error[] = sprintf($lang_module['error_duplicated'], $row['code'], nv_date('d/m/Y', $row['date']));
     }
 
     if (empty($error)) {
@@ -193,10 +193,21 @@ if (empty($row['date'])) {
     $row['date'] = date('d/m/Y', $row['date']);
 }
 
-$_sql = 'SELECT code FROM ' . $db_config['prefix'] . '_users_info where userid = ' . $user_info['userid'];
-$_row = $db->query($_sql)->fetch();
-$sale_code = $_row['code'];
-$sale_name = $user_info['last_name'] . ' ' . $user_info['first_name'];
+if (!empty($row['banca_sale'])) {
+    $row['banca_sale'] = number_format($row['banca_sale'], 0, ',', '.');
+}
+
+if ($row['id'] > 0) {
+    $sale_code = $row['code'];
+    $sale_name = displayName($array_code_users[$row['code']]);
+} else {
+    $_sql = 'SELECT code FROM ' . $db_config['prefix'] . '_users_info where userid = ' . $user_info['userid'];
+    $_row = $db->query($_sql)->fetch();
+    $sale_code = $_row['code'];
+    $sale_name = $user_info['last_name'] . ' ' . $user_info['first_name'];
+}
+
+
 
 $xtpl = new XTemplate('report.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
