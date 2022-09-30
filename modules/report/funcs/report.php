@@ -46,7 +46,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['ipp_app'] = $nv_Request->get_int('ipp_app', 'post', 0);
     $row['ipp_loan'] = $nv_Request->get_int('ipp_loan', 'post', 0);
     $row['banca_hd'] = $nv_Request->get_int('banca_hd', 'post', 0);
-    $row['banca_sale'] = $nv_Request->get_int('banca_sale', 'post', 0);
+    $row['banca_sale'] = str_replace('.', '', $nv_Request->get_title('banca_sale', 'post', 0));
+    $row['banca_sale'] = str_replace(',', '', $nv_Request->get_title('banca_sale', 'post', 0));
+
     $row['ubank_app'] = $nv_Request->get_int('ubank_app', 'post', 0);
     $row['ubank_loan'] = $nv_Request->get_int('ubank_loan', 'post', 0);
     $row['courier_lead'] = $nv_Request->get_int('courier_lead', 'post', 0);
