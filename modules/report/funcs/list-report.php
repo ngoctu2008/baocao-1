@@ -195,7 +195,7 @@ if ($show_view) {
         $view['date'] = nv_date('d/m/Y', $view['date']);
         $view['banca_sale'] = empty($view['banca_sale']) ? 0 : number_format($view['banca_sale'], 0, ',', '.');
         $view['sale_name'] =  $array_code_users[$view['code']]['last_name'] . ' ' . $array_code_users[$view['code']]['first_name'] . ' (' . $view['code'] . ')';
-        // $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
+        $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
         // $view['link_delete'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;delete_id=' . $view['id'] . '&amp;delete_checkss=' . md5($view['id'] . NV_CACHE_PREFIX . $client_info['session_id']);
         $xtpl->assign('VIEW', $view);
         $xtpl->parse('main.view.loop');
