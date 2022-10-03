@@ -29,8 +29,8 @@ $error = [];
 $row['id'] = $nv_Request->get_int('id', 'post,get', 0);
 if ($nv_Request->isset_request('submit', 'post')) {
     if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('date', 'post'), $m)) {
-        $_hour = 0;
-        $_min = 0;
+        $_hour = nv_date('H', NV_CURRENTTIME);
+        $_min = nv_date('i', NV_CURRENTTIME);
         $row['date'] = mktime($_hour, $_min, 0, $m[2], $m[1], $m[3]);
     } else {
         $row['date'] = 0;
@@ -46,7 +46,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['ipp_app'] = $nv_Request->get_int('ipp_app', 'post', 0);
     $row['ipp_loan'] = $nv_Request->get_int('ipp_loan', 'post', 0);
     $row['banca_hd'] = $nv_Request->get_int('banca_hd', 'post', 0);
-    $row['banca_sale'] = str_replace('.', '', $nv_Request->get_title('banca_sale', 'post', 0));
+    $row['banca_sale'] = intval(str_replace('.', '', $nv_Request->get_title('banca_sale', 'post', 0)));
     // $row['banca_sale'] = str_replace(',', '', $nv_Request->get_title('banca_sale', 'post', 0));
 
     $row['ubank_app'] = $nv_Request->get_int('ubank_app', 'post', 0);
@@ -82,8 +82,6 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $error[] = $lang_module['error_required_ipp_loan'];
     } elseif (!check_number($row['banca_hd'])) {
         $error[] = $lang_module['error_required_banca_hd'];
-    } elseif (!check_number($row['banca_sale'])) {
-        $error[] = $lang_module['error_required_banca_sale'];
     } elseif (!check_number($row['ubank_app'])) {
         $error[] = $lang_module['error_required_ubank_app'];
     } elseif (!check_number($row['ubank_loan'])) {
@@ -111,12 +109,14 @@ if ($nv_Request->isset_request('submit', 'post')) {
     if (empty($error)) {
         try {
             if (empty($row['id'])) {
-                $stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_rows (date, code, pl_app, pl_loan, dn_app, dn_loan, xstu_check, xstu_app, xstu_loan, ipp_app, ipp_loan, banca_hd, banca_sale, ubank_app, ubank_loan, courier_lead, courier_app, courier_loan, credit_app, credit_loan) VALUES (:date, :code, :pl_app, :pl_loan, :dn_app, :dn_loan, :xstu_check, :xstu_app, :xstu_loan, :ipp_app, :ipp_loan, :banca_hd, :banca_sale, :ubank_app, :ubank_loan, :courier_lead, :courier_app, :courier_loan, :credit_app, :credit_loan)');
+                $stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_rows (date, code, pl_app, pl_loan, dn_app, dn_loan, xstu_check, xstu_app, xstu_loan, ipp_app, ipp_loan, banca_hd, banca_sale, ubank_app, ubank_loan, courier_lead, courier_app, courier_loan, credit_app, credit_loan) VALUES (:date, :code, :pl_app, :pl_loan, :dn_app, :dn_loan, :xstu_check, :xstu_app, :xstu_loan, :ipp_app, :ipp_loan, :banca_hd, 
+                :banca_sale, :ubank_app, :ubank_loan, :courier_lead, :courier_app, :courier_loan, :credit_app, :credit_loan)');
+
+                $stmt->bindParam(':date', $row['date'], PDO::PARAM_INT);
+                $stmt->bindParam(':code', $row['code'], PDO::PARAM_STR);
             } else {
-                $stmt = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_rows SET date = :date, code = :code, pl_app = :pl_app, pl_loan = :pl_loan, dn_app = :dn_app, dn_loan = :dn_loan, xstu_check = :xstu_check, xstu_app = :xstu_app, xstu_loan = :xstu_loan, ipp_app = :ipp_app, ipp_loan = :ipp_loan, banca_hd = :banca_hd, banca_sale = :banca_sale, ubank_app = :ubank_app, ubank_loan = :ubank_loan, courier_lead = :courier_lead, courier_app = :courier_app, courier_loan = :courier_loan, credit_app = :credit_app, credit_loan = :credit_loan WHERE id=' . $row['id']);
+                $stmt = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_rows SET pl_app = :pl_app, pl_loan = :pl_loan, dn_app = :dn_app, dn_loan = :dn_loan, xstu_check = :xstu_check, xstu_app = :xstu_app, xstu_loan = :xstu_loan, ipp_app = :ipp_app, ipp_loan = :ipp_loan, banca_hd = :banca_hd, banca_sale = :banca_sale, ubank_app = :ubank_app, ubank_loan = :ubank_loan, courier_lead = :courier_lead, courier_app = :courier_app, courier_loan = :courier_loan, credit_app = :credit_app, credit_loan = :credit_loan WHERE id=' . $row['id']);
             }
-            $stmt->bindParam(':date', $row['date'], PDO::PARAM_INT);
-            $stmt->bindParam(':code', $row['code'], PDO::PARAM_STR);
             $stmt->bindParam(':pl_app', $row['pl_app'], PDO::PARAM_INT);
             $stmt->bindParam(':pl_loan', $row['pl_loan'], PDO::PARAM_INT);
             $stmt->bindParam(':dn_app', $row['dn_app'], PDO::PARAM_INT);
@@ -188,9 +188,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
 }
 
 if (empty($row['date'])) {
-    $row['date'] = date('d/m/Y', NV_CURRENTTIME);
+    $row['date'] = nv_date('d/m/Y', NV_CURRENTTIME);
 } else {
-    $row['date'] = date('d/m/Y', $row['date']);
+    $row['date'] = nv_date('d/m/Y', $row['date']);
 }
 
 if (!empty($row['banca_sale'])) {

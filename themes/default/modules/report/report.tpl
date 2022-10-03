@@ -83,7 +83,7 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="ipp_app" value="{ROW.ipp_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" />
+                                    <input class="form-control" type="text" name="ipp_app" value="{ROW.ipp_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}" title="{LANG.app}"/>
                                 </div>
                                 <div class="col-xs-8 col-md-4">
                                     <input class="form-control" type="text" name="ipp_loan" value="{ROW.ipp_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
@@ -97,10 +97,10 @@
                         <td>
                             <div class="form-group ">
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="banca_hd" value="{ROW.banca_hd}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.hd}" />
+                                    <input class="form-control" type="text" name="banca_hd" value="{ROW.banca_hd}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.hd}"  title="{LANG.hd}"/>
                                 </div>
                                 <div class="col-xs-8 col-md-4">
-                                    <input class="form-control" type="text" name="banca_sale" value="{ROW.banca_sale}" pattern="^[.,0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.sale}" onkeyup="this.value=FormatNumber(this.value);"/>
+                                    <input class="form-control" type="text" name="banca_sale" value="{ROW.banca_sale}" pattern="^[.,0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.sale}" onkeyup="this.value=FormatNumber(this.value);" title="{LANG.sale}"/>
                                 </div>
                             </div>
                         </td>

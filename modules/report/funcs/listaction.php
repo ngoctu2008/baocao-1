@@ -60,7 +60,7 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
         ->select('COUNT(*)')
         ->from('' . NV_PREFIXLANG . '_' . $module_data . '_actions');
 
-    $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
+    $where = 'date >= ' . intval($from_time) . ' and date <= ' . intval($to_time);
     if (defined('NV_IS_MODADMIN')) {
         $where .= ''; //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
     } elseif ($leader_team < 1) {

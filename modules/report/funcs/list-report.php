@@ -13,12 +13,31 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
+
+if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('q_date', 'post,get'), $m)) {
+    $q_date = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
+    $from_time = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
+    $to_time = mktime(23, 59, 59, $m[2], $m[1], $m[3]);
+} else if (!empty($nv_Request->get_string('q_date', 'post,get'))) {
+    $q_date = $nv_Request->get_string('q_date', 'post,get');
+    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
+    $to_time = mktime(23, 59, 59, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
+} else {
+    $q_date = NV_CURRENTTIME;
+    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+}
+if ($leader_team == 0) {
+    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), 1, intval(date("Y", $q_date)));
+    $to_time = mktime(0, 0, 0, intval(date("m", $q_date)) + 1, 1, intval(date("Y", $q_date)));
+}
+
 if ($nv_Request->isset_request('export', 'get')) {
     if (defined('NV_IS_MODADMIN')) { //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
         //Lọc các bản ghi trong ngày
-        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-        $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
+        // $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        // $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $where = 'date >= ' . intval($from_time) . ' and date <= ' . intval($to_time);
 
         $_sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows WHERE ' . $where . ' ORDER BY code';
         $_query = $db->query($_sql);
@@ -84,23 +103,8 @@ if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_reques
 $row = [];
 $error = [];
 
-if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('q_date', 'post,get'), $m)) {
-    $q_date = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
-    $from_time = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
-    $to_time = mktime(23, 59, 59, $m[2], $m[1], $m[3]);
-} else if (!empty($nv_Request->get_string('q_date', 'post,get'))) {
-    $q_date = $nv_Request->get_string('q_date', 'post,get');
-    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
-    $to_time = mktime(23, 59, 59, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
-} else {
-    $q_date = NV_CURRENTTIME;
-    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-}
-if ($leader_team == 0) {
-    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), 1, intval(date("Y", $q_date)));
-    $to_time = mktime(0, 0, 0, intval(date("m", $q_date)) + 1, 1, intval(date("Y", $q_date)));
-}
+
+
 // Fetch Limit
 $show_view = false;
 if (!$nv_Request->isset_request('id', 'post,get')) {
@@ -111,7 +115,8 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
         ->select('COUNT(*)')
         ->from('' . NV_PREFIXLANG . '_' . $module_data . '_rows');
 
-    $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
+    $where = 'date >= ' . intval($from_time) . ' and date <= ' . intval($to_time);
+
 
     if (defined('NV_IS_MODADMIN')) { //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
         $where .= '';
