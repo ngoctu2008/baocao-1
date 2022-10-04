@@ -8,20 +8,38 @@
     <div class="row">
         <div class="col-xs-24 col-sm-24 col-md-24">
             <div class="form-group">
-                <div class="col-xs-10 col-sm-5 col-sm-19 col-md-6">
+                <div class="col-xs-9 col-sm-5 col-md-4">
                     <div class="input-group">
-                        <input class="form-control" readonly type="text" value="{q_date_show}" name="q_date" id="q_date" maxlength="255" placeholder="{q_date_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
+                        <input class="form-control" readonly type="text" value="{q_date_from_show}" name="q_date_from" id="q_date_from" maxlength="255" placeholder="{q_date_from_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" id="q_date-btn">
+                            <button class="btn btn-default" type="button" id="q_date_from-btn">
                                 <em class="fa fa-calendar fa-fix"> </em>
                             </button>
                         </span>
                     </div>
                 </div>
-                <div class="col-xs-8 col-sm-19 col-md-6">
+                <div class="col-xs-9 col-sm-5 col-md-4">
+                    <div class="input-group">
+                        <input class="form-control" readonly type="text" value="{q_date_to_show}" name="q_date_to" id="q_date_to" maxlength="255" placeholder="{q_date_to_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="q_date_to-btn">
+                                <em class="fa fa-calendar fa-fix"> </em>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <!-- BEGIN: search_type -->
+                <div class="col-xs-9 col-sm-5 col-md-4">
+                    <div class="input-group">
+                        
+                    </div>
+                </div>
+                <!-- END: search_type -->
+
+                <div class="col-xs-4 col-sm-10 col-md-6">
                     <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
                 </div>
-                <div class="pull-right">
+                <div class="pull-right" style="margin-top:5px;">
                     <!-- BEGIN: extract_button -->
                     <button class="btn btn-primary btn-xs" name="export" id="export">Extract to excel</button>
                     <!-- END: extract_button -->
@@ -125,12 +143,19 @@
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-    $("#q_date").datepicker({
+    $("#q_date_from,#q_date_to").datepicker({
         dateFormat : "dd/mm/yy",
         changeMonth : true,
         changeYear : true,
         showOtherMonths : true,
     });
+    $('#q_date_from-btn').click(function() {
+       $("#q_date_from").datepicker('show');
+   });
+   $('#q_date_to-btn').click(function() {
+      $("#q_date_to").datepicker('show');
+  });
+
 
 //]]>
 </script>

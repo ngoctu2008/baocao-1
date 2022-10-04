@@ -155,3 +155,8 @@ function displayName($arraydata)
     $fullname = $arraydata['last_name'] . ' ' . $arraydata['first_name'];
     return $fullname;
 }
+
+function stop($string = '')
+{
+    exit($string);
+}

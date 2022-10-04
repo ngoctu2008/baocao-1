@@ -55,6 +55,7 @@ $lang_module['courier'] = 'Courier';
 
 $lang_module['credit'] = 'Credit Card';
 $lang_module['error_required_date'] = 'Lỗi: bạn cần nhập dữ liệu cho Ngày';
+$lang_module['error_search_date'] = 'Lỗi: Vui lòng xem lại khoảng ngày tìm kiếm';
 $lang_module['error_required_code'] = 'Lỗi: bạn cần nhập dữ liệu cho Mã nhân viên';
 $lang_module['error_required_sale'] = 'Lỗi: bạn cần chọn Nhân viên';
 $lang_module['error_required_pl_app'] = 'Lỗi: bạn cần nhập dữ liệu cho PL APP';

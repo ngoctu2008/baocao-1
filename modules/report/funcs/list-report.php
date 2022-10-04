@@ -13,24 +13,39 @@ if (!defined('NV_IS_MOD_REPORT')) {
     die('Stop!!!');
 }
 
+$q_date_from = $nv_Request->get_string('q_date_from', 'post,get', 0);
+$q_date_to = $nv_Request->get_string('q_date_to', 'post,get', 0);
 
-if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('q_date', 'post,get'), $m)) {
-    $q_date = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
-    $from_time = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
-    $to_time = mktime(23, 59, 59, $m[2], $m[1], $m[3]);
-} else if (!empty($nv_Request->get_string('q_date', 'post,get'))) {
-    $q_date = $nv_Request->get_string('q_date', 'post,get');
-    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
-    $to_time = mktime(23, 59, 59, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
-} else {
+if ((empty($q_date_from)) and (empty($q_date_to))) {
     $q_date = NV_CURRENTTIME;
-    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    //Set thời gian lọc mặc định
+    if ($leader_team < 1) { //Sale thì sẽ mặc định hiển thị cả tháng
+        $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), 1, intval(date("Y", $q_date)));
+        $to_time = mktime(0, 0, 0, intval(date("m", $q_date)) + 1, 1, intval(date("Y", $q_date)));
+    } else { //Ngược lại hiển thị ngày hiện tại
+        $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
+        $to_time = mktime(23, 59, 59, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
+    }
+} elseif ((empty($q_date_from)) or (empty($q_date_to))) {
+    $q_date_from = empty($q_date_from) ? $q_date_to : $q_date_from;
+    $q_date_to = empty($q_date_to) ? $q_date_from : $q_date_to;
+    $from_time = mktime(0, 0, 0, intval(date("m", $q_date_from)), 1, intval(date("Y", $q_date_from)));
+    $to_time = mktime(23, 59, 59, intval(date("m", $q_date_to)), 1, intval(date("Y", $q_date_to)));
+} else {
+    if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $q_date_from, $m)) {
+        $from_time = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
+    }
+    if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $q_date_to, $n)) {
+        $to_time = mktime(23, 59, 59, $n[2], $n[1], $n[3]);
+    }
+    if ($to_time < $from_time) {
+        $tg = $to_time;
+        $to_time = $from_time;
+        $from_time = $tg;
+        // $error[] = $lang_module['error_search_date'];
+    }
 }
-if ($leader_team == 0) {
-    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), 1, intval(date("Y", $q_date)));
-    $to_time = mktime(0, 0, 0, intval(date("m", $q_date)) + 1, 1, intval(date("Y", $q_date)));
-}
+
 
 if ($nv_Request->isset_request('export', 'get')) {
     if (defined('NV_IS_MODADMIN')) { //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
@@ -89,21 +104,8 @@ if ($nv_Request->isset_request('export', 'get')) {
     }
 }
 
-if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_request('delete_checkss', 'get')) {
-    $id = $nv_Request->get_int('delete_id', 'get');
-    $delete_checkss = $nv_Request->get_string('delete_checkss', 'get');
-    if ($id > 0 and $delete_checkss == md5($id . NV_CACHE_PREFIX . $client_info['session_id'])) {
-        $db->query('DELETE FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows  WHERE id = ' . $db->quote($id));
-        $nv_Cache->delMod($module_name);
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'Delete Report ', 'ID: ' . $id, $admin_info['userid']);
-        nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
-    }
-}
-
 $row = [];
 $error = [];
-
-
 
 // Fetch Limit
 $show_view = false;
@@ -181,7 +183,8 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
-$xtpl->assign('q_date_show', nv_date('d/m/Y', $q_date));
+$xtpl->assign('q_date_from_show', nv_date('d/m/Y', $from_time));
+$xtpl->assign('q_date_to_show', nv_date('d/m/Y', $to_time));
 
 if ($show_view) {
     $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
