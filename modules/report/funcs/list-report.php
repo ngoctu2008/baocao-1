@@ -21,7 +21,7 @@ if ((empty($q_date_from)) and (empty($q_date_to))) {
     //Set thời gian lọc mặc định
     if ($leader_team < 1) { //Sale thì sẽ mặc định hiển thị cả tháng
         $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), 1, intval(date("Y", $q_date)));
-        $to_time = mktime(0, 0, 0, intval(date("m", $q_date)) + 1, 1, intval(date("Y", $q_date)));
+        $to_time = mktime(0, 0, 0, intval(date("m", $q_date)) + 1, 1, intval(date("Y", $q_date))) - 1;
     } else { //Ngược lại hiển thị ngày hiện tại
         $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
         $to_time = mktime(23, 59, 59, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));

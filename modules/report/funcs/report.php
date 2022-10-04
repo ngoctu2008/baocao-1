@@ -29,11 +29,15 @@ $error = [];
 $row['id'] = $nv_Request->get_int('id', 'post,get', 0);
 if ($nv_Request->isset_request('submit', 'post')) {
     if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('date', 'post'), $m)) {
-        $_hour = nv_date('H', NV_CURRENTTIME);
-        $_min = nv_date('i', NV_CURRENTTIME);
-        $row['date'] = mktime($_hour, $_min, 0, $m[2], $m[1], $m[3]);
+        //Trường hợp cho hiển thị, chỉnh sửa ngày tháng thì sửa lại code dưới
+        // $_hour = nv_date('H', NV_CURRENTTIME);
+        // $_min = nv_date('i', NV_CURRENTTIME);
+        $row['date'] = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
     } else {
-        $row['date'] = 0;
+        $_day = nv_date('d', NV_CURRENTTIME);
+        $_month = nv_date('m', NV_CURRENTTIME);
+        $_year = nv_date('Y', NV_CURRENTTIME);
+        $row['date'] = mktime(0, 0, 0, $_month, $_day, $_year);
     }
     $row['code'] = $nv_Request->get_title('code', 'post', '');
     $row['pl_app'] = $nv_Request->get_int('pl_app', 'post', 0);
