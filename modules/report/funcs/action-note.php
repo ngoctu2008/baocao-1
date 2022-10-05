@@ -83,12 +83,15 @@ if ($nv_Request->isset_request('submit', 'post')) {
     if (empty($row)) {
         nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
     }
-} else {
+} else { //Load form mới    
     $row['id'] = 0;
     $row['creat_by'] = $user_info['userid'];
     $row['date'] = 0;
     $row['code'] = '';
     $row['note'] = '';
+    if (!empty($nv_Request->get_title('code', 'post,get', ''))) {
+        $row['code'] = $nv_Request->get_title('code', 'post,get');
+    }
 }
 
 if (empty($row['date'])) {

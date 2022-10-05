@@ -137,10 +137,17 @@
                     <td> {VIEW.credit_loan} </td>
                     <td class="text-center">
                         <!-- BEGIN: add_action -->
-                        <a href="{VIEW.add_action}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Addnew</a>
+                        <a href="{link_add_action}" class="btn-warning btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</a>
                         <!-- END: add_action -->
                         <!-- BEGIN: view_action -->
-                        {VIEW.action_note}
+                        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="Action note" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              {action_note}
+                            </div>
+                          </div>
+                        </div>
+                        <a href="{link_add_action}" class="btn-info btn" data-toggle="modal" data-target=".bd-example-modal-sm"><i class="fa fa-eye" aria-hidden="true"></i> View </a>
                         <!-- END: view_action -->
                     </td>
                 </tr>

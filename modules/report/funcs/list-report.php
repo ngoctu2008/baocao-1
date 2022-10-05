@@ -67,7 +67,7 @@ if ($nv_Request->isset_request('export', 'get')) {
             $array_data[] = $_row;
         }
 
-        export_dailyreport($array_data);
+        export_dailyreport($array_data, 1);
     } elseif ($leader_team < 1) {
         //Không phải là leader, không được xuất file
         $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report';
@@ -213,10 +213,12 @@ if ($show_view) {
         $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
         $view['action_note'] = get_action_note($array_code_users[$view['code']]['userid'], 0, $view['date']);
         if (empty($view['action_note'])) {
-            $view['add_action'] = '#'; //NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note';
+            $add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note&amp;code=' . $view['code'];
+            $xtpl->assign('link_add_action', $add_action);
             $xtpl->parse('main.view.loop.add_action');
         } else {
-            $view['action_note'] = str_replace('</br>', '. ', $view['action_note']);
+            $action_note = str_replace('</br>', '. ', $view['action_note']);
+            $xtpl->assign('action_note', $action_note);
             $xtpl->parse('main.view.loop.view_action');
         }
         $view['date'] = nv_date('d/m/Y', $view['date']);
