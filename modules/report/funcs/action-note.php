@@ -119,10 +119,20 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
-$in_group = $array_infor_users[$user_info['userid']]['group_id'];
-$list_code_in_group = implode(',', $array_team_users[$in_group]);
-$arr_code_in_group = $array_team_users[$in_group];
-if ($leader_team > 0) {
+if (defined('NV_IS_MODADMIN')) { //Nếu là ADMIN thì show danh sách các DSS
+    foreach ($array_leader as $group_id => $_leader) {
+        $xtpl->assign('OPTION', [
+            'key' => $_leader['code'],
+            'title' => $array_code_users[$_leader['code']]['last_name'] . ' ' . $array_code_users[$_leader['code']]['first_name'] . ' (' . $_leader['code'] . ')',
+            'selected' => ($_leader['code'] == $row['code']) ? ' selected="selected"' : ''
+        ]);
+        $xtpl->parse('main.select_code.loop');
+    }
+    $xtpl->parse('main.select_code');
+} elseif ($leader_team > 1) { //Nếu là DSS thì show danh sách sale team mình
+    $in_group = $array_infor_users[$user_info['userid']]['group_id'];
+    $list_code_in_group = implode(',', $array_team_users[$in_group]);
+    $arr_code_in_group = $array_team_users[$in_group];
     foreach ($arr_code_in_group as $_userid => $_code) {
         if (!empty($array_code_users[$_code])) {
             $xtpl->assign('OPTION', [

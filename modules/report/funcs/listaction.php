@@ -143,6 +143,9 @@ if ($show_view) {
     }
     $xtpl->assign('link_add', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note');
 
+    if (defined('NV_IS_MODADMIN') or $leader_team > 1) {
+        $xtpl->parse('main.view.add_button');
+    }
     $xtpl->parse('main.view');
 }
 

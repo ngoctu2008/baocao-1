@@ -32,13 +32,22 @@ $_sql = 'SELECT t1.group_id, t1.title, t2.userid as leader_id FROM ' . $db_confi
 $array_group_info = $nv_Cache->db($_sql, 'group_id', $module_name, '', 0);
 
 /**
+ * Lấy thông tin nhóm các leader -> Lưu cache 
+ * Result: Array[group_id] = [userid,code];
+ */
+$array_leader = [];
+$_sql = 'SELECT t1.userid,t2.code FROM ' . $db_config['prefix'] . '_users_groups_users as t1 INNER JOIN ' . $db_config['prefix'] . '_users_info as t2 ON t1.userid = t2.userid WHERE t1.is_leader = 1 AND t1.group_id > 6 ORDER BY t1.group_id DESC'; //Chỉ lấy trưởng nhóm
+$array_leader = $nv_Cache->db($_sql, 'group_id', $module_name, '', 86400 * 7);
+
+
+/**
  * Lấy danh sách nhân sự của từng Team -> Lưu cache 
  * Result: Array[group_id][userid] = code;
  */
 
 $array_team_users = [];
 $_sql = 'SELECT userid,group_id FROM ' . $db_config['prefix'] . '_users_groups_users WHERE is_leader = 0 ORDER BY group_id DESC'; //Không lấy trưởng nhóm
-$_list = $nv_Cache->db($_sql, '', $module_name, '', 86400 * 7);
+$_list = $nv_Cache->db($_sql, '', $module_name, '', 86400 * 1);
 
 $cache_file = NV_LANG_DATA . '_array_team_users.cache';
 if ($nv_Cache->getItem($module_name, $cache_file) == false) {

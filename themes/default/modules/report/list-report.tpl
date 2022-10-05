@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-xs-24 col-sm-24 col-md-24">
             <div class="form-group">
-                <div class="col-xs-9 col-sm-5 col-md-4">
+                <div class="col-xs-8 col-sm-5 col-md-4">
                     <div class="input-group">
                         <input class="form-control" readonly type="text" value="{q_date_from_show}" name="q_date_from" id="q_date_from" maxlength="255" placeholder="{q_date_from_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
                         <span class="input-group-btn">
@@ -18,7 +18,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-xs-9 col-sm-5 col-md-4">
+                <div class="col-xs-8 col-sm-5 col-md-4">
                     <div class="input-group">
                         <input class="form-control" readonly type="text" value="{q_date_to_show}" name="q_date_to" id="q_date_to" maxlength="255" placeholder="{q_date_to_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
                         <span class="input-group-btn">
@@ -29,14 +29,15 @@
                     </div>
                 </div>
                 <!-- BEGIN: search_type -->
-                <div class="col-xs-9 col-sm-5 col-md-4">
-                    <div class="input-group">
-                        
-                    </div>
+                <div class="col-xs-8 col-sm-5 col-md-4">
+                    <select class="form-control" name="q_type">
+                        <option value="0"> Danh sách DSA </option>
+                        <option value="1"> Danh sách DSS </option>
+                    </select>
                 </div>
                 <!-- END: search_type -->
 
-                <div class="col-xs-4 col-sm-10 col-md-6">
+                <div class="col-xs-24 col-sm-10 col-md-6">
                     <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
                 </div>
                 <div class="pull-right" style="margin-top:5px;">
@@ -52,6 +53,11 @@
     </div>
 </form>
 </div>
+<div class="panel-heading">
+    <h1> BẢNG THỐNG KÊ DOANH SỐ BÁN HÀNG </h1>
+    <strong>Ngày {date}</strong>
+</div>
+
 <form action="{NV_BASE_SITEURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
     <div class="table-responsive" style="text-align:center;">
         <table class="table table-striped table-bordered table-hover">
@@ -130,6 +136,12 @@
                     <td> {VIEW.credit_app} </td>
                     <td> {VIEW.credit_loan} </td>
                     <td class="text-center">
+                        <!-- BEGIN: add_action -->
+                        <a href="{view.link_add}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> </a>
+                        <!-- END: add_action -->
+                        <!-- BEGIN: view_action -->
+                        <a href="{view.link_view}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> </a>
+                        <!-- END: view_action -->
                     </td>
                 </tr>
                 <!-- END: loop -->

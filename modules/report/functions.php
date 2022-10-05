@@ -160,12 +160,17 @@ function check_report_static_team($level = 2)
     return $sale_not_report;
 }
 
-function get_action_note($userid, $for_display = 1)
+function get_action_note($userid, $for_display = 1, $date = 0)
 {
     global $global_config, $array_infor_users, $module_data, $db, $module_name;
     //ACTION_NOTE
-    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    if (empty($date)) {
+        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    } else {
+        $from_time = mktime(0, 0, 0, intval(date("m", $date)), intval(date("d", $date)), intval(date("Y", $date)));
+        $to_time = mktime(23, 59, 59, intval(date("m", $date)), intval(date("d", $date)), intval(date("Y", $date)));
+    }
 
     $where = ' date >= ' . $from_time . ' AND date <= ' . $to_time;
     $where .= " AND code = '" . $array_infor_users[$userid]['code'] . "'";
