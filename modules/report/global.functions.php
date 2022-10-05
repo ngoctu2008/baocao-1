@@ -14,7 +14,9 @@ if (!defined('NV_MAINFILE')) {
 
 global $module_name, $nv_Cache;
 
-$time_over = [8, 21];
+// echo mktime(0, 0, 0, 10, 3, 2022);
+// die();
+$time_over = [8, 24];
 
 //Lấy thông tin toàn bộ user, key là code
 $array_code_users = [];

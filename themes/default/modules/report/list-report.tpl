@@ -137,10 +137,10 @@
                     <td> {VIEW.credit_loan} </td>
                     <td class="text-center">
                         <!-- BEGIN: add_action -->
-                        <a href="{view.link_add}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> </a>
+                        <a href="{VIEW.add_action}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Addnew</a>
                         <!-- END: add_action -->
                         <!-- BEGIN: view_action -->
-                        <a href="{view.link_view}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> </a>
+                        {VIEW.action_note}
                         <!-- END: view_action -->
                     </td>
                 </tr>

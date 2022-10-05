@@ -78,8 +78,8 @@ if ($nv_Request->isset_request('export', 'get')) {
         exit();
     } else {
         //Lọc các bản ghi trong ngày
-        $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-        $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        // $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+        // $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
         $where = 'date >= ' . $from_time . ' and date <= ' . $to_time;
         foreach ($array_team_users[$leader_team] as $_userid => $_code) {
             if (!empty($_code)) {
@@ -213,7 +213,7 @@ if ($show_view) {
         $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
         $view['action_note'] = get_action_note($array_code_users[$view['code']]['userid'], 0, $view['date']);
         if (empty($view['action_note'])) {
-            $view['link_add'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note';
+            $view['add_action'] = '#'; //NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note';
             $xtpl->parse('main.view.loop.add_action');
         } else {
             $view['action_note'] = str_replace('</br>', '. ', $view['action_note']);
