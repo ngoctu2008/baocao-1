@@ -76,7 +76,7 @@ if ($nv_Request->isset_request('export', 'get')) {
         echo nv_site_theme($contents);
         include NV_ROOTDIR . '/includes/footer.php';
         exit();
-    } else {
+    } else { //Nếu là Leader
         //Lọc các bản ghi trong ngày
         // $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
         // $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
@@ -101,7 +101,7 @@ if ($nv_Request->isset_request('export', 'get')) {
             $array_data[] = $_row;
         }
 
-        export_dailyreport($array_data);
+        export_dailyreport($array_data, 1);
     }
 }
 

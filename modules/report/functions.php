@@ -26,11 +26,13 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-function export_dailyreport($array_data)
+function export_dailyreport($array_data, $total_sheet = 0)
 {
-    global $module_name, $lang_module, $user_info;
+    global $module_name, $lang_module, $user_info, $array_code_users;
     $objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load(NV_ROOTDIR . '/modules/report/dailyreport.xlsx');
-    $objWorksheet = $objPHPExcel->getActiveSheet();
+
+    //Xuất dữ liệu tại Sheet 1
+    $objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
 
     $file_folder_path = NV_ROOTDIR . "/" . NV_TEMP_DIR . "/" . $module_name . "/";
     $username = $user_info['username']; //tên team hoặc tên sale
@@ -73,6 +75,7 @@ function export_dailyreport($array_data)
         }
     }
 
+    //Fill dữ liệu
     $r = 5;
     $num = 0;
 
@@ -81,6 +84,7 @@ function export_dailyreport($array_data)
         $r++;
         $c = 1;
         $list_ignore = ['id', 'team', 'sale_name'];
+        // $list_accepted = ['pl_app', 'pl_loan', 'dn_app', 'dn_loan', 'xstu_check', 'xstu_app', 'xstu_loan', 'ipp_app', 'ipp_loan', 'banca_hd', 'banca_sale', 'ubank_app', 'ubank_loan', 'courier_lead', 'courier_app', 'courier_loan', 'credit_app ', 'credit_loan'];
         $objWorksheet->setCellValueByColumnAndRow($c, $r, $num); //Thứ tự
         $objWorksheet->setCellValueByColumnAndRow($c + 1, $r, $row['team']); //Team
         $objWorksheet->setCellValueByColumnAndRow($c + 2, $r, $row['sale_name']); //Sale name
@@ -96,6 +100,48 @@ function export_dailyreport($array_data)
             $c++;
         }
     }
+
+    //Tính tổng ở sheet 2
+    if ($total_sheet) {
+        $total_by_code = []; //Tính tổng cho từng nhân viên
+        $list_ignore2 = ['id', 'code', 'date', 'team', 'sale_name', 'action_note'];
+        foreach ($array_data as $row) {
+            if (empty($total_by_code[$row['code']]['id'])) {
+                $total_by_code[$row['code']] = $row;
+            } else {
+                foreach ($row as $label => $value) {
+                    if (in_array($label, $list_ignore2)) {
+                        continue;
+                    }
+                    $total_by_code[$row['code']][$label] = empty($total_by_code[$row['code']][$label]) ? $value : $total_by_code[$row['code']][$label] + $value;
+                }
+            }
+        }
+
+        //Ghi dữ liệu
+        $objWorksheetTotal = $objPHPExcel->setActiveSheetIndex(1);
+
+        $r = 5;
+        $num = 0;
+        foreach ($total_by_code as $code => $_row) {
+            $r++;
+            $num++;
+            $c = 1;
+            $objWorksheetTotal->setCellValueByColumnAndRow($c, $r, $num); //Thứ tự
+            $objWorksheetTotal->setCellValueByColumnAndRow($c + 1, $r, $_row['team']); //Team 
+            $objWorksheetTotal->setCellValueByColumnAndRow($c + 2, $r, $_row['sale_name']); //Sale name
+            $objWorksheetTotal->setCellValueByColumnAndRow($c + 3, $r, $code); //Sale code
+            $c = 5;
+            foreach ($_row as $label => $value) {
+                if (in_array($label, $list_ignore2)) {
+                    continue;
+                }
+                $c++;
+                $objWorksheetTotal->setCellValueByColumnAndRow($c, $r, $value);
+            }
+        }
+    }
+
 
     $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objPHPExcel, 'Xlsx');
     $objWriter->save($file_export_tmp); //lưu vào file tạm trên server
