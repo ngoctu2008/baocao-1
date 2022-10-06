@@ -143,7 +143,15 @@
                         <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="Action note" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
-                              {action_note}
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalCenterTitle">Action Note</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    {action_note}
+                                </div>
                             </div>
                           </div>
                         </div>
