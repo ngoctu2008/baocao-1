@@ -12,6 +12,11 @@
 <div class="panel-body">
 <form class="form-horizontal" action="{NV_BASE_SITEURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
     <input type="hidden" name="id" value="{ROW.id}" />
+    <!-- BEGIN: input_code -->
+    <input type="hidden" name="code[]" value="{ROW.code}" />
+    <h2 class="text-center">{SALE_TITLE}</h2>
+    <!-- END: input_code -->
+
 
     <div class="form-group">
         <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.date}</strong> <span class="red">(*)</span></label>
@@ -31,32 +36,14 @@
         <div class="col-xs-24 col-sm-8 col-md-20">
             <!-- BEGIN: loop -->
             <div class="col-xs-12 col-sm-12 col-md-8">
-                <input class="form-control" type="checkbox" name="code[]" value="{OPTION.key}" {OPTION.checked}>
-                <span class="less-text"> {OPTION.title} </span>
+                <input class="form-control" type="checkbox" name="code[]" value="{OPTION.key}" {OPTION.checked} {OPTION.disabled}>
+                <span class="less-text {OPTION.color}"> {OPTION.title} </span>
 
             </div>
             <!-- END: loop -->
         </div>
     </div>
     <!-- END: checkbox_code -->
-
-    <!-- BEGIN: select_code -->
-    <div class="form-group">
-        <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.sale_name}</strong> <span class="red">(*)</span></label>
-        <div class="col-sm-19 col-md-20">
-            <select class="form-control" name="code">
-                <option value=""> --- </option>
-                <!-- BEGIN: loop -->
-                <option value="{OPTION.key}" {OPTION.selected}>{OPTION.title}</option>
-                <!-- END: loop -->
-            </select>
-        </div>
-    </div>
-    <!-- END: select_code -->
-
-    <!-- BEGIN: input_code -->
-    <input type="hidden" name="code" value="{SALE_CODE}" />
-    <!-- END: input_code -->
 
     <div class="form-group">
         <label class="col-sm-5 col-md-4 control-label"><strong>{LANG.note}</strong> <span class="red">(*)</span></label>

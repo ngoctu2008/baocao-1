@@ -72,6 +72,10 @@ th {
     color: green;
     font-style: italic;
 }
+.red {
+    color: red;
+    font-style: italic;
+}
 .bg-gray {
     background-color: lightgray;
 }

@@ -15,7 +15,45 @@ if (!defined('NV_IS_MOD_REPORT')) {
 
 $row = [];
 $error = [];
+$_row_exist = [];
+$arr_user_in_group = [];
+$arr_code_in_group = [];
+
 $row['id'] = $nv_Request->get_int('id', 'post,get', 0);
+//Nếu là tạo mới 
+if (empty($row['id'])) {
+    //Khởi tạo danh sách code
+    if (defined('NV_IS_MODADMIN')) { //Nếu là ADMIN thì show danh sách các DSS    
+        foreach ($array_leader as $group_id => $_leader) {
+            $arr_user_in_group[$_leader['userid']] = [
+                'code' => $_leader['code'],
+                'title' => displayName($array_code_users[$_leader['code']]) . ' <sub> ' . $_leader['code'] . '</sub>'
+            ];
+            $arr_code_in_group[] = $_leader['code'];
+        }
+    } elseif ($leader_team > 0) { //Nếu là DSS thì show danh sách sale team mình
+        $in_group = $array_infor_users[$user_info['userid']]['group_id'];
+        $_arr_user = $array_team_users[$in_group];
+        foreach ($_arr_user as $_userid => $_code) {
+            $arr_user_in_group[$_userid]['code'] = $_code;
+            $arr_user_in_group[$_userid]['title'] = displayName($array_code_users[$_code]) . ' <sub> ' . $_code . '</sub>';
+            $arr_code_in_group[] = $_code;
+        }
+    } else {
+        $arr_user_in_group = $array_infor_users[$user_info['userid']]['code'];
+    }
+
+    //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
+    $query_code = implode('","', $arr_code_in_group);
+    $from_time = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME));
+    $to_time = mktime(23, 59, 59, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME));
+
+    $_sql = 'SELECT code FROM ' . NV_PREFIXLANG . '_' . $module_data . '_actions where code IN ("' . $query_code . '") and date < ' . $to_time . ' and date >=' . $from_time;
+    $result = $db->query($_sql);
+    while ($_row = $result->fetch()) {
+        $_row_exist[] = $_row['code'];
+    }
+}
 if ($nv_Request->isset_request('submit', 'post')) {
     if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('date', 'post'), $m)) {
         $_hour = 0;
@@ -25,15 +63,18 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $row['date'] = NV_CURRENTTIME;
     }
     $row['creat_by'] = $user_info['userid'];
-    $row['code'] = $nv_Request->get_title('code', 'post', '');
+    // $row['code'] = $nv_Request->get_title('code', 'post', '');
+    $row['code'] = $nv_Request->get_array('code', 'post', array());
     $row['note'] = $nv_Request->get_textarea('note', '', NV_ALLOWED_HTML_TAGS);
 
-    //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
-    $_sql = 'SELECT code, date FROM ' . NV_PREFIXLANG . '_' . $module_data . '_actions where code = "' . $row['code'] . '" AND date = ' . $row['date'];
-    $_row = $db->query($_sql)->fetch();
-
-    if (!empty($_row) and empty($row['id'])) { //Nếu tồn tại nhưng không phải trạng thái sửa thì báo lỗi
-        $error[] = sprintf($lang_module['error_duplicated'], $row['code'], nv_date('d/m/Y', $row['date']));
+    if (empty($row['id'])) {
+        //Kiểm tra code + ngày xem đã trùng dữ liệu chưa
+        $query_code = implode('","', $row['code']);
+        $_sql = 'SELECT code FROM ' . NV_PREFIXLANG . '_' . $module_data . '_actions where code IN ("' . $query_code . '") AND date = ' . $row['date'];
+        $_row_exist = $db->query($_sql)->fetch();
+        if (!empty($_row_exist) and empty($row['id'])) { //Nếu tồn tại nhưng không phải trạng thái sửa thì báo lỗi
+            $error[] = sprintf($lang_module['error_duplicated'], implode(',', $_row_exist), nv_date('d/m/Y', $row['date']));
+        }
     }
 
     if (empty($row['date'])) {
@@ -44,23 +85,33 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $error[] = $lang_module['error_required_note'];
     }
 
+
     if (empty($error)) {
         try {
             if (empty($row['id'])) {
-                $stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_actions (date, code, note, creat_by) VALUES (:date, :code, :note, :creat_by)');
+                $insert_query = [];
+                foreach ($row['code'] as $code) {
+                    $insert_query[] = "({$row['date']}, '{$code}', '{$row['note']}', {$row['creat_by']})";
+                }
+                $insert_query = implode(',', $insert_query);
+                $sql = 'INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_actions (date, code, note, creat_by) VALUES ' . $insert_query;
+
+                $stmt = $db->prepare($sql);
+                $exc = $stmt->execute();
             } else {
                 $stmt = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_actions SET date = :date, code = :code, note = :note, creat_by = :creat_by WHERE id=' . $row['id']);
-            }
-            $stmt->bindParam(':date', $row['date'], PDO::PARAM_INT);
-            $stmt->bindParam(':code', $row['code'], PDO::PARAM_STR);
-            $stmt->bindParam(':creat_by', $row['creat_by'], PDO::PARAM_STR);
-            $stmt->bindParam(':note', $row['note'], PDO::PARAM_STR, strlen($row['note']));
+                $code = $row['code'][0];
+                $stmt->bindParam(':code', $code, PDO::PARAM_STR);
+                $stmt->bindParam(':date', $row['date'], PDO::PARAM_INT);
+                $stmt->bindParam(':creat_by', $row['creat_by'], PDO::PARAM_STR);
+                $stmt->bindParam(':note', $row['note'], PDO::PARAM_STR, strlen($row['note']));
 
-            $exc = $stmt->execute();
+                $exc = $stmt->execute();
+            }
             if ($exc) {
                 $nv_Cache->delMod($module_name);
                 if (empty($row['id'])) {
-                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Add Action-note', 'Date: ' . nv_date('d/m/Y', $row['date']) . ', For Sale code: ' . $row['code'], $user_info['userid']);
+                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Add Action-note', 'Date: ' . nv_date('d/m/Y', $row['date']) . ', For Sale code: ' . implode(',', $row['code']), $user_info['userid']);
                 } else {
                     nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Action-note', 'ID: ' . $row['id'], $user_info['userid']);
                 }
@@ -83,15 +134,14 @@ if ($nv_Request->isset_request('submit', 'post')) {
     if (empty($row)) {
         nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
     }
+    // $arr_user_in_group = [];
+    // $arr_user_in_group[] = ['code' => $row['code'], 'title' => displayName($array_code_users[$row['code']])];
 } else { //Load form mới    
     $row['id'] = 0;
     $row['creat_by'] = $user_info['userid'];
     $row['date'] = 0;
-    $row['code'] = '';
     $row['note'] = '';
-    if (!empty($nv_Request->get_title('code', 'post,get', ''))) {
-        $row['code'] = $nv_Request->get_title('code', 'post,get');
-    }
+    // $row['code'] = $nv_Request->get_array('code', 'post,get', []);
 }
 
 if (empty($row['date'])) {
@@ -99,15 +149,8 @@ if (empty($row['date'])) {
 } else {
     $row['date'] = date('d/m/Y', $row['date']);
 }
-
 $row['note'] = nv_htmlspecialchars(nv_br2nl($row['note']));
 
-// $array_code_users = [];
-// $_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
-// $_query = $db->query($_sql);
-// while ($_row = $_query->fetch()) {
-//     $array_code_users[$_row['userid']] = $_row;
-// }
 
 $xtpl = new XTemplate('action-note.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
@@ -122,52 +165,29 @@ $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
 
-if (defined('NV_IS_MODADMIN')) { //Nếu là ADMIN thì show danh sách các DSS
-    foreach ($array_leader as $group_id => $_leader) {
-        $xtpl->assign('OPTION', [
-            'key' => $_leader['code'],
-            'title' => $array_code_users[$_leader['code']]['last_name'] . ' ' . $array_code_users[$_leader['code']]['first_name'] . ' (' . $_leader['code'] . ')',
-            'selected' => ($_leader['code'] == $row['code']) ? ' selected="selected"' : ''
-        ]);
-        $xtpl->parse('main.select_code.loop');
-    }
-    $xtpl->parse('main.select_code');
-} elseif ($leader_team > 1) { //Nếu là DSS thì show danh sách sale team mình
-    $in_group = $array_infor_users[$user_info['userid']]['group_id'];
-    $list_code_in_group = implode(',', $array_team_users[$in_group]);
-    $arr_code_in_group = $array_team_users[$in_group];
-    foreach ($arr_code_in_group as $_userid => $_code) {
-        if (!empty($array_code_users[$_code])) {
-            $xtpl->assign('OPTION', [
-                'key' => $_code,
-                'title' => $array_code_users[$_code]['last_name'] . ' ' . $array_code_users[$_code]['first_name'] . ' (' . $_code . ')',
-                'selected' => ($_code == $row['code']) ? ' selected="selected"' : ''
-            ]);
-            $xtpl->parse('main.select_code.loop');
+if (empty($row['id'])) {
+    foreach ($arr_user_in_group as $_userid => $value) {
+        if (!empty($_row_exist) and in_array($value['code'], $_row_exist)) {
+            $exist = true;
+        } else {
+            $exist = false;
         }
+        $xtpl->assign('OPTION', [
+            'key' => $value['code'],
+            'title' => $value['title'],
+            // 'checked' => ($value['code'] == $row['code']) ? ' checked="checked"' : '',
+            'disabled' => $exist ? 'disabled' : '',
+            'color' => $exist ? 'red' : ''
+        ]);
+        $xtpl->parse('main.checkbox_code.loop');
     }
-    $xtpl->parse('main.select_code');
+    $xtpl->parse('main.checkbox_code');
+    $page_title = $lang_module['add_action'];
 } else {
-    $xtpl->assign('SALE_CODE', $array_infor_users[$user_info['userid']]['code']);
+    $xtpl->assign('SALE_TITLE', displayName($array_code_users[$row['code']]) . ' (' . $row['code'] . ')');
     $xtpl->parse('main.input_code');
+    $page_title = $lang_module['edit_add_action'];
 }
-
-// if ($leader_team > 0) {
-//     foreach ($arr_code_in_group as $_userid => $_code) {
-//         if (!empty($array_code_users[$_code])) {
-//             $xtpl->assign('OPTION', [
-//                 'key' => $_code,
-//                 'title' => displayName($array_code_users[$_code]) . ' <sub> ' . $_code . '</sub>',
-//                 'checked' => ($_code == $row['code']) ? ' checked="checked"' : ''
-//             ]);
-//             $xtpl->parse('main.checkbox_code.loop');
-//         }
-//     }
-//     $xtpl->parse('main.checkbox_code');
-// } else {
-//     $xtpl->assign('SALE_CODE', $array_infor_users[$user_info['userid']]['code']);
-//     $xtpl->parse('main.input_code');
-// }
 
 
 if (!empty($error)) {
@@ -178,7 +198,7 @@ if (!empty($error)) {
 $xtpl->parse('main');
 $contents = $xtpl->text('main');
 
-$page_title = $lang_module['action-note'];
+
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

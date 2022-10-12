@@ -76,11 +76,12 @@ $lang_module['error_required_courier_app'] = 'Lỗi: bạn cần nhập dữ li�
 $lang_module['error_required_courier_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Courier LOAN';
 $lang_module['error_required_credit_app'] = 'Lỗi: bạn cần nhập dữ liệu cho Credit Card APP';
 $lang_module['error_required_credit_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Credit Card LOAN';
-$lang_module['error_duplicated'] = 'Lỗi: dữ liệu cho sale %s vào ngày %s đã tồn tại, không thể tạo dữ liệu 2 lần cho 1 DSA trên 1 ngày';
+$lang_module['error_duplicated'] = 'Lỗi: dữ liệu cho Nhân viên %s vào ngày %s đã tồn tại, không thể tạo dữ liệu 2 lần cho 1 người trên 1 ngày';
 $lang_module['save'] = 'Ghi lại';
 
 //Lang for function actions
 $lang_module['add_action'] = 'Thêm Action Note';
+$lang_module['edit_add_action'] = 'Sửa Action Note';
 $lang_module['note'] = 'Nội dung';
 $lang_module['action_note'] = 'Action note';
 
@@ -108,6 +109,3 @@ $lang_module['not_reported'] = 'DSA chưa gửi báo cáo hôm nay';
 $lang_module['income_date'] = 'Thu nhập hôm nay của %s bạn là:';
 $lang_module['income_month'] = 'Thu nhập MTD của %s bạn là:';
 $lang_module['income_noloan'] = 'Tổ quốc ghi công NO LOAN:';
-
-//Lang for function test
-$lang_module['test'] = 'test';
