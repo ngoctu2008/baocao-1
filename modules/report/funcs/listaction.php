@@ -27,13 +27,6 @@ if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_reques
 $row = [];
 $error = [];
 
-// $array_code_users = [];
-// $_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
-// $_query = $db->query($_sql);
-// while ($_row = $_query->fetch()) {
-//     $array_code_users[$_row['code']] = $_row;
-// }
-
 $q = $nv_Request->get_title('q', 'post,get');
 
 if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('q_date', 'post,get'), $m)) {
@@ -42,12 +35,12 @@ if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_st
     $to_time = mktime(23, 59, 59, $m[2], $m[1], $m[3]);
 } else if (!empty($nv_Request->get_string('q_date', 'post,get'))) {
     $q_date = $nv_Request->get_string('q_date', 'post,get');
-    $from_time = mktime(0, 0, 0, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
-    $to_time = mktime(23, 59, 59, intval(date("m", $q_date)), intval(date("d", $q_date)), intval(date("Y", $q_date)));
+    $from_time = mktime(0, 0, 0, intval(date("n", $q_date)), intval(date("j", $q_date)), intval(date("Y", $q_date)));
+    $to_time = mktime(23, 59, 59, intval(date("n", $q_date)), intval(date("j", $q_date)), intval(date("Y", $q_date)));
 } else {
     $q_date = NV_CURRENTTIME;
-    $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
-    $to_time = mktime(23, 59, 59, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $from_time = mktime(0, 0, 0, intval(date("n", NV_CURRENTTIME)), intval(date("j", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
+    $to_time = mktime(23, 59, 59, intval(date("n", NV_CURRENTTIME)), intval(date("j", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
 }
 
 // Fetch Limit
@@ -62,8 +55,11 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
 
     $where = 'date >= ' . intval($from_time) . ' and date <= ' . intval($to_time);
     if (defined('NV_IS_MODADMIN')) {
-        $where .= ''; //Nếu từ cấp quản lý module trở lên thì cho xem tất cả
-    } elseif ($leader_team < 1) {
+        foreach ($array_leader as $group_id => $_leader) {
+            $arr_code_in_group[] = $_leader['code'];
+        }
+        $where .= ' AND code IN ("' . implode('","', $arr_code_in_group) . '") '; //ASM, ADMIN chỉ xem của DSS
+    } elseif ($leader_team < 1) { //DSS chỉ xem của DSA team mình
         $where .= ' AND code = "' . $array_infor_users[$user_info['userid']]['code']  . '"';
     } else {
         //Nếu là quản lý thì lấy thành viên của nhóm mình
