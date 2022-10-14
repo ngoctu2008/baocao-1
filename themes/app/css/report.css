@@ -1,0 +1,98 @@
+/**
+ * @Project NUKEVIET 4.x
+ * @Author  <tuanpb1988@gmail.com>
+ * @Copyright (C) 2022 . All rights reserved
+ * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
+ * @Createdate Wed, 21 Sep 2022 04:14:05 GMT
+ */
+
+label {
+    padding-top: 5px;
+}
+.field {
+    vertical-align:middle;
+    font-weight: bolder;
+}
+
+.panel-heading {
+    text-align: center;
+}
+
+th {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.label_table_lv2 {
+    /* background-color: #8dc1ed; */
+    padding: 0px !important;
+    transform: rotateY(45deg);
+}
+
+.total {
+    font-weight: bold;
+}
+
+.box-monitor {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    padding: 2px !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+    line-height: 1.5em !important;
+}
+.red-box {
+    border-color: red !important;
+}
+
+.text-hightlight {
+    font-weight: bold;
+    color: red !important;
+}
+
+.table-monitor>tbody>tr>td {
+    border-top: 0 !important;
+    padding: 4px 2px !important;
+}
+
+.field-monitor {
+    text-align: left;
+    font-weight: bold;
+    vertical-align: middle !important;
+    font-size: 13px !important;
+}
+
+.title-block {
+    text-transform: uppercase;
+}
+
+.small-text {
+    font-size: 11px;
+}
+.green {
+    color: green;
+    font-style: italic;
+}
+.red {
+    color: red;
+    font-style: italic;
+}
+.bg-gray {
+    background-color: lightgray;
+}
+
+.panel-body {
+    padding: 8px !important;
+}
+
+.w15p {
+    width: 15%;
+}
+.w20p {
+    width: 20%;
+}
+.w25p {
+    width: 25%;
+}
+.less-text {
+    font-size: 12px !important;
+}
