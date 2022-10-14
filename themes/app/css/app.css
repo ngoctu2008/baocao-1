@@ -2126,7 +2126,7 @@ a {
 }
 
 .authentication-lock-screen {
-	height: 80vh;
+	height: 100vh;
 	padding: 0 1rem
 }
 
@@ -3325,7 +3325,7 @@ input.search-control-2::placeholder {
 
 }
 .login-box-card {
-	padding: 0 5px 0 5px;
+	padding: 0 15px 0 15px;
     border-radius: 4px;
 }
 

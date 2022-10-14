@@ -7,6 +7,7 @@
 <link href="/themes/{TEMPLATE}/css/app.css" rel="stylesheet" />
 <link href="/themes/{TEMPLATE}/css/icon.css" rel="stylesheet" />
 <link href="/themes/{TEMPLATE}/css/semi-dark.css" rel="stylesheet" />
+<link href="/themes/{TEMPLATE}/css/utility.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <script src="/themes/{TEMPLATE}/js/pace.min.js"></script>
 
@@ -15,8 +16,8 @@
 	<!-- wrapper -->
 	<div class="wrapper">
 		<div class="authentication-lock-screen d-flex align-items-center justify-content-center">
-			<div class="shadow-none">
-				<div class="card-body text-center">
+			<div class="card shadow-none">
+				<div class="card-body text-center login-box-card">
 					{MODULE_CONTENT}
 				</div>
 			</div>
