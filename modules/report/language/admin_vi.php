@@ -24,3 +24,14 @@ $lang_module['statistical'] = 'Thống kê';
 $lang_module['action_note'] = 'Action Note';
 $lang_module['extract'] = 'Xuất file excel';
 $lang_module['save'] = 'Lưu lại';
+
+//Lang for function config
+$lang_module['add'] = 'Thêm mới';
+$lang_module['edit'] = 'Sửa';
+$lang_module['delete'] = 'Xóa';
+$lang_module['number'] = 'STT';
+$lang_module['active'] = 'Trạng thái';
+$lang_module['valid_time'] = 'Thời gian cho phép Nhập - Sửa báo cáo';
+$lang_module['showname_format'] = 'Định dạng hiển thị tên nhân viên';
+$lang_module['require_valid_time'] = $lang_module['valid_time'] . ' Không được để trống';
+$lang_module['err_valid_time'] = $lang_module['valid_time'] . ' phải theo định dạng: from Hour - to Hour';

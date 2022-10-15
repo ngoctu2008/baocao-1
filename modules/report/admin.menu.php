@@ -13,6 +13,6 @@ if (!defined('NV_ADMIN')) {
 }
 
 $submenu['config'] = $lang_module['config'];
-$submenu['statistical'] = $lang_module['statistical'];
-$submenu['action_note'] = $lang_module['action_note'];
-$submenu['extract'] = $lang_module['extract'];
+// $submenu['statistical'] = $lang_module['statistical'];
+// $submenu['action_note'] = $lang_module['action_note'];
+// $submenu['extract'] = $lang_module['extract'];
