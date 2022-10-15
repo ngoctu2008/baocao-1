@@ -1,0 +1,25 @@
+
+
+/*# sourceMappingURL=utility.css.map */
+
+.align-items-center {
+    align-items: center!important;
+}
+.justify-content-center {
+    justify-content: center!important;
+}
+.d-flex {
+    display: flex!important;
+}
+
+@media (max-width: 767.98px) {
+    body {
+        padding-top: 40% !important;
+    }
+}
+
+/* @media (min-width: 767.98px) {
+    body {
+        padding: 48px 0 40px 0 !important;
+    }
+} */
