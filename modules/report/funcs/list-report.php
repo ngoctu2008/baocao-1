@@ -209,7 +209,7 @@ if ($show_view) {
     while ($view = $sth->fetch()) {
         $view['number'] = $number++;
         $view['banca_sale'] = empty($view['banca_sale']) ? 0 : number_format($view['banca_sale'], 0, ',', '.');
-        $view['sale_name'] =  $array_code_users[$view['code']]['last_name'] . ' ' . $array_code_users[$view['code']]['first_name'] . ' (' . $view['code'] . ')';
+        $view['sale_name'] =  displayName($array_code_users[$view['code']]) . ' <sub> (' . $view['code'] . ') </sub>';
         $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
         $view['action_note'] = get_action_note($array_code_users[$view['code']]['userid'], 0, $view['date']);
         if (empty($view['action_note'])) {
