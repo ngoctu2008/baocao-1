@@ -118,9 +118,9 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-function export_dailyreport($array_data, $total_sheet = 0)
+function export_dailyreport($array_data, $total_sheet = 0, $total_by_team = 0)
 {
-    global $module_name, $lang_module, $user_info, $array_code_users;
+    global $module_name, $lang_module, $user_info, $array_group_info;
     $objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load(NV_ROOTDIR . '/modules/report/dailyreport.xlsx');
 
     //Xuất dữ liệu tại Sheet 1
@@ -193,7 +193,7 @@ function export_dailyreport($array_data, $total_sheet = 0)
         }
     }
 
-    //Tính tổng ở sheet 2
+    //Tính tổng từng DSA ở Sheet 2
     if ($total_sheet) {
         $total_by_code = []; //Tính tổng cho từng nhân viên
         $list_ignore2 = ['id', 'code', 'date', 'team', 'sale_name', 'action_note'];
@@ -212,7 +212,6 @@ function export_dailyreport($array_data, $total_sheet = 0)
 
         //Ghi dữ liệu
         $objWorksheetTotal = $objPHPExcel->setActiveSheetIndex(1);
-
         $r = 5;
         $num = 0;
         foreach ($total_by_code as $code => $_row) {
@@ -234,6 +233,18 @@ function export_dailyreport($array_data, $total_sheet = 0)
         }
     }
 
+    //Tính tổng theo Team ở Sheet 3
+    if ($total_by_team) {
+        //Ghi dữ liệu
+        $objWorksheetTotal = $objPHPExcel->setActiveSheetIndex(2);
+        $r = 6;
+        $c = 2;
+        foreach ($array_group_info as $_group_id => $_group) {
+            //Ghi danh sách các team vào cột Team
+            $objWorksheetTotal->setCellValueByColumnAndRow($c, $r, $_group['title']); //Tên Team
+            $r++;
+        }
+    }
 
     $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objPHPExcel, 'Xlsx');
     $objWriter->save($file_export_tmp); //lưu vào file tạm trên server
@@ -337,7 +348,9 @@ function get_action_note($userid, $for_display = 1, $date = 0)
 
     return $_action['note'];
 }
-
+/**
+ * Hiển thị số liệu tổng theo ngày cho block thống kê
+ */
 function render_data_total($type = 'month', $arr_codes)
 {
     global $db, $module_data;

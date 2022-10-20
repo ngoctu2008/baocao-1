@@ -67,7 +67,7 @@ if ($nv_Request->isset_request('export', 'get')) {
             $array_data[] = $_row;
         }
 
-        export_dailyreport($array_data, 1);
+        export_dailyreport($array_data, 1, 1);
     } elseif ($leader_team < 1) {
         //Không phải là leader, không được xuất file
         $redirect = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report';
