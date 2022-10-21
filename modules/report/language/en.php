@@ -99,3 +99,13 @@ $lang_module['extract'] = 'extract';
 
 //Lang for function test
 $lang_module['test'] = 'test';
+
+//Lang for function plans
+$lang_module['plans'] = 'plans';
+$lang_module['namecard'] = 'Namecard';
+$lang_module['point_link'] = 'Point link';
+$lang_module['online'] = 'Online';
+$lang_module['ads'] = 'Ads';
+$lang_module['ctv'] = 'Ctv';
+$lang_module['cskh'] = 'Cskh';
+$lang_module['telesale'] = 'Telesale';

@@ -74,6 +74,7 @@
                     <th colspan="2">{LANG.ubank}</th>
                     <th colspan="3">{LANG.courier}</th>
                     <th colspan="2">{LANG.credit}</th>
+                    <th colspan="2">{LANG.smartpos}</th>
                     <th rowspan="2">{LANG.action_note}</th>
                 </tr>
                 <tr>
@@ -91,6 +92,8 @@
                     <th class="label_table_lv2">{LANG.app}</th>
                     <th class="label_table_lv2">{LANG.loan}</th>
                     <th class="label_table_lv2">{LANG.lead}</th>
+                    <th class="label_table_lv2">{LANG.app}</th>
+                    <th class="label_table_lv2">{LANG.loan}</th>
                     <th class="label_table_lv2">{LANG.app}</th>
                     <th class="label_table_lv2">{LANG.loan}</th>
                     <th class="label_table_lv2">{LANG.app}</th>
@@ -135,6 +138,8 @@
                     <td> {VIEW.courier_loan} </td>
                     <td> {VIEW.credit_app} </td>
                     <td> {VIEW.credit_loan} </td>
+                    <td> {VIEW.smartpos_app} </td>
+                    <td> {VIEW.smartpos_loan} </td>
                     <td class="text-center">
                         <!-- BEGIN: add_action -->
                         <a href="{link_add_action}" class="btn-warning btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</a>

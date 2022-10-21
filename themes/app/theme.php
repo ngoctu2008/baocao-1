@@ -175,7 +175,8 @@ function nv_site_theme($contents, $full = true)
         'href' => NV_STATIC_URL . 'themes/' . $global_config['module_theme'] . '/css/custom.css'
     ];
 
-    // Customs Style
+    // Customs Style 
+
     if (isset($module_config['themes'][$global_config['module_theme']]) and !empty($module_config['themes'][$global_config['module_theme']])) {
         $config_theme = unserialize($module_config['themes'][$global_config['module_theme']]);
 
@@ -246,7 +247,6 @@ function nv_site_theme($contents, $full = true)
         'ext' => 1,
         'content' => NV_STATIC_URL . 'themes/' . $global_config['module_theme'] . '/js/custom.js'
     ];
-
     foreach ($html_js as $js) {
         if ($js['ext']) {
             $xtpl->assign('JS_SRC', $js['content']);

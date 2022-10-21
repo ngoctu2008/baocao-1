@@ -46,6 +46,7 @@ $lang_module['vnd'] = 'VND';
 $lang_module['lead'] = 'Lead';
 
 $lang_module['xstu'] = 'XSTU';
+$lang_module['smartpos'] = 'Smartpos';
 
 $lang_module['pl'] = 'PL';
 $lang_module['ipp'] = 'IPP/GNN';
@@ -76,6 +77,8 @@ $lang_module['error_required_courier_app'] = 'Lỗi: bạn cần nhập dữ li�
 $lang_module['error_required_courier_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Courier LOAN';
 $lang_module['error_required_credit_app'] = 'Lỗi: bạn cần nhập dữ liệu cho Credit Card APP';
 $lang_module['error_required_credit_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Credit Card LOAN';
+$lang_module['error_required_smartpos_app'] = 'Lỗi: bạn cần nhập dữ liệu cho Smart Pos APP';
+$lang_module['error_required_smartpos_loan'] = 'Lỗi: bạn cần nhập dữ liệu cho Smart Pos LOAN';
 $lang_module['error_duplicated'] = 'Lỗi: dữ liệu cho Nhân viên %s vào ngày %s đã tồn tại, không thể tạo dữ liệu 2 lần cho 1 người trên 1 ngày';
 $lang_module['save'] = 'Ghi lại';
 
@@ -109,3 +112,13 @@ $lang_module['not_reported'] = 'DSA chưa gửi báo cáo hôm nay';
 $lang_module['income_date'] = 'Thu nhập hôm nay của %s bạn là:';
 $lang_module['income_month'] = 'Thu nhập MTD của %s bạn là:';
 $lang_module['income_noloan'] = 'Tổ quốc ghi công NO LOAN:';
+
+//Lang for function plans
+$lang_module['plans'] = 'Kế hoạch hàng ngày';
+$lang_module['namecard'] = 'Name Card';
+$lang_module['point_link'] = 'Điểm LK';
+$lang_module['online'] = 'Online';
+$lang_module['ads'] = 'Quảng cáo';
+$lang_module['ctv'] = 'CTV';
+$lang_module['cskh'] = 'CSKH';
+$lang_module['telesale'] = 'Telesale';

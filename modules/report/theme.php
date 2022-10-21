@@ -22,7 +22,7 @@ if (!defined('NV_IS_MOD_REPORT')) {
 function nv_theme_report_main()
 {
     global $module_info, $lang_module, $user_info, $op, $module_file, $db, $module_data, $codes_in_team, $level, $array_infor_users;
-    global $leader_team, $array_team_users;
+    global $leader_team, $array_team_users, $global_config;
 
     if (is_array($codes_in_team)) {
         $listcode = implode('","', $codes_in_team);
@@ -44,7 +44,9 @@ function nv_theme_report_main()
     $sth = $db->prepare($db->sql());
     $sth->execute();
 
-    $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
+    $template = file_exists(NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file . '/' . $op . '.tpl') ? $global_config['module_theme'] : 'default';
+
+    $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $template . '/modules/' . $module_file);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('NV_LANG_VARIABLE', NV_LANG_VARIABLE);
     $xtpl->assign('NV_LANG_DATA', NV_LANG_DATA);

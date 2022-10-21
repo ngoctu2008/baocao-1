@@ -148,6 +148,19 @@
                             </div>
                         </td>
                     </tr>
+                    <tr class="rows">
+                        <td class="field">{LANG.smartpos}</td>
+                        <td>
+                            <div class="form-group ">
+                                <div class="col-xs-8 col-md-4">
+                                    <input class="form-control" type="text" name="smartpos_app" value="{ROW.smartpos_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}"/>
+                                </div>
+                                <div class="col-xs-8 col-md-4">
+                                    <input class="form-control" type="text" name="smartpos_loan" value="{ROW.smartpos_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
                 </tbody>
 
