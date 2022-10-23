@@ -26,6 +26,7 @@ $lang_module['team-manager'] = 'Quản lý Team';
 
 //Lang for function report
 $lang_module['title_report'] = 'Báo cáo công việc hàng ngày';
+$lang_module['table_report'] = 'Bảng thống kê doanh số bán hàng';
 $lang_module['sale_name'] = 'Nhân viên';
 $lang_module['add'] = 'Thêm mới';
 $lang_module['edit'] = 'Sửa';

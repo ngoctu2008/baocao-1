@@ -1,13 +1,14 @@
 <!-- BEGIN: main -->
 <!-- BEGIN: view -->
-<div class="well">
-    <div class="panel-heading">
-        <h1 style="text-transform: uppercase;"> {LANG.listaction} </h1>
-        <!-- BEGIN: add_button -->
-        <a href="{link_add}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới </a>
-        <!-- END: add_button -->
+<div class="alert alert-info text-center">
+    <h1 style="text-transform: uppercase;"> {LANG.listaction} </h1>
+    <!-- BEGIN: add_button -->
+    <a href="{link_add}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm mới </a>
+    <!-- END: add_button -->
+</div>
 
-    </div>
+<div class="well">
+
 
 <form action="{NV_BASE_SITEURL}index.php" method="get">
     <input type="hidden" name="{NV_LANG_VARIABLE}"  value="{NV_LANG_DATA}" />

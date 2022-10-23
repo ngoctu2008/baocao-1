@@ -8,3 +8,15 @@
  */
 
 /* Các tùy chỉnh CSS của giao diện nên để vào đây */
+
+#info_tab {
+    background-color: #f2f2f2;
+    padding: 7px 2px;
+    min-height: 36px;
+    text-align: center;
+    color: #007daf;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}

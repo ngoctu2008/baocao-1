@@ -36,8 +36,10 @@
         <div class="col-xs-24 col-sm-8 col-md-20">
             <!-- BEGIN: loop -->
             <div class="col-xs-12 col-sm-12 col-md-8">
-                <input class="form-control" type="checkbox" name="code[]" value="{OPTION.key}" {OPTION.checked} {OPTION.disabled}>
+                <label>
+                <input class="form-control" type="checkbox" name="code[]" value="{OPTION.key}" {OPTION.checked} {OPTION.disabled} />
                 <span class="less-text {OPTION.color}"> {OPTION.title} </span>
+                </label>
 
             </div>
             <!-- END: loop -->

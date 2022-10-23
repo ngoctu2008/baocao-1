@@ -463,7 +463,7 @@ mark, .mark {
 }
 
 .text-center {
-    text-align: center;
+    text-align: center !important;
 }
 
 .text-justify {
@@ -4422,7 +4422,7 @@ a.list-group-item-danger.active, button.list-group-item-danger.active, a.list-gr
 
 .panel-info>.panel-heading {
     color: #31708f;
-    background-color: #d9edf7;
+    background-color: #87c3f75e;
     border-color: #bce8f1;
 }
 

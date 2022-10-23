@@ -543,10 +543,6 @@ div.check-box {
 
 /* panel */
 
-.panel,
-.panel-heading {
-    border-radius: 0;
-}
 
 .panel-body p {
     margin: 0;

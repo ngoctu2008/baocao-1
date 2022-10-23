@@ -19,7 +19,7 @@ if ($nv_Request->isset_request('delete_id', 'get') and $nv_Request->isset_reques
     if ($id > 0 and $delete_checkss == md5($id . NV_CACHE_PREFIX . $client_info['session_id'])) {
         $db->query('DELETE FROM ' . NV_PREFIXLANG . '_' . $module_data . '_plans  WHERE id = ' . $db->quote($id));
         $nv_Cache->delMod($module_name);
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'Delete Plans', 'ID: ' . $id, $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'Delete Plans', 'ID: ' . $id, $user_info['userid']);
         nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
     }
 }
@@ -78,9 +78,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
             if ($exc) {
                 $nv_Cache->delMod($module_name);
                 if (empty($row['id'])) {
-                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Add Plans', ' ', $admin_info['userid']);
+                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Add Plans', ' ', $user_info['userid']);
                 } else {
-                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Plans', 'ID: ' . $row['id'], $admin_info['userid']);
+                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Plans', 'ID: ' . $row['id'], $user_info['userid']);
                 }
                 nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
             }
@@ -227,12 +227,20 @@ $xtpl->assign('ROW', $row);
 $xtpl->assign('SALE_CODE', $sale_code);
 $xtpl->assign('SALE_NAME', $sale_name);
 
-$fields_list = ['namecard', 'point_link', 'online', 'ads', 'ctv', 'cskh', 'telesale'];
-foreach ($fields_list as $field) {
-    $xtpl->assign('field_title', $lang_module[$field]);
-    $xtpl->assign('field_name', $field);
-    $xtpl->assign('field_value', empty($row[$field]) ? '' : $row[$field]);
-    $xtpl->parse('main.INPUT');
+
+if (defined('NV_IS_MODADMIN') or $leader_team >= 1) { //Là DSS hoặc cấp quản lý module trở lên
+    $xtpl->parse('main.view.IS_MANAGER');
+} else { //Nếu là sale 
+    $xtpl->parse('main.view.IS_SALE');
+
+    $fields_list = ['namecard', 'point_link', 'online', 'ads', 'ctv', 'cskh', 'telesale'];
+    foreach ($fields_list as $field) {
+        $xtpl->assign('field_title', $lang_module[$field]);
+        $xtpl->assign('field_name', $field);
+        $xtpl->assign('field_value', empty($row[$field]) ? '' : $row[$field]);
+        $xtpl->parse('main.form.input');
+    }
+    $xtpl->parse('main.form');
 }
 
 $xtpl->assign('q_date_from_show', nv_date('d/m/Y', $from_time));
@@ -257,6 +265,7 @@ if ($show_view) {
     }
     while ($view = $sth->fetch()) {
         $view['date_show'] = nv_date('d/m/Y', $view['date']);
+        $view['ads'] = number_format($view['ads'], 0, ',', '.');
         $view['sale_name'] = displayName($array_code_users[$view['code']]);
         $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;id=' . $view['id'];
         $view['link_delete'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;delete_id=' . $view['id'] . '&amp;delete_checkss=' . md5($view['id'] . NV_CACHE_PREFIX . $client_info['session_id']);

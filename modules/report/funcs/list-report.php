@@ -177,6 +177,7 @@ $xtpl->assign('MODULE_UPLOAD', $module_upload);
 $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
 $xtpl->assign('OP', $op);
 $xtpl->assign('ROW', $row);
+$xtpl->assign('TEMPLATE', 'app');
 
 $xtpl->assign('q_date_from_show', nv_date('d/m/Y', $from_time));
 $xtpl->assign('q_date_to_show', nv_date('d/m/Y', $to_time));
