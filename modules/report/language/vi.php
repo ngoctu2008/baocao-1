@@ -23,6 +23,7 @@ $lang_module['report'] = 'Nhập báo cáo';
 $lang_module['action-note'] = 'Action Note';
 $lang_module['extract'] = 'Xuất file excel';
 $lang_module['team-manager'] = 'Quản lý Team';
+$lang_module['recent_day'] = 'Báo cáo hàng ngày (%s)';
 
 //Lang for function report
 $lang_module['title_report'] = 'Báo cáo công việc hàng ngày';

@@ -95,6 +95,7 @@ function nv_theme_report_main()
         $xtpl->parse('main.TOTAL_DAILY.empty');
     }
     // $xtpl->assign('link_export', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report?export=1');
+    $xtpl->assign('title', sprintf($lang_module['recent_day'], nv_date('d/m/Y', NV_CURRENTTIME)));
     $xtpl->parse('main.TOTAL_DAILY');
 
     /** BEGIN: BLOCK Hiển thị số liệu tổng THÁNG */

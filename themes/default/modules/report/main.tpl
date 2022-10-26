@@ -130,7 +130,7 @@
     <!-- BEGIN: TOTAL_DAILY -->
     <div class="panel panel-info box-monitor">
         <div class="panel-heading title-block">
-            <strong> NGÀY HÔM NAY </strong>
+            <strong> {title} </strong>
         </div>
         <div class="panel-body">
             <!-- BEGIN: empty -->
