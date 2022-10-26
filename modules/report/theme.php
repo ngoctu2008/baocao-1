@@ -65,7 +65,7 @@ function nv_theme_report_main()
 
     $xtpl->assign('label_income_date', sprintf($lang_module['income_date'], $appellation));
     $xtpl->assign('label_income_month', sprintf($lang_module['income_month'], $appellation));
-    $xtpl->parse('main.INCOME');
+    // $xtpl->parse('main.INCOME');
 
 
     /** BEGIN: BLOCK Hiển thị số liệu tổng NGÀY */
@@ -154,8 +154,10 @@ function nv_theme_report_main()
 
     /** BEGIN: BLOCK ACTION NOTE */
     $action_content = get_action_note($user_info['userid']);
-    $xtpl->assign('CONTENT_NOTE', $action_content);
-    $xtpl->parse('main.ACTION_NOTE');
+    if (!empty($action_content)) {
+        $xtpl->assign('CONTENT_NOTE', $action_content);
+        $xtpl->parse('main.ACTION_NOTE');
+    }
 
 
     if (!empty($error)) {

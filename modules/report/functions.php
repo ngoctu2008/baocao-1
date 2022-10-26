@@ -320,7 +320,7 @@ function check_report_static_team($level = 2)
  */
 function get_action_note($userid, $for_display = 1, $date = 0)
 {
-    global $global_config, $array_infor_users, $module_data, $db, $module_name;
+    global $array_infor_users, $module_data, $db, $module_name, $leader_team;
     //ACTION_NOTE
     if (empty($date)) {
         $from_time = mktime(0, 0, 0, intval(date("m", NV_CURRENTTIME)), intval(date("d", NV_CURRENTTIME)), intval(date("Y", NV_CURRENTTIME)));
@@ -338,7 +338,7 @@ function get_action_note($userid, $for_display = 1, $date = 0)
 
     if (empty($_action)) {
         $_action['note'] = '';
-        if ($for_display) {
+        if ($for_display and $leader_team >= 1) {
             $link_add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=action-note';
             $_action['note'] = '<div class="text-center"> <a href="' . $link_add_action . '" class="btn btn-success"> <i class="fa fa-plus-circle" aria-hidden="true"> Add Action Note </i> </a> </div>';
         }
