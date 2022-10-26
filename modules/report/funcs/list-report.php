@@ -211,16 +211,21 @@ if ($show_view) {
         $view['number'] = $number++;
         $view['banca_sale'] = empty($view['banca_sale']) ? 0 : number_format($view['banca_sale'], 0, ',', '.');
         $view['sale_name'] =  displayName($array_code_users[$view['code']]) . ' <sub> (' . $view['code'] . ') </sub>';
-        $view['link_edit'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
+        $today = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME));
+        if ($view['date'] >= $today) {
+            $link_edit = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
+            $xtpl->assign('link_edit', $link_edit);
+            $xtpl->parse('main.view.loop.edit_allow');
+        }
         $view['action_note'] = get_action_note($array_code_users[$view['code']]['userid'], 0, $view['date']);
-        if (empty($view['action_note'])) {
-            $add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note&amp;code=' . $view['code'];
-            $xtpl->assign('link_add_action', $add_action);
-            $xtpl->parse('main.view.loop.add_action');
-        } else {
+        if (!empty($view['action_note'])) {
             $action_note = str_replace('</br>', '. ', $view['action_note']);
             $xtpl->assign('action_note', $action_note);
             $xtpl->parse('main.view.loop.view_action');
+        } elseif ($leader_team >= 1) {
+            $add_action = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=action-note&amp;code=' . $view['code'];
+            $xtpl->assign('link_add_action', $add_action);
+            $xtpl->parse('main.view.loop.add_action');
         }
         $view['date'] = nv_date('d/m/Y', $view['date']);
         // $view['link_delete'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;delete_id=' . $view['id'] . '&amp;delete_checkss=' . md5($view['id'] . NV_CACHE_PREFIX . $client_info['session_id']);

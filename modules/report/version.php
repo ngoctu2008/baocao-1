@@ -14,9 +14,9 @@ if (!defined('NV_MAINFILE')) {
 
 $module_version = [
     'name' => 'Report',
-    'modfuncs' => 'main,report,list-report, action-note, listaction, plans',
-    'change_alias' => 'main,report,list-report,action-note,listaction, plans',
-    'submenu' => 'main,report,list-report,action-note,listaction, plans',
+    'modfuncs' => 'main,report,list-report, action-note, listaction, plans, config',
+    'change_alias' => 'main,report,list-report,action-note,listaction, plans, config',
+    'submenu' => 'main,report,list-report,action-note,listaction, plans, config',
     'is_sysmod' => 0,
     'virtual' => 0,
     'version' => '4.3.03',

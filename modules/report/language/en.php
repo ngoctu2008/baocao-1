@@ -109,3 +109,8 @@ $lang_module['ads'] = 'Ads';
 $lang_module['ctv'] = 'Ctv';
 $lang_module['cskh'] = 'Cskh';
 $lang_module['telesale'] = 'Telesale';
+
+//Lang for function config
+$lang_module['config'] = 'config';
+$lang_module['kpi'] = 'Kpi';
+$lang_module['target'] = 'Target';

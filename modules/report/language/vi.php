@@ -104,7 +104,7 @@ $lang_module['warning'] = 'Cảnh báo';
 $lang_module['waiting_redirect'] = 'Vui lòng chờ giây lát để hệ thống chuyển hướng';
 $lang_module['no_permission'] = 'Bạn không có quyền để thực hiện thao tác này!';
 $lang_module['redirect'] = 'Chuyển trang';
-$lang_module['over_time'] = 'Chức năng chỉ được sử dụng từ 8h - 21h hàng ngày';
+$lang_module['over_time'] = 'Chức năng chỉ được sử dụng từ %sh - %sh hàng ngày';
 
 //Lang for function monitor
 $lang_module['monitor'] = 'Tổng quát';
@@ -123,3 +123,9 @@ $lang_module['ads'] = 'Quảng cáo';
 $lang_module['ctv'] = 'CTV';
 $lang_module['cskh'] = 'CSKH';
 $lang_module['telesale'] = 'Telesale';
+
+//Lang for function config
+$lang_module['config_kpi'] = 'Cấu hình KPI cá nhân';
+$lang_module['kpi'] = 'KPI được chia';
+$lang_module['target'] = 'Target được chia';
+$lang_module['err_require'] = 'Lỗi: Bạn cần phải nhập đầy đủ dữ liệu!';

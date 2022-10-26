@@ -16,7 +16,8 @@ if (!defined('NV_IS_MOD_REPORT')) {
 $now_time = intval(nv_date('H', NV_CURRENTTIME));
 if ($now_time >= $time_over[1] or $now_time < $time_over[0]) {
     $redirect = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=list-report', true);
-    $contents = nv_theme_alert($lang_module['over_time'], $lang_module['waiting_redirect'], 'warning', $redirect, $lang_module['redirect'], 2);
+    $notification = sprintf($lang_module['over_time'], $time_over[0], $time_over[1]);
+    $contents = nv_theme_alert($notification, $lang_module['waiting_redirect'], 'warning', $redirect, $lang_module['redirect'], 2);
     include NV_ROOTDIR . '/includes/header.php';
     echo nv_site_theme($contents);
     include NV_ROOTDIR . '/includes/footer.php';
@@ -172,7 +173,10 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
 } elseif ($row['id'] > 0) {
     $row = $db->query('SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows WHERE id=' . $row['id'])->fetch();
+    $today = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME));
     if (empty($row)) {
+        nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
+    } elseif ($row['date'] < $today) {
         nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
     }
 } else {

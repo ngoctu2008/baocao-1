@@ -112,7 +112,7 @@
                 </tr>
                 <!-- BEGIN: generate_page -->
                 <tr>
-                    <td class="text-center" colspan="22">{NV_GENERATE_PAGE}</td>
+                    <td class="text-center" colspan="23">{NV_GENERATE_PAGE}</td>
                 </tr>
                 <!-- END: generate_page -->
             </tfoot>
@@ -120,7 +120,9 @@
                 <!-- BEGIN: loop -->
                 <tr>
                     <td> {VIEW.date}
-                        <a href="{VIEW.link_edit}#edit"><i class="fa fa-edit fa-lg">&nbsp;</i></a>
+                        <!-- BEGIN: edit_allow -->
+                        <a href="{link_edit}#edit"><i class="fa fa-edit fa-lg">&nbsp;</i></a>
+                        <!-- END: edit_allow -->
                     </td>
                     <td> {VIEW.sale_name} </td>
                     <td> {VIEW.pl_app} </td>
