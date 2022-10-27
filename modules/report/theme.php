@@ -21,8 +21,9 @@ if (!defined('NV_IS_MOD_REPORT')) {
  */
 function nv_theme_report_main()
 {
-    global $module_info, $lang_module, $user_info, $op, $module_file, $db, $module_data, $codes_in_team, $level, $array_infor_users;
+    global $lang_module, $user_info, $op, $module_file, $db, $module_data, $codes_in_team, $level, $array_infor_users;
     global $leader_team, $array_team_users, $global_config;
+    global $target, $kpi;
 
     if (is_array($codes_in_team)) {
         $listcode = implode('","', $codes_in_team);
@@ -102,6 +103,7 @@ function nv_theme_report_main()
     $totals_month = render_data_total('month', $codes_in_team);
     foreach ($totals_month as $key => $_group_value) {
         foreach ($_group_value as $subkey => $subvalue) {
+            $total_actual[$key] = $subvalue; //Gán thực đạt bằng số liệu tổng cuối cùng (loan, sale...)
             if ($subkey == 'sale') {
                 $subkey = $lang_module['vnd'];
                 $subvalue = number_format($subvalue, 0, ',', '.');
@@ -115,6 +117,15 @@ function nv_theme_report_main()
         if (count($_group_value) < 3) {
             $xtpl->parse('main.TOTAL_MONTH.row.td');
         }
+        //Tính tỉ lệ %
+        $total_kpi_reality = cal_total_kpi_reality($kpi, $target);
+        $target_percent = cal_target_percent($total_actual[$key], $target[$key]);
+        $kpi_revised = cal_kpi_revised($kpi[$key], $total_kpi_reality);
+        $kpi_percent = cal_kpi_percent($target_percent, $kpi_revised);
+        $xtpl->assign('target_percent', $target_percent);
+        $xtpl->assign('kpi_percent', $kpi_percent);
+        $xtpl->parse('main.TOTAL_MONTH.row.percent');
+
         $xtpl->assign('label', $lang_module[$key]);
         $xtpl->parse('main.TOTAL_MONTH.row');
     }

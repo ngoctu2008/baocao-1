@@ -185,16 +185,17 @@
                         <!-- BEGIN: td -->
                         <td> </td>
                         <!-- END: td -->
+                        <!-- BEGIN: percent -->
                         <td>
-                            <strong class="text-hightlight">0.00%</strong>
+                            <strong class="text-hightlight">{target_percent} %</strong>
                             <sub>TARGET</sub> </br>
                             <div class="bg-gray">
                                 <div class="small-text">
-                                    <strong class="green"> {KPI} 0.00</strong> KPI
+                                    <strong class="green"> {kpi_percent} %</strong> KPI
                                 </div>
                             </div>
-
                         </td>
+                        <!-- END: percent -->
                     </tr>
                     <!-- END: row -->
                 </tbody>

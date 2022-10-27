@@ -11,16 +11,60 @@
 if (!defined('NV_MAINFILE')) {
     exit('Stop!!!');
 }
-
 global $module_name, $nv_Cache;
 
+
+/**
+ * BEGIN KPI, TARGET
+ * Khởi tạo KPI, Target
+ * Tính toán %KPI đạt được, %Target đạt được của User
+ */
+$kpi = ['pl' => 25, 'dn' => 15, 'xstu' => 15, 'ipp' => 15, 'banca' => 10, 'ubank' => 5, 'courier' => 5, 'credit' => 10, 'smartpos' => 0]; //đơn vị %
+$target = ['pl' => 5, 'dn' => 3, 'xstu' => 4, 'ipp' => 0, 'banca' => 10000000, 'ubank' => 5, 'courier' => 5, 'credit' => 0, 'smartpos' => 0];
+
+//Tính Tổng số % các nghiệp vụ bán của user
+function cal_total_kpi_reality($kpi, $target)
+{
+    $total = 0;
+    foreach ($kpi as $key => $value) {
+        if ($target[$key] != 0) {
+            $total += $value;
+        }
+    }
+    return $total;
+}
+
+// Tính số %Target đạt được
+function cal_target_percent($total, $target = 1)
+{
+    if ($target == 0) {
+        return 0;
+    } else {
+        return number_format($total / $target, 2);
+    }
+}
+//Tính tỉ trọng KPI Revised
+function cal_kpi_revised($kpi, $total_kpi_reality)
+{
+    return number_format($kpi / $total_kpi_reality, 3) * 100;
+}
+//Tính số %KPI thực đạt
+function cal_kpi_percent($target_percent, $kpi_revised)
+{
+    return number_format($target_percent * $kpi_revised, 2);
+}
+
+
+/**
+ *  Get Config Module 
+ */
 $sql = 'SELECT config_name, config_value FROM ' . NV_PREFIXLANG . '_' . $module_data . '_config';
 $result = $db->query($sql);
 while (list($c_config_name, $c_config_value) = $result->fetch(3)) {
     $array_config[$c_config_name] = $c_config_value;
 }
-
 $time_over = explode('-', $array_config['valid_time']);
+
 
 function get_field_extract($field_array)
 {
