@@ -40,7 +40,7 @@ function cal_target_percent($total, $target = 1)
     if ($target == 0) {
         return 0;
     } else {
-        return number_format($total / $target, 2);
+        return number_format($total / $target, 2) * 100;
     }
 }
 //Tính tỉ trọng KPI Revised
@@ -51,7 +51,7 @@ function cal_kpi_revised($kpi, $total_kpi_reality)
 //Tính số %KPI thực đạt
 function cal_kpi_percent($target_percent, $kpi_revised)
 {
-    return number_format($target_percent * $kpi_revised, 2);
+    return number_format(($target_percent * $kpi_revised) / 100, 2);
 }
 
 
