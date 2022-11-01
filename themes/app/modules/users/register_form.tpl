@@ -4,64 +4,78 @@
     <div class="form-detail">
         <!-- BEGIN: name_show_0 -->
         <!-- BEGIN: show_last_name-->
-        <div class="form-group">
-            <div>
-                <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="last_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess="{LANG.field_unane_error}"<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
+        <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+                <div>
+                    <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="last_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess="{LANG.field_unane_error}"<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
+                </div>
             </div>
         </div>
         <!-- END: show_last_name-->
         <!-- BEGIN: show_first_name-->
+        <div class="col-xs-12 col-md-12">
         <div class="form-group">
             <div>
                 <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="first_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess="{LANG.field_unane_error}"<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
             </div>
+        </div>
         </div>
         <!-- END: show_first_name-->
         <!-- END: name_show_0 -->
 
         <!-- BEGIN: name_show_1 -->
         <!-- BEGIN: show_first_name-->
-        <div class="form-group">
-            <div>
-                <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="first_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess=""<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
+        <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+                <div>
+                    <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="first_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess=""<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
+                </div>
             </div>
         </div>
         <!-- END: show_first_name-->
         <!-- BEGIN: show_last_name-->
-        <div class="form-group">
-            <div>
-                <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="last_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess=""<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
+        <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+                <div>
+                    <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="last_name" maxlength="{FIELD.max_length}" onkeypress="validErrorHidden(this);" data-mess=""<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}" data-error="{ERRMESS}"<!-- END: data_callback-->>
+                </div>
             </div>
         </div>
         <!-- END: show_last_name-->
         <!-- END: name_show_1 -->
-
-        <div class="form-group">
-            <div>
-                <input type="text" class="required form-control" placeholder="{LANG.account}" value="" name="username" maxlength="{NICK_MAXLENGTH}" onkeypress="validErrorHidden(this);" data-mess="{USERNAME_RULE}" data-callback="login_check" data-minlength="{NICK_MINLENGTH}" data-type="{LOGINTYPE}">
+        <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+                <div>
+                    <input type="text" class="required form-control" placeholder="{LANG.account}" value="" name="username" maxlength="{NICK_MAXLENGTH}" onkeypress="validErrorHidden(this);" data-mess="{USERNAME_RULE}" data-callback="login_check" data-minlength="{NICK_MINLENGTH}" data-type="{LOGINTYPE}">
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div>
-                <input type="email" class="required form-control" placeholder="{LANG.email}" value="" name="email" maxlength="100" onkeypress="validErrorHidden(this);" data-mess="{GLANG.email_empty}">
+        <div class="col-xs-12 col-md-12">
+            <div class="form-group">
+                <div>
+                    <input type="email" class="required form-control" placeholder="{LANG.email}" value="" name="email" maxlength="100" onkeypress="validErrorHidden(this);" data-mess="{GLANG.email_empty}">
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div>
-                <input type="password" autocomplete="off" class="password required form-control" placeholder="{LANG.password}" value="" name="password" maxlength="{PASS_MAXLENGTH}" data-pattern="/^(.){{PASS_MINLENGTH},{PASS_MAXLENGTH}}$/" onkeypress="validErrorHidden(this);" data-mess="{PASSWORD_RULE}">
+        <div class="rows">
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group">
+                    <div>
+                        <input type="password" autocomplete="off" class="password required form-control" placeholder="{LANG.password}" value="" name="password" maxlength="{PASS_MAXLENGTH}" data-pattern="/^(.){{PASS_MINLENGTH},{PASS_MAXLENGTH}}$/" onkeypress="validErrorHidden(this);" data-mess="{PASSWORD_RULE}">
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <input type="password" autocomplete="off" class="re-password required form-control" placeholder="{LANG.re_password}" value="" name="re_password" maxlength="{PASS_MAXLENGTH}" data-pattern="/^(.){1,}$/" onkeypress="validErrorHidden(this);" data-mess="{GLANG.re_password_empty}">
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group">
+                    <div>
+                        <input type="password" autocomplete="off" class="re-password required form-control" placeholder="{LANG.re_password}" value="" name="re_password" maxlength="{PASS_MAXLENGTH}" data-pattern="/^(.){1,}$/" onkeypress="validErrorHidden(this);" data-mess="{GLANG.re_password_empty}">
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- BEGIN: show_gender -->
-        <div>
+        <div class="col-xs-24 col-md-24">
             <div>
                 <div class="form-group clearfix radio-box {FIELD.required} {FIELD.class}" data-mess="">
                     <label class="col-sm-8 control-label {FIELD.required} {FIELD.class}" title="{FIELD.description}"> {FIELD.title} </label>
@@ -75,56 +89,69 @@
         </div>
         <!-- END: show_gender -->
 
-        <!-- BEGIN: show_birthday -->
-        <div class="form-group">
-            <div class="input-group">
-                <input type="text" class="form-control datepicker {FIELD.required} {FIELD.class}" data-provide="datepicker" placeholder="{FIELD.title}" value="{FIELD.value}" name="birthday" readonly="readonly" style="background-color:#fff" onchange="validErrorHidden(this);" onfocus="datepickerShow(this);" data-mess=""/>
-                <span class="input-group-addon pointer" onclick="button_datepickerShow(this);"> <em class="fa fa-calendar"></em> </span>
-            </div>
-        </div>
-        <!-- END: show_birthday -->
-
-        <!-- BEGIN: show_sig -->
-        <div class="form-group">
-            <div>
-                <textarea class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" name="sig" onkeypress="validErrorHidden(this);" data-mess="">{FIELD.value}</textarea>
-            </div>
-        </div>
-        <!-- END: show_sig -->
-
-        <!-- BEGIN: show_question -->
-        <div class="form-group rel">
-            <div class="input-group">
-                <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="question" maxlength="{FIELD.max_length}" data-pattern="/^(.){{FIELD.min_length},}$/" onkeypress="validErrorHidden(this);" data-mess="{LANG.your_question_empty}">
-                <div class="input-group-btn" role="group">
-                    <button type="button" class="btn btn-default pointer dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <!-- BEGIN: frquestion -->
-                        <li><a href="javascript:void(0)" onclick="addQuestion(this);">{QUESTION}</a></li>
-                        <!-- END: frquestion -->
-                    </ul>
+        <div class="col-xs-24 col-md-24">
+            <!-- BEGIN: show_birthday -->
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control datepicker {FIELD.required} {FIELD.class}" data-provide="datepicker" placeholder="{FIELD.title}" value="{FIELD.value}" name="birthday" readonly="readonly" style="background-color:#fff" onchange="validErrorHidden(this);" onfocus="datepickerShow(this);" data-mess=""/>
+                        <span class="input-group-addon pointer" onclick="button_datepickerShow(this);"> <em class="fa fa-calendar"></em> </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- END: show_question -->
+            <!-- END: show_birthday -->
 
-        <!-- BEGIN: show_answer -->
-        <div class="form-group">
-            <div>
-                <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="answer" maxlength="{FIELD.max_length}" data-pattern="/^(.){{FIELD.min_length},}$/" onkeypress="validErrorHidden(this);" data-mess="{LANG.answer_empty}">
+            <!-- BEGIN: show_sig -->
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group">
+                    <div>
+                        <textarea class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" name="sig" onkeypress="validErrorHidden(this);" data-mess="">{FIELD.value}</textarea>
+                    </div>
+                </div>
             </div>
+            <!-- END: show_sig -->
         </div>
-        <!-- END: show_answer -->
 
+        <div class="col-xs-24 col-md-24">
+            <!-- BEGIN: show_question -->
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group rel">
+                    <div class="input-group">
+                        <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="question" maxlength="{FIELD.max_length}" data-pattern="/^(.){{FIELD.min_length},}$/" onkeypress="validErrorHidden(this);" data-mess="{LANG.your_question_empty}">
+                        <div class="input-group-btn" role="group">
+                            <button type="button" class="btn btn-default pointer dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <!-- BEGIN: frquestion -->
+                                <li><a href="javascript:void(0)" onclick="addQuestion(this);">{QUESTION}</a></li>
+                                <!-- END: frquestion -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: show_question -->
+
+            <!-- BEGIN: show_answer -->
+            <div class="col-xs-12 col-md-12">
+                <div class="form-group">
+                    <div>
+                        <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="answer" maxlength="{FIELD.max_length}" data-pattern="/^(.){{FIELD.min_length},}$/" onkeypress="validErrorHidden(this);" data-mess="{LANG.answer_empty}">
+                    </div>
+                </div>
+            </div>
+            <!-- END: show_answer -->
+        </div>
         <!-- BEGIN: field -->
         <!-- BEGIN: loop -->
         <!-- BEGIN: textbox -->
-        <div class="form-group">
-            <label for="nvcf-{FIELD.field}">{FIELD.title}:</label>
-            <div>
-                <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="custom_fields[{FIELD.field}]" onkeypress="validErrorHidden(this);" data-mess="" id="nvcf-{FIELD.field}"<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}"  data-error="{ERRMESS}"<!-- END: data_callback-->>
+        <div class="col-xs-12 col-md-8">
+            <div class="form-group">
+                <!-- <label for="nvcf-{FIELD.field}">{FIELD.title}:</label> -->
+                <div>
+                    <input type="text" class="form-control {FIELD.required} {FIELD.class}" placeholder="{FIELD.title}" value="{FIELD.value}" name="custom_fields[{FIELD.field}]" onkeypress="validErrorHidden(this);" data-mess="" id="nvcf-{FIELD.field}"<!-- BEGIN: data_callback--> data-callback="{CALLFUNC}"  data-error="{ERRMESS}"<!-- END: data_callback-->>
+                </div>
             </div>
         </div>
         <!-- END: textbox -->
@@ -212,9 +239,9 @@
         <!-- END: multiselect -->
         <!-- END: loop -->
         <!-- END: field -->
-
+        <div class="clearfix"></div>
         <!-- BEGIN: agreecheck -->
-        <div>
+        <div class="">
             <div>
                 <div class="form-group text-center check-box required" data-mess="">
                     <input type="checkbox" name="agreecheck" value="1" class="fix-box" style="margin-top:0" onclick="validErrorHidden(this,3);"/>{LANG.accept2} <a onclick="usageTermsShow('{LANG.usage_terms}');" href="javascript:void(0);"><span class="btn btn-default btn-xs">{LANG.usage_terms}</span></a>
@@ -226,9 +253,13 @@
         <!-- BEGIN: reg_captcha -->
         <div class="form-group">
             <div class="middle text-center clearfix">
-                <img class="captchaImg display-inline-block" src="{SRC_CAPTCHA}" width="{GFX_WIDTH}" height="{GFX_HEIGHT}" alt="{N_CAPTCHA}" title="{N_CAPTCHA}" />
-                <em class="fa fa-pointer fa-refresh margin-left margin-right" title="{CAPTCHA_REFRESH}" onclick="change_captcha('.rsec');"></em>
-                <input type="text" style="width:100px;" class="rsec required form-control display-inline-block" name="nv_seccode" value="" maxlength="{GFX_MAXLENGTH}" placeholder="{GLANG.securitycode}" data-pattern="/^(.){{GFX_MAXLENGTH},{GFX_MAXLENGTH}}$/" onkeypress="validErrorHidden(this);" data-mess="{GLANG.securitycodeincorrect}" />
+                <div class="col-xs-12 col-md-12">
+                    <img class="captchaImg display-inline-block" src="{SRC_CAPTCHA}" width="{GFX_WIDTH}" height="{GFX_HEIGHT}" alt="{N_CAPTCHA}" title="{N_CAPTCHA}" />
+                    <em class="fa fa-pointer fa-refresh margin-left margin-right" title="{CAPTCHA_REFRESH}" onclick="change_captcha('.rsec');"></em>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <input type="text" style="width:100px;" class="rsec required form-control display-inline-block" name="nv_seccode" value="" maxlength="{GFX_MAXLENGTH}" placeholder="{GLANG.securitycode}" data-pattern="/^(.){{GFX_MAXLENGTH},{GFX_MAXLENGTH}}$/" onkeypress="validErrorHidden(this);" data-mess="{GLANG.securitycodeincorrect}" />
+                </div>
             </div>
         </div>
         <!-- END: reg_captcha -->
@@ -244,8 +275,14 @@
         <div class="text-center margin-bottom-lg">
             <input type="hidden" name="checkss" value="{CHECKSS}" />
             <!-- BEGIN: redirect --><input name="nv_redirect" value="{REDIRECT}" type="hidden" /><!-- END: redirect -->
-            <input type="button" value="{GLANG.reset}" class="btn btn-default" onclick="validReset(this.form);return!1;" />
-            <input type="submit" class="btn btn-primary" value="{LANG.register}" />
+            <div class="rows clearfix">
+                <div class="col-xs-12 col-md-12">
+                    <input type="button" value="{GLANG.reset}" class="btn btn-default" onclick="validReset(this.form);return!1;" />
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <input type="submit" class="btn btn-primary" value="{LANG.register}" />
+                </div>
+            </div>
         </div>
         <!-- BEGIN: lostactivelink -->
         <div class="text-center">
