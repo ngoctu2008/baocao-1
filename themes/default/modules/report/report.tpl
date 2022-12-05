@@ -161,6 +161,19 @@
                             </div>
                         </td>
                     </tr>
+                    <tr class="rows">
+                        <td class="field">{LANG.vpbank}</td>
+                        <td>
+                            <div class="form-group ">
+                                <div class="col-xs-8 col-md-4">
+                                    <input class="form-control" type="text" name="vpbank_app" value="{ROW.vpbank_app}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.app}"/>
+                                </div>
+                                <div class="col-xs-8 col-md-4">
+                                    <input class="form-control" type="text" name="vpbank_loan" value="{ROW.vpbank_loan}" pattern="^[0-9]*$"  oninvalid="setCustomValidity(nv_digits)" oninput="setCustomValidity('')"  placeholder="{LANG.loan}" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
                 </tbody>
 

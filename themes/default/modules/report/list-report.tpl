@@ -76,6 +76,7 @@
                     <th colspan="3">{LANG.courier}</th>
                     <th colspan="2">{LANG.credit}</th>
                     <th colspan="2">{LANG.smartpos}</th>
+                    <th colspan="2">{LANG.vpbank}</th>
                     <th rowspan="2">{LANG.action_note}</th>
                 </tr>
                 <tr>
@@ -98,9 +99,10 @@
                     <th class="label_table_lv2">{LANG.app}</th>
                     <th class="label_table_lv2">{LANG.loan}</th>
                     <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2" title="{LANG.loan}">{LANG.loan}</th>
+                    <th class="label_table_lv2">{LANG.loan}</th>
+                    <th class="label_table_lv2">{LANG.app}</th>
+                    <th class="label_table_lv2">{LANG.loan}</th>
                 </tr>
-
             </thead>
             <tfoot>
                 <tr class="row_total">
@@ -112,7 +114,7 @@
                 </tr>
                 <!-- BEGIN: generate_page -->
                 <tr>
-                    <td class="text-center" colspan="23">{NV_GENERATE_PAGE}</td>
+                    <td class="text-center" colspan="28">{NV_GENERATE_PAGE}</td>
                 </tr>
                 <!-- END: generate_page -->
             </tfoot>
@@ -145,6 +147,8 @@
                     <td> {VIEW.credit_loan} </td>
                     <td> {VIEW.smartpos_app} </td>
                     <td> {VIEW.smartpos_loan} </td>
+                    <td> {VIEW.vpbank_app} </td>
+                    <td> {VIEW.vpbank_loan} </td>
                     <td class="text-center">
                         <!-- BEGIN: add_action -->
                         <a href="{link_add_action}" class="btn-warning btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</a>

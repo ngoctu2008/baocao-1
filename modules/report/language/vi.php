@@ -9,7 +9,7 @@
  */
 
 if (!defined('NV_MAINFILE')) {
-    die('Stop!!!');
+	die('Stop!!!');
 }
 
 $lang_translator['author'] = ' (tuanpb1988@gmail.com)';
@@ -49,6 +49,7 @@ $lang_module['lead'] = 'Lead';
 
 $lang_module['xstu'] = 'XSTU';
 $lang_module['smartpos'] = 'Smartpos';
+$lang_module['vpbank'] = 'TK VPbank';
 
 $lang_module['pl'] = 'PL';
 $lang_module['ipp'] = 'IPP/GNN';
