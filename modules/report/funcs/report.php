@@ -150,8 +150,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
 			$stmt->bindParam(':credit_loan', $row['credit_loan'], PDO::PARAM_INT);
 			$stmt->bindParam(':smartpos_app', $row['smartpos_app'], PDO::PARAM_INT);
 			$stmt->bindParam(':smartpos_loan', $row['smartpos_loan'], PDO::PARAM_INT);
-			$stmt->bindParam(':vpbank_app', $row['smartpos_app'], PDO::PARAM_INT);
-			$stmt->bindParam(':vpbank_loan', $row['smartpos_loan'], PDO::PARAM_INT);
+			$stmt->bindParam(':vpbank_app', $row['vpbank_app'], PDO::PARAM_INT);
+			$stmt->bindParam(':vpbank_loan', $row['vpbank_loan'], PDO::PARAM_INT);
 
 			$exc = $stmt->execute();
 			if ($exc) {
