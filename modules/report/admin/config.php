@@ -24,8 +24,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
 		$error[] = $lang_module['require_valid_time'];
 	} else {
 		$time = explode('-', $array_config['valid_time']);
-		if ((0 < $time[0]) or ($time[1] > 24)) {
-			$error[] = $lang_module['err_valid_time'] . $time[0] . $time[1];
+		if (empty($time) or ($time[0] < 0) or ($time[1] > 24)) {
+			$error[] = $lang_module['err_valid_time'];
 		}
 		if ($time[0] >= $time[1]) {
 			$error[] = $lang_module['err_valid_time'];
