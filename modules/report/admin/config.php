@@ -28,10 +28,10 @@ if ($nv_Request->isset_request('submit', 'post')) {
 			die();
 		}
 		if (empty($time) or (0 < $time[0]) or ($time[1] > 24)) {
-			$error[] = $lang_module['err_valid_time'];
+			// $error[] = $lang_module['err_valid_time'];
 		}
 		if ($time[0] >= $time[1]) {
-			$error[] = $lang_module['err_valid_time'];
+			// $error[] = $lang_module['err_valid_time'];
 		}
 	}
 	if (empty($error)) {
