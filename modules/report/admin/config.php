@@ -10,52 +10,52 @@
  */
 
 if (!defined('NV_IS_FILE_ADMIN')) {
-    die('Stop!!!');
+	die('Stop!!!');
 }
 
 $array_config = [];
 $error = [];
 
 if ($nv_Request->isset_request('submit', 'post')) {
-    $array_config['valid_time'] = $nv_Request->get_title('valid_time', 'post,get', '8-22');
-    $array_config['showname_ormat'] = $nv_Request->get_title('showname_format', 'post,get', '');
+	$array_config['valid_time'] = $nv_Request->get_title('valid_time', 'post,get', '8-22');
+	$array_config['showname_ormat'] = $nv_Request->get_title('showname_format', 'post,get', '');
 
-    if (empty($array_config['valid_time'])) {
-        $error[] = $lang_module['require_valid_time'];
-    } else {
-        $time = explode('-', $array_config['valid_time']);
-        if (empty($time) or (0 < $time[0]) or ($time[1] > 24)) {
-            $error[] = $lang_module['err_valid_time'];
-        }
-        if ($time[0] >= $time[1]) {
-            $error[] = $lang_module['err_valid_time'];
-        }
-    }
-    if (empty($error)) {
-        try {
-            $sth = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_config SET config_value = :config_value WHERE config_name = :config_name');
-            foreach ($array_config as $config_name => $config_value) {
-                $sth->bindParam(':config_name', $config_name, PDO::PARAM_STR);
-                $sth->bindParam(':config_value', $config_value, PDO::PARAM_STR);
-                $exc = $sth->execute();
-                if ($exc) {
-                    nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Config', 'New Config: ' . $config_name . ' = ' . $config_value, $admin_info['userid']);
-                }
-            }
-            $nv_Cache->delMod($module_name);
+	if (empty($array_config['valid_time'])) {
+		$error[] = $lang_module['require_valid_time'];
+	} else {
+		$time = explode('-', $array_config['valid_time']);
+		if (empty($time) or (0 < $time[0]) or ($time[1] > 24)) {
+			$error[] = $lang_module['err_valid_time'];
+		}
+		if ($time[0] >= $time[1]) {
+			// $error[] = $lang_module['err_valid_time'];
+		}
+	}
+	if (empty($error)) {
+		try {
+			$sth = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_config SET config_value = :config_value WHERE config_name = :config_name');
+			foreach ($array_config as $config_name => $config_value) {
+				$sth->bindParam(':config_name', $config_name, PDO::PARAM_STR);
+				$sth->bindParam(':config_value', $config_value, PDO::PARAM_STR);
+				$exc = $sth->execute();
+				if ($exc) {
+					nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Config', 'New Config: ' . $config_name . ' = ' . $config_value, $admin_info['userid']);
+				}
+			}
+			$nv_Cache->delMod($module_name);
 
-            nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
-        } catch (PDOException $e) {
-            trigger_error($e->getMessage());
-            die($e->getMessage()); //Remove this line after checks finished
-        }
-    }
+			nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
+		} catch (PDOException $e) {
+			trigger_error($e->getMessage());
+			die($e->getMessage()); //Remove this line after checks finished
+		}
+	}
 } else {
-    $sql = 'SELECT config_name, config_value FROM ' . NV_PREFIXLANG . '_' . $module_data . '_config';
-    $result = $db->query($sql);
-    while (list($c_config_name, $c_config_value) = $result->fetch(3)) {
-        $array_config[$c_config_name] = $c_config_value;
-    }
+	$sql = 'SELECT config_name, config_value FROM ' . NV_PREFIXLANG . '_' . $module_data . '_config';
+	$result = $db->query($sql);
+	while (list($c_config_name, $c_config_value) = $result->fetch(3)) {
+		$array_config[$c_config_name] = $c_config_value;
+	}
 }
 $xtpl = new XTemplate('config.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
@@ -72,8 +72,8 @@ $xtpl->assign('ROW', $array_config);
 
 
 if (!empty($error)) {
-    $xtpl->assign('ERROR', implode('<br />', $error));
-    $xtpl->parse('main.error');
+	$xtpl->assign('ERROR', implode('<br />', $error));
+	$xtpl->parse('main.error');
 }
 
 $xtpl->parse('main');
