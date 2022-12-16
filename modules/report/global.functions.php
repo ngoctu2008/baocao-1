@@ -80,7 +80,7 @@ function get_field_extract($field_array)
 function get_field_rows()
 {
 	global $db, $module_data;
-	$accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank']; //Các trường chứa dữ liệu
+	$accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc']; //Các trường chứa dữ liệu
 	$fields = array();
 	$_sql = "SHOW COLUMNS FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows LIKE '%\_%'";
 	$_query = $db->query($_sql);

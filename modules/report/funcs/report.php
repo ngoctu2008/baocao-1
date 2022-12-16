@@ -65,6 +65,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
 	$row['vpbank_app'] = $nv_Request->get_int('vpbank_app', 'post', 0);
 	$row['vpbank_loan'] = $nv_Request->get_int('vpbank_loan', 'post', 0);
+	$row['sfc_lead'] = $nv_Request->get_int('sfc_lead', 'post', 0);
+	$row['sfc_fullpaid'] = $nv_Request->get_int('sfc_fullpaid', 'post', 0);
 
 
 	if (empty($row['date'])) {
@@ -122,13 +124,13 @@ if ($nv_Request->isset_request('submit', 'post')) {
 	if (empty($error)) {
 		try {
 			if (empty($row['id'])) {
-				$stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_rows (date, code, pl_app, pl_loan, dn_app, dn_loan, xstu_check, xstu_app, xstu_loan, ipp_app, ipp_loan, banca_hd, banca_sale, ubank_app, ubank_loan, courier_lead, courier_app, courier_loan, credit_app, credit_loan, smartpos_app, smartpos_loan, vpbank_app, vpbank_loan) VALUES (:date, :code, :pl_app, :pl_loan, :dn_app, :dn_loan, :xstu_check, :xstu_app, :xstu_loan, :ipp_app, :ipp_loan, :banca_hd, 
-                :banca_sale, :ubank_app, :ubank_loan, :courier_lead, :courier_app, :courier_loan, :credit_app, :credit_loan, :smartpos_app, :smartpos_loan,:vpbank_app, :vpbank_loan)');
+				$stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_rows (date, code, pl_app, pl_loan, dn_app, dn_loan, xstu_check, xstu_app, xstu_loan, ipp_app, ipp_loan, banca_hd, banca_sale, ubank_app, ubank_loan, courier_lead, courier_app, courier_loan, credit_app, credit_loan, smartpos_app, smartpos_loan, vpbank_app, vpbank_loan, sfc_lead, sfc_fullpaid) VALUES (:date, :code, :pl_app, :pl_loan, :dn_app, :dn_loan, :xstu_check, :xstu_app, :xstu_loan, :ipp_app, :ipp_loan, :banca_hd, 
+                :banca_sale, :ubank_app, :ubank_loan, :courier_lead, :courier_app, :courier_loan, :credit_app, :credit_loan, :smartpos_app, :smartpos_loan,:vpbank_app, :vpbank_loan, :sfc_lead, :sfc_fullpaid)');
 
 				$stmt->bindParam(':date', $row['date'], PDO::PARAM_INT);
 				$stmt->bindParam(':code', $row['code'], PDO::PARAM_STR);
 			} else {
-				$stmt = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_rows SET pl_app = :pl_app, pl_loan = :pl_loan, dn_app = :dn_app, dn_loan = :dn_loan, xstu_check = :xstu_check, xstu_app = :xstu_app, xstu_loan = :xstu_loan, ipp_app = :ipp_app, ipp_loan = :ipp_loan, banca_hd = :banca_hd, banca_sale = :banca_sale, ubank_app = :ubank_app, ubank_loan = :ubank_loan, courier_lead = :courier_lead, courier_app = :courier_app, courier_loan = :courier_loan, credit_app = :credit_app, credit_loan = :credit_loan, smartpos_app =:smartpos_app, smartpos_loan = :smartpos_loan, vpbank_app = :vpbank_app, vpbank_loan =:vpbank_loan WHERE id=' . $row['id']);
+				$stmt = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_rows SET pl_app = :pl_app, pl_loan = :pl_loan, dn_app = :dn_app, dn_loan = :dn_loan, xstu_check = :xstu_check, xstu_app = :xstu_app, xstu_loan = :xstu_loan, ipp_app = :ipp_app, ipp_loan = :ipp_loan, banca_hd = :banca_hd, banca_sale = :banca_sale, ubank_app = :ubank_app, ubank_loan = :ubank_loan, courier_lead = :courier_lead, courier_app = :courier_app, courier_loan = :courier_loan, credit_app = :credit_app, credit_loan = :credit_loan, smartpos_app =:smartpos_app, smartpos_loan = :smartpos_loan, vpbank_app = :vpbank_app, vpbank_loan =:vpbank_loan, sfc_lead = :sfc_lead, sfc_fullpaid = :sfc_fullpaid WHERE id=' . $row['id']);
 			}
 			$stmt->bindParam(':pl_app', $row['pl_app'], PDO::PARAM_INT);
 			$stmt->bindParam(':pl_loan', $row['pl_loan'], PDO::PARAM_INT);
@@ -152,6 +154,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
 			$stmt->bindParam(':smartpos_loan', $row['smartpos_loan'], PDO::PARAM_INT);
 			$stmt->bindParam(':vpbank_app', $row['vpbank_app'], PDO::PARAM_INT);
 			$stmt->bindParam(':vpbank_loan', $row['vpbank_loan'], PDO::PARAM_INT);
+			$stmt->bindParam(':sfc_lead', $row['sfc_lead'], PDO::PARAM_INT);
+			$stmt->bindParam(':sfc_fullpaid', $row['sfc_fullpaid'], PDO::PARAM_INT);
 
 			$exc = $stmt->execute();
 			if ($exc) {

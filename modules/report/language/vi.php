@@ -46,10 +46,12 @@ $lang_module['hd'] = 'HĐ';
 $lang_module['sale'] = 'Doanh thu';
 $lang_module['vnd'] = 'VND';
 $lang_module['lead'] = 'Lead';
+$lang_module['fullpaid'] = 'Full Paid';
 
 $lang_module['xstu'] = 'XSTU';
 $lang_module['smartpos'] = 'Smartpos';
 $lang_module['vpbank'] = 'TK VPbank';
+$lang_module['sfc'] = 'SFC';
 
 $lang_module['pl'] = 'PL';
 $lang_module['ipp'] = 'IPP/GNN';
