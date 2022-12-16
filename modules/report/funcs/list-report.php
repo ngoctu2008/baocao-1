@@ -144,6 +144,7 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
 	//Tính tổng các cột
 	$total = array();
 	$arr_field = ['pl_app', 'pl_loan', 'dn_app', 'dn_loan', 'xstu_check', 'xstu_app', 'xstu_loan', 'ipp_app', 'ipp_loan', 'banca_hd', 'banca_sale', 'ubank_app', 'ubank_loan', 'courier_lead', 'courier_app', 'courier_loan', 'credit_app', 'credit_loan', 'smartpos_app', 'smartpos_loan', 'vpbank_app', 'vpbank_loan'];
+
 	$_sql = [];
 	foreach ($arr_field as $_field) {
 		$_sql[] = 'sum(' . $_field . ') as total_' . $_field;
