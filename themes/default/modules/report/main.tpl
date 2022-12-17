@@ -169,7 +169,7 @@
             <table class="table table-monitor ">
                 <tbody>
                     <!-- BEGIN: row -->
-                    <tr>
+                    <tr class="row_total_month">
                         <td class="field-monitor w20p">
                             {label}
                         </td>

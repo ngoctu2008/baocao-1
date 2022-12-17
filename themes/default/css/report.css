@@ -99,3 +99,7 @@ th {
 .row_total{
     background-color: #b0e0e670 !important;
 }
+
+.row_total_month {
+  font-size: 1.4vw !important;
+}
