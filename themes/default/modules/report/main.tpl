@@ -169,17 +169,17 @@
             <table class="table table-monitor ">
                 <tbody>
                     <!-- BEGIN: row -->
-                    <tr class="row_total_month">
+                    <tr>
                         <td class="field-monitor w20p">
                             {label}
                         </td>
                         <!-- BEGIN: loop -->
                         <td class="text-center">
                             <strong class="text-hightlight">{TOTAL}</strong>
-                            <sub> {sub_label}</sub> </br>
-                            <div class="bg-gray">
+                            <sub>{sub_label}</sub> </br>
+                            <!-- <div class="bg-gray">
                                 <div class="small-text">P: <strong class="green"> {p_value} 0.00</strong> </div>
-                            </div>
+                            </div> -->
                         </td>
                         <!-- END: loop -->
                         <!-- BEGIN: td -->
@@ -187,11 +187,11 @@
                         <!-- END: td -->
                         <!-- BEGIN: percent -->
                         <td>
-                            <strong class="text-hightlight">{target_percent} %</strong>
+                            <strong class="text-hightlight">{target_percent}%</strong>
                             <sub>TARGET</sub> </br>
                             <div class="bg-gray">
                                 <div class="small-text">
-                                    <strong class="green"> {kpi_percent} %</strong> KPI
+                                    <strong class="green"> {kpi_percent}%</strong> KPI
                                 </div>
                             </div>
                         </td>
