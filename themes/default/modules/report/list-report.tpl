@@ -77,6 +77,7 @@
                     <th colspan="2">{LANG.credit}</th>
                     <th colspan="2">{LANG.smartpos}</th>
                     <th colspan="2">{LANG.vpbank}</th>
+                    <th colspan="2">{LANG.sfc}</th>
                     <th rowspan="2">{LANG.action_note}</th>
                 </tr>
                 <tr>
@@ -102,6 +103,8 @@
                     <th class="label_table_lv2">{LANG.loan}</th>
                     <th class="label_table_lv2">{LANG.app}</th>
                     <th class="label_table_lv2">{LANG.loan}</th>
+                    <th class="label_table_lv2">{LANG.lead}</th>
+                    <th class="label_table_lv2">{LANG.fullpaid}</th>
                 </tr>
             </thead>
             <tfoot>
@@ -149,6 +152,8 @@
                     <td> {VIEW.smartpos_loan} </td>
                     <td> {VIEW.vpbank_app} </td>
                     <td> {VIEW.vpbank_loan} </td>
+                    <td> {VIEW.sfc_lead} </td>
+                    <td> {VIEW.sfc_fullpaid} </td>
                     <td class="text-center">
                         <!-- BEGIN: add_action -->
                         <a href="{link_add_action}" class="btn-warning btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</a>
@@ -217,8 +222,8 @@ $(document).ready(function() {
         // scrollY:        300,
         // scrollX:        true,
         // scrollCollapse: true,
-        // paging:         false,
-        // fixedColumns:   true,
+        paging:         false,
+        fixedColumns:   true,
 
     });
 } );
