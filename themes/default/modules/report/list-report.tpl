@@ -214,11 +214,11 @@ $(document).ready(function() {
             thousands: '.',
         },
         //fixedColumns
-        scrollY:        300,
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         false,
-        fixedColumns:   true,
+        // scrollY:        300,
+        // scrollX:        true,
+        // scrollCollapse: true,
+        // paging:         false,
+        // fixedColumns:   true,
 
     });
 } );
