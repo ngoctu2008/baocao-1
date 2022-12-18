@@ -39,7 +39,12 @@ th {
     padding: 2px !important;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
     line-height: 1.5em !important;
+}
+@media (max-width: 991.98px) {
+  .box-monitor {
     font-size: 0.8em !important;
+
+  }
 }
 .red-box {
     border-color: red !important;
