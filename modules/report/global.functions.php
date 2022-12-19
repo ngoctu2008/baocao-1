@@ -13,6 +13,8 @@ if (!defined('NV_MAINFILE')) {
 }
 global $module_name, $nv_Cache;
 
+//Định nghĩa các trường chứa dữ liệu
+$list_field_accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc'];
 
 /**
  * BEGIN KPI, TARGET
@@ -65,7 +67,33 @@ while (list($c_config_name, $c_config_value) = $result->fetch(3)) {
 }
 $time_over = explode('-', $array_config['valid_time']);
 
+/**
+ * Get_field_rows()
+ * Lấy tên các nghiệp vụ từ các trường trong csdl => đẩy vào mảng 
+ * example: [pl_app, pl_loan, dn_app, dn_loan]
+ */
+function get_field_rows()
+{
+	global $db, $module_data, $list_field_accepted;
+	$fields = array();
+	$_sql = "SHOW COLUMNS FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows LIKE '%\_%'";
+	$_query = $db->query($_sql);
+	// echo $_sql;
+	while ($_row = $_query->fetch()) {
+		$field_full = explode('_', $_row['field']);
+		if (in_array($field_full[0], $list_field_accepted)) {
+			// echo "<br>Field name: " . $field_full[0];
+			$fields[] = $_row['field'];
+		}
+	}
+	return $fields;
+}
 
+/** 
+ *  Get_field_extract($field_array)
+ * Lấy tên các trường chứa số liệu nghiệp vụ -> mảng 
+ * Example: pl[app,loan], dn[app,loan],...
+ */
 function get_field_extract($field_array)
 {
 	$arr_label = [];
@@ -74,26 +102,6 @@ function get_field_extract($field_array)
 		$arr_label[$_field[0]][] = $_field[1];
 	}
 	return $arr_label;
-}
-
-
-function get_field_rows()
-{
-	global $db, $module_data;
-	$accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc']; //Các trường chứa dữ liệu
-	$fields = array();
-	$_sql = "SHOW COLUMNS FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows LIKE '%\_%'";
-	$_query = $db->query($_sql);
-
-	// echo $_sql;
-	while ($_row = $_query->fetch()) {
-		$field_full = explode('_', $_row['field']);
-		if (in_array($field_full[0], $accepted)) {
-			// echo "<br>Field name: " . $field_full[0];
-			$fields[] = $_row['field'];
-		}
-	}
-	return $fields;
 }
 
 function check_number($value)
@@ -109,7 +117,7 @@ function displayArray($array, $tab = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp', $indent =
 {
 	$curtab = "";
 	$returnvalues = "";
-	while (list($key, $value) = each($array)) {
+	foreach ($array as $key => $value) {
 		for ($i = 0; $i < $indent; $i++) {
 			$curtab .= $tab;
 		}

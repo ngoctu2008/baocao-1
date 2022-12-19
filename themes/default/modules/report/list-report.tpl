@@ -62,56 +62,27 @@
 
 
     <div class="table-responsive">
-        <table class="display nowrap hover cell-border compact text-center" id="table_view2" style="width:100%">
+        <table class="table table-hover table_responsive table-bordered">
             <thead>
                 <tr class="label_table">
-                    <th rowspan="2">{LANG.date}</th>
-                    <th rowspan="2">{LANG.sale_name}</th>
-                    <th colspan="2">{LANG.pl}</th>
-                    <th colspan="2">{LANG.dn}</th>
-                    <th colspan="3">{LANG.xstu}</th>
-                    <th colspan="2">{LANG.ipp}</th>
-                    <th colspan="2">{LANG.banca}</th>
-                    <th colspan="2">{LANG.ubank}</th>
-                    <th colspan="3">{LANG.courier}</th>
-                    <th colspan="2">{LANG.credit}</th>
-                    <th colspan="2">{LANG.smartpos}</th>
-                    <th colspan="2">{LANG.vpbank}</th>
-                    <th colspan="2">{LANG.sfc}</th>
+                  <th rowspan="2">{LANG.date}</th>
+                  <th rowspan="2">{LANG.sale_name}</th>
+                    <!-- BEGIN: label_table_lv1 -->
+                    <th colspan="{colspan}">{label_lv1}</th>
+                    <!-- END: label_table_lv1 -->
                     <th rowspan="2">{LANG.action_note}</th>
                 </tr>
                 <tr>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.check}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.hd}</th>
-                    <th class="label_table_lv2">{LANG.sale}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.lead}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.app}</th>
-                    <th class="label_table_lv2">{LANG.loan}</th>
-                    <th class="label_table_lv2">{LANG.lead}</th>
-                    <th class="label_table_lv2">{LANG.fullpaid}</th>
+                    <!-- BEGIN: label_table_lv2 -->
+                    <th class="label_table_lv2">{label_lv2}</th>
+                    <!-- END: label_table_lv2 -->
                 </tr>
             </thead>
             <tfoot>
                 <tr class="row_total">
                     <th colspan="2" class="total text-center">{LANG.total}</th>
                     <!-- BEGIN: TOTAL -->
-                    <th class="total text-center"> {TOTAL} </th>
+                    <td data-header="{KEY}" class="total text-center"> {TOTAL} </td>
                     <!-- END: TOTAL -->
                     <th> </th>
                 </tr>
@@ -124,37 +95,16 @@
             <tbody>
                 <!-- BEGIN: loop -->
                 <tr>
-                    <td> {VIEW.date}
+                    <td data-header="{LANG.date}"> {VIEW.date}
                         <!-- BEGIN: edit_allow -->
                         <a href="{link_edit}#edit"><i class="fa fa-edit fa-lg">&nbsp;</i></a>
                         <!-- END: edit_allow -->
                     </td>
-                    <td> {VIEW.sale_name} </td>
-                    <td> {VIEW.pl_app} </td>
-                    <td> {VIEW.pl_loan} </td>
-                    <td> {VIEW.dn_app} </td>
-                    <td> {VIEW.dn_loan} </td>
-                    <td> {VIEW.xstu_check} </td>
-                    <td> {VIEW.xstu_app} </td>
-                    <td> {VIEW.xstu_loan} </td>
-                    <td> {VIEW.ipp_app} </td>
-                    <td> {VIEW.ipp_loan} </td>
-                    <td> {VIEW.banca_hd} </td>
-                    <td> {VIEW.banca_sale} </td>
-                    <td> {VIEW.ubank_app} </td>
-                    <td> {VIEW.ubank_loan} </td>
-                    <td> {VIEW.courier_lead} </td>
-                    <td> {VIEW.courier_app} </td>
-                    <td> {VIEW.courier_loan} </td>
-                    <td> {VIEW.credit_app} </td>
-                    <td> {VIEW.credit_loan} </td>
-                    <td> {VIEW.smartpos_app} </td>
-                    <td> {VIEW.smartpos_loan} </td>
-                    <td> {VIEW.vpbank_app} </td>
-                    <td> {VIEW.vpbank_loan} </td>
-                    <td> {VIEW.sfc_lead} </td>
-                    <td> {VIEW.sfc_fullpaid} </td>
-                    <td class="text-center">
+                    <td data-header="{LANG.sale_name}"> {VIEW.sale_name} </td>
+                    <!-- BEGIN: column -->
+                    <td data-header="{KEY}"> {VALUE} </td>
+                    <!-- END: column -->
+                    <td data-header="Action Note">
                         <!-- BEGIN: add_action -->
                         <a href="{link_add_action}" class="btn-warning btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</a>
                         <!-- END: add_action -->

@@ -39,14 +39,14 @@
 </div>
 <form action="{NV_BASE_SITEURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-hover table_responsive">
             <thead>
                 <tr>
-                    <th class="w100">{LANG.number}</th>
+                    <th>{LANG.number}</th>
                     <th>{LANG.date}</th>
                     <th>{LANG.sale_name}</th>
                     <th>{LANG.note}</th>
-                    <th class="w150">&nbsp;</th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <!-- BEGIN: generate_page -->
@@ -59,11 +59,11 @@
             <tbody>
                 <!-- BEGIN: loop -->
                 <tr>
-                    <td class="text-center"> {VIEW.number} </td>
-                    <td class="text-center"> {VIEW.date} </td>
-                    <td> {VIEW.sale} </td>
-                    <td> {VIEW.note} </td>
-                    <td class="text-center">
+                    <td data-header="STT" class="text-center"> {VIEW.number} </td>
+                    <td data-header="{LANG.date}" class="text-center"> {VIEW.date} </td>
+                    <td data-header="{LANG.sale_name}"> {VIEW.sale} </td>
+                    <td data-header="{LANG.note}"> {VIEW.note} </td>
+                    <td data-header="{LANG.edit}" class="text-center">
                         <i class="fa fa-edit fa-lg">&nbsp;</i> <a href="{VIEW.link_edit}#edit">{LANG.edit}</a>
                     </td>
                 </tr>

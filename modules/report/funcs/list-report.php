@@ -143,7 +143,9 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
 
 	//Tính tổng các cột
 	$total = array();
-	$arr_field = ['pl_app', 'pl_loan', 'dn_app', 'dn_loan', 'xstu_check', 'xstu_app', 'xstu_loan', 'ipp_app', 'ipp_loan', 'banca_hd', 'banca_sale', 'ubank_app', 'ubank_loan', 'courier_lead', 'courier_app', 'courier_loan', 'credit_app', 'credit_loan', 'smartpos_app', 'smartpos_loan', 'vpbank_app', 'vpbank_loan', 'sfc_lead', 'sfc_fullpaid'];
+	// $arr_field = ['pl_app', 'pl_loan', 'dn_app', 'dn_loan', 'xstu_check', 'xstu_app', 'xstu_loan', 'ipp_app', 'ipp_loan', 'banca_hd', 'banca_sale', 'ubank_app', 'ubank_loan', 'courier_lead', 'courier_app', 'courier_loan', 'credit_app', 'credit_loan', 'smartpos_app', 'smartpos_loan', 'vpbank_app', 'vpbank_loan', 'sfc_lead', 'sfc_fullpaid'];
+
+	$arr_field = get_field_rows();
 
 	$_sql = [];
 	foreach ($arr_field as $_field) {
@@ -231,6 +233,13 @@ if ($show_view) {
 		$view['date'] = nv_date('d/m/Y', $view['date']);
 		// $view['link_delete'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;delete_id=' . $view['id'] . '&amp;delete_checkss=' . md5($view['id'] . NV_CACHE_PREFIX . $client_info['session_id']);
 		$xtpl->assign('VIEW', $view);
+		foreach ($view as $key => $value) {
+			if (in_array($key, $arr_field)) {
+				$xtpl->assign('KEY', $key);
+				$xtpl->assign('VALUE', $value);
+				$xtpl->parse('main.view.loop.column');
+			}
+		}
 		$xtpl->parse('main.view.loop');
 	}
 	$xtpl->assign('link_add_report', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report');
@@ -246,6 +255,7 @@ if ($show_view) {
 	//Fill dòng tổng cộng
 	foreach ($_arr_total as $total_field => $total_value) {
 		$total_value = empty($total_value) ? 0 : number_format($total_value, 0, ',', '.');
+		$xtpl->assign('KEY', $total_field);
 		$xtpl->assign('TOTAL', $total_value);
 		$xtpl->parse('main.view.TOTAL');
 	}
@@ -254,6 +264,21 @@ if ($show_view) {
 		$xtpl->parse('main.view.search_type');
 	}
 
+	//Label Table LV1
+	$_field_array = get_field_extract($arr_field);
+	foreach ($_field_array as $_field => $_value) {
+		$xtpl->assign('colspan', sizeof($_value));
+		$xtpl->assign('label_lv1', $lang_module[$_field]);
+		$xtpl->parse('main.view.label_table_lv1');
+	}
+	// $xtpl->parse('main.view.label_table_lv1');
+
+	//label_table_lv2
+	foreach ($arr_field as $key => $_field) {
+		$label_lv2 = preg_replace('/(.*)_(.*)/', '$2', $_field);
+		$xtpl->assign('label_lv2', $lang_module[$label_lv2]);
+		$xtpl->parse('main.view.label_table_lv2');
+	}
 	$xtpl->parse('main.view');
 }
 

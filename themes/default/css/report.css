@@ -105,3 +105,40 @@ th {
 .row_total{
     background-color: #b0e0e670 !important;
 }
+
+
+/*Table responsive */
+  .table_responsive thead {
+    position: absolute;
+    left: -9999rem;
+  }
+
+  .table_responsive th, td {
+    display: block;
+    padding: 1ex 1ch;
+  }
+  .table_responsive td:before {
+    content: attr(data-header) ": ";
+  }
+  .table_responsive th, td:before {
+    color: slategray;
+    font-weight: regular;
+    font-variant: small-caps;
+    text-transform: capitalize;
+    text-align: left;
+  }
+
+  .table_responsive tr { border-bottom: solid 1px teal; }
+  .table_responsive tbody tr:first-of-type { border-top: solid 1px teal; }
+
+  .table_responsive tbody tr:nth-of-type(even) {
+    background: aliceblue;
+  }
+
+@media (min-width: 600px) {
+  .table_responsive table, thead, tbody, tr, td, th {
+    display: revert !important;
+    position: revert !important;
+  }
+  .table_responsive td:before { content: '' !important; }
+}
