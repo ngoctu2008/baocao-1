@@ -113,14 +113,14 @@ th {
     left: -9999rem;
   }
 
-  .table_responsive th, td {
+  .table_responsive th,.table_responsive td {
     display: block;
     padding: 1ex 1ch;
   }
   .table_responsive td:before {
     content: attr(data-header) ": ";
   }
-  .table_responsive th, td:before {
+  .table_responsive th,.table_responsive td:before {
     color: slategray;
     font-weight: regular;
     font-variant: small-caps;
@@ -136,7 +136,7 @@ th {
   }
 
 @media (min-width: 600px) {
-  .table_responsive table, thead, tbody, tr, td, th {
+  .table_responsive table, .table_responsive thead, .table_responsive tbody, .table_responsive tr, .table_responsive td, .table_responsive th {
     display: revert !important;
     position: revert !important;
   }
