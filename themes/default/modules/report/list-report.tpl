@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <!-- BEGIN: search_type -->
-                    <div class="col-xs-6 col-sm-5 col-md-4">
+                    <div class="col-xs-12 col-sm-5 col-md-4">
                         <select class="form-control" name="q_type">
                             <option value="0"> Danh sách DSA </option>
                             <option value="1"> Danh sách DSS </option>
@@ -43,7 +43,7 @@
                     </div>
                     <!-- END: search_type -->
 
-                    <div class="col-xs-24 col-sm-10 col-md-6">
+                    <div class="col-xs-6 col-sm-10 col-md-6">
                         <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
                     </div>
                     <div class="pull-right" style="margin-top:5px;">
