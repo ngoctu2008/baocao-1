@@ -13,6 +13,33 @@ if (!defined('NV_MAINFILE')) {
 }
 global $module_name, $nv_Cache;
 
+
+/**
+ * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader
+ * $leader_team = 0 nếu không phải leader
+ */
+//Kiểm tra chức vụ, lấy thông tin
+$leader_team = 0;
+$is_leader_group = array();
+$_sql = 'SELECT is_leader, group_id FROM ' . $db_config['prefix'] . '_users_groups_users where userid = ' . $user_info['userid'] . ' ORDER BY time_approved DESC';
+$check_leader = $nv_Cache->db($_sql, '', $module_name, '', 86400);
+
+if (!empty($check_leader)) {
+	foreach ($check_leader as $value) {
+		if ($value['is_leader'] == 1) {
+			$leader_team = $value['group_id']; //lấy group_id mới nhất làm leader, tránh trường hợp chuyển team mà chưa hạ cấp ở team cũ
+			break;
+		}
+	}
+}
+//Kiểm tra xem user có nằm trong các nhóm cấp Admin không (1,2,3)
+foreach ($user_info['in_groups'] as $_group) {
+	if ($_group <= 3 and !defined('NV_IS_MODADMIN')) {
+		define('NV_IS_MODADMIN', true);
+		break;
+	}
+}
+
 //Định nghĩa các trường chứa dữ liệu
 $list_field_accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc'];
 
@@ -24,7 +51,23 @@ $list_field_accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 
 $kpi = ['pl' => 25, 'dn' => 15, 'xstu' => 15, 'ipp' => 15, 'banca' => 10, 'ubank' => 5, 'courier' => 5, 'credit' => 10, 'smartpos' => 0]; //đơn vị %
 $target = ['pl' => 5, 'dn' => 3, 'xstu' => 4, 'ipp' => 0, 'banca' => 10000000, 'ubank' => 5, 'courier' => 5, 'credit' => 0, 'smartpos' => 0];
 
-//Tính Tổng số % các nghiệp vụ bán của user
+if (defined('NV_IS_MODADMIN')) {
+	$personal_ratio = 15 * 8; //Nếu là ASM x 8 team x 15 sale/team
+} elseif ($leader_team > 0) {
+	$personal_ratio = 15; //Nếu là Team leader x 15 sale/Team
+} else {
+	$personal_ratio = 1; //Nếu là sale
+}
+
+foreach ($list_field_accepted as $key) {
+	$kpi[$key] = empty($kpi[$key]) ? 0 : $kpi[$key] * $personal_ratio;
+	$target[$key] = empty($target[$key]) ? 0 : $target[$key] * $personal_ratio;
+}
+/**
+ * Tính Tổng số %KPI các nghiệp vụ đang bán của user (Nghiệp vụ có Target >0)
+ * Input: Array(KPI), Array(Target)
+ * Output: Number(total KPI)
+ */
 function cal_total_kpi_reality($kpi, $target)
 {
 	$total = 0;

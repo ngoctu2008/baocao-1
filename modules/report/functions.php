@@ -68,32 +68,6 @@ if ($nv_Cache->getItem($module_name, $cache_file) == false) {
 // echo displayArray($array_team_users);
 // die();
 
-/**
- * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader
- * $leader_team = 0 nếu không phải leader
- */
-//Kiểm tra chức vụ, lấy thông tin
-$leader_team = 0;
-$is_leader_group = array();
-$_sql = 'SELECT is_leader, group_id FROM ' . $db_config['prefix'] . '_users_groups_users where userid = ' . $user_info['userid'] . ' ORDER BY time_approved DESC';
-$check_leader = $nv_Cache->db($_sql, '', $module_name, '', 86400);
-
-if (!empty($check_leader)) {
-	foreach ($check_leader as $value) {
-		if ($value['is_leader'] == 1) {
-			$leader_team = $value['group_id']; //lấy group_id mới nhất làm leader, tránh trường hợp chuyển team mà chưa hạ cấp ở team cũ
-			break;
-		}
-	}
-}
-//Kiểm tra xem user có nằm trong các nhóm cấp Admin không (1,2,3)
-foreach ($user_info['in_groups'] as $_group) {
-	if ($_group <= 3 and !defined('NV_IS_MODADMIN')) {
-		define('NV_IS_MODADMIN', true);
-		break;
-	}
-}
-
 //Lấy danh sách code nhân viên cấp dưới mình quản lý
 if (defined('NV_IS_MODADMIN')) {
 	$level = 1; //ASM, Administrator
