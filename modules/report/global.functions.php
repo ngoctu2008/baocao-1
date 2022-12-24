@@ -13,7 +13,6 @@ if (!defined('NV_MAINFILE')) {
 }
 global $module_name, $nv_Cache;
 
-
 /**
  * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader
  * $leader_team = 0 nếu không phải leader
@@ -58,11 +57,11 @@ if (defined('NV_IS_MODADMIN')) {
 } else {
 	$personal_ratio = 1; //Nếu là sale
 }
-
 foreach ($list_field_accepted as $key) {
 	$kpi[$key] = empty($kpi[$key]) ? 0 : $kpi[$key] * $personal_ratio;
 	$target[$key] = empty($target[$key]) ? 0 : $target[$key] * $personal_ratio;
 }
+
 /**
  * Tính Tổng số %KPI các nghiệp vụ đang bán của user (Nghiệp vụ có Target >0)
  * Input: Array(KPI), Array(Target)

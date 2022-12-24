@@ -8,9 +8,9 @@
 <!-- //Search form -->
 <div class="well">
     <form action="{NV_BASE_SITEURL}index.php" method="get">
-        <input type="hidden" name="{NV_LANG_VARIABLE}"  value="{NV_LANG_DATA}" />
-        <input type="hidden" name="{NV_NAME_VARIABLE}"  value="{MODULE_NAME}" />
-        <input type="hidden" name="{NV_OP_VARIABLE}"  value="{OP}" />
+        <input type="hidden" name="{NV_LANG_VARIABLE}" value="{NV_LANG_DATA}" />
+        <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}" />
+        <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}" />
         <div class="row">
             <div class="col-xs-24 col-sm-24 col-md-24">
                 <div class="form-group">
@@ -63,18 +63,18 @@
 
     <div class="table-responsive">
         <table class="table table-hover table_responsive table-bordered">
-            <thead>
+            <thead >
                 <tr class="label_table">
-                  <th rowspan="2">{LANG.date}</th>
-                  <th rowspan="2">{LANG.sale_name}</th>
+                  <th rowspan="2" class="text-center">{LANG.date}</th>
+                  <th rowspan="2" class="text-center">{LANG.sale_name}</th>
                     <!-- BEGIN: label_table_lv1 -->
-                    <th colspan="{colspan}">{label_lv1}</th>
+                    <th colspan="{colspan}" class="text-center">{label_lv1}</th>
                     <!-- END: label_table_lv1 -->
-                    <th rowspan="2">{LANG.action_note}</th>
+                    <th rowspan="2" class="text-center">{LANG.action_note}</th>
                 </tr>
                 <tr>
                     <!-- BEGIN: label_table_lv2 -->
-                    <th class="label_table_lv2">{label_lv2}</th>
+                    <th class="label_table_lv2 text-center">{label_lv2}</th>
                     <!-- END: label_table_lv2 -->
                 </tr>
             </thead>
@@ -102,7 +102,7 @@
                     </td>
                     <td data-header="{LANG.sale_name}"> {VIEW.sale_name} </td>
                     <!-- BEGIN: column -->
-                    <td data-header="{KEY}"> {VALUE} </td>
+                    <td data-header="{KEY}" class="text-center"> {VALUE} </td>
                     <!-- END: column -->
                     <td data-header="Action Note">
                         <!-- BEGIN: add_action -->
@@ -135,16 +135,19 @@
 
 <!-- END: view -->
 <link type="text/css" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
-<link type="text/css" href="{NV_STATIC_URL}themes/{TEMPLATE}/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link type="text/css" href="{NV_STATIC_URL}themes/{TEMPLATE}/css/responsive.dataTables.min.css" rel="stylesheet" />
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
 
-
-<script type="text/javascript" src="{NV_STATIC_URL}themes/{TEMPLATE}/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="{NV_STATIC_URL}themes/{TEMPLATE}/js/dataTables.responsive.min.js"></script>
-
-
 <script type="text/javascript">
+$(document).ready(function(){
+    $(".table_responsive tbody td:nth-child(1n+3)").hide();
+    // $(".table_responsive tbody tr").append('<i class="viewmore fa fa-chevron-circle-down" aria-hidden="true"></i>');
+    $("tr").click(function(){
+        $(this).find("td:nth-child(1n+3)").toggle();
+    });
+
+
+});
+
 //<![CDATA[
     $("#q_date_from,#q_date_to").datepicker({
         dateFormat : "dd/mm/yy",
@@ -159,24 +162,8 @@
       $("#q_date_to").datepicker('show');
   });
 //]]>
+    // $('#viewmore').after().click(alert('click'));
 
-$(document).ready(function() {
-    $('#table_view2').DataTable({
-        searching: false,
-        ordering: false,
-        language: {
-            decimal: ',',
-            thousands: '.',
-        },
-        //fixedColumns
-        // scrollY:        300,
-        // scrollX:        true,
-        // scrollCollapse: true,
-        paging:         false,
-        fixedColumns:   true,
-
-    });
-} );
 
 </script>
 
