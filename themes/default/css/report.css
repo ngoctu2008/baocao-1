@@ -1,4 +1,4 @@
-/**
+AY&Y/**
  * @Project NUKEVIET 4.x
  * @Author  <tuanpb1988@gmail.com>
  * @Copyright (C) 2022 . All rights reserved
@@ -128,9 +128,8 @@ th {
     text-align: left;
   }
 
-  .table_responsive tr { border-bottom: solid 1px teal; }
-  .table_responsive tbody tr:first-of-type { border-top: solid 1px teal; }
-
+  .table_responsive tr { border-bottom: solid 1px teal;}
+  .table_responsive tbody tr:first-of-type { border-top: solid 1px teal;}
   .table_responsive tbody tr:nth-of-type(even) {
     background: aliceblue;
   }
@@ -140,5 +139,7 @@ th {
     display: revert !important;
     position: revert !important;
   }
-  .table_responsive td:before { content: '' !important; }
+  .table_responsive td:before {
+      content: '' !important;
+  }
 }

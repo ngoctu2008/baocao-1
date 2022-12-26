@@ -261,7 +261,7 @@ if ($show_view) {
 	}
 
 	if (defined('NV_IS_MODADMIN')) {
-		$xtpl->parse('main.view.search_type');
+		// $xtpl->parse('main.view.search_type');
 	}
 
 	//Label Table LV1
