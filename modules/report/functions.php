@@ -21,14 +21,14 @@ require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 /**
  *  Khởi tạo cache các giá trị sử dụng chung
  */
-//Lấy thông tin toàn bộ user, key là code
+//Lấy thông tin toàn bộ user, key là code. Chỉ lấy những user đang thuộc các Team ( AND t2.in_groups !="")
 $array_code_users = [];
-$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != ""';
+$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != "" AND t2.in_groups !=""';
 $array_code_users = $nv_Cache->db($_sql, 'code', $module_name, '', 86400 * 30);
 
-//Lấy thông tin cá nhân nhân viên, key là userid
+//Lấy thông tin cá nhân nhân viên, key là userid. Chỉ lấy những user đang thuộc các Team ( AND t2.in_groups !="")
 $array_infor_users = [];
-$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != "" ';
+$_sql = 'SELECT t1.userid, t1.code, t2.first_name, t2.last_name, t2.group_id FROM ' . $db_config['prefix'] . '_users_info as t1 LEFT JOIN ' . $db_config['prefix'] . '_users as t2 ON t1.userid = t2.userid WHERE t1.code != "" AND t2.in_groups !=""';
 $array_infor_users = $nv_Cache->db($_sql, 'userid', $module_name, '', 86400 * 7);
 
 //Lấy thông tin các nhóm (các nhóm đang có trưởng nhóm)
