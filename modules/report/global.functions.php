@@ -11,7 +11,7 @@
 if (!defined('NV_MAINFILE')) {
 	exit('Stop!!!');
 }
-global $module_name, $nv_Cache;
+global $module_name, $nv_Cache, $db_config, $user_info;
 
 /**
  * Kiểm tra chức vụ, nếu là leader thì trả lại leader_team = group_id làm leader
@@ -20,6 +20,10 @@ global $module_name, $nv_Cache;
 //Kiểm tra chức vụ, lấy thông tin
 $leader_team = 0;
 $is_leader_group = array();
+if (empty($user_info['userid'])) {
+	$user_id = $admin_info['admin_id'];
+}
+
 $_sql = 'SELECT is_leader, group_id FROM ' . $db_config['prefix'] . '_users_groups_users where userid = ' . $user_info['userid'] . ' ORDER BY time_approved DESC';
 $check_leader = $nv_Cache->db($_sql, '', $module_name, '', 86400);
 
