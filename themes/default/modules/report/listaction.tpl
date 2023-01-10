@@ -17,8 +17,8 @@
     <div class="row" style="margin-top:8px;">
         <div class="col-xs-24 col-md-24">
             <div class="form-group">
-                <label class="col-xs-8 col-sm-5 col-md-8 control-label"><strong>{LANG.q_date}</strong></label>
-                <div class="col-xs-10 col-sm-10 col-md-8">
+                <label class="col-xs-8 col-sm-5 col-md-6 control-label"><strong>{LANG.q_date}</strong></label>
+                <div class="col-xs-10 col-sm-10 col-md-4">
                     <div class="input-group">
                         <input class="form-control" readonly type="text" value="{q_date_show}" name="q_date" id="q_date" maxlength="255" placeholder="{q_date_show}" pattern="^[0-9]{2,2}\/[0-9]{2,2}\/[0-9]{1,4}$" required="required" oninvalid="setCustomValidity(nv_required)" oninput="setCustomValidity('')"/>
                         <span class="input-group-btn">
@@ -30,6 +30,9 @@
                 </div>
                 <div class="col-xs-6 col-sm-4 col-md-6">
                     <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-6">
+                    <button class="btn btn-primary" name="export" id="export">{LANG.extract}</button>
                 </div>
             </div>
         </div>
