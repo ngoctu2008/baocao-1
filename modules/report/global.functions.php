@@ -43,7 +43,7 @@ foreach ($user_info['in_groups'] as $_group) {
 $list_field_accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc'];
 
 //Giới hạn số ngày được sửa lại báo cáo
-$date_limit = 2;
+$date_limit = 3;
 
 /**
  * BEGIN KPI, TARGET
