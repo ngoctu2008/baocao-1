@@ -181,7 +181,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 	}
 } elseif ($row['id'] > 0) {
 	$row = $db->query('SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_rows WHERE id=' . $row['id'])->fetch();
-	$today = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME));
+	$today = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME)) - (86400 * ($date_limit - 1)); //Cho phép sửa ... ngày gần nhất
 	if (empty($row)) {
 		nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
 	} elseif ($row['date'] < $today) {
