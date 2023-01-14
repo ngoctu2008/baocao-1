@@ -47,6 +47,7 @@ $lang_module['sale'] = 'Doanh thu';
 $lang_module['vnd'] = 'VND';
 $lang_module['lead'] = 'Lead';
 $lang_module['fullpaid'] = 'Full Paid';
+$lang_module['fe'] = 'Khoản vay FE';
 
 $lang_module['xstu'] = 'XSTU';
 $lang_module['smartpos'] = 'Smartpos';
@@ -60,6 +61,7 @@ $lang_module['ubank'] = 'UBANK';
 $lang_module['courier'] = 'Courier';
 
 $lang_module['credit'] = 'Credit Card';
+$lang_module['error_required'] = 'Lỗi: bạn cần nhập dữ liệu cho';
 $lang_module['error_required_date'] = 'Lỗi: bạn cần nhập dữ liệu cho Ngày';
 $lang_module['error_search_date'] = 'Lỗi: Vui lòng xem lại khoảng ngày tìm kiếm';
 $lang_module['error_required_code'] = 'Lỗi: bạn cần nhập dữ liệu cho Mã nhân viên';
