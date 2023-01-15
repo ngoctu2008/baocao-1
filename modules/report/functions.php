@@ -92,8 +92,52 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-function export_action_note()
+function export_action_note($array_data)
 {
+	global $module_name, $lang_module, $user_info, $array_group_info;
+	$objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load(NV_ROOTDIR . '/modules/report/note.xlsx');
+
+	//Xuất dữ liệu tại Sheet 1
+	$objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
+
+	$file_folder_path = NV_ROOTDIR . "/" . NV_TEMP_DIR . "/" . $module_name . "/";
+	$username = $user_info['username'];
+	$file_name_export = 'action_note_' . $username . '.xlsx';
+	$file_export_tmp = $file_folder_path . $file_name_export;
+
+	//Kiểm tra thư mục chứa file tạm
+	if (!file_exists($file_folder_path)) {
+		$error = $lang_module['export_error_fileexists'];
+		mkdir($file_folder_path);
+	}
+	//Xóa các file tạm cũ đi tránh trùng
+	if (file_exists($file_export_tmp)) {
+		$check = nv_deletefile($file_export_tmp, true);
+		if ($check[0] != 1) {
+			$error = $check[1];
+		}
+	}
+
+	$num = 0;
+	$r = 1;
+	$c = 1;
+	foreach ($array_data as $row) {
+		$num++;
+		$r++;
+		$c = 1;
+		$objWorksheet->setCellValueByColumnAndRow($c, $r, $num); //Thứ tự
+		$objWorksheet->setCellValueByColumnAndRow($c + 1, $r, $row['date']);
+		$objWorksheet->setCellValueByColumnAndRow($c + 2, $r, $row['code']);
+		$objWorksheet->setCellValueByColumnAndRow($c + 3, $r, $row['sale_name']);
+		$objWorksheet->setCellValueByColumnAndRow($c + 4, $r, $row['note']);
+	}
+	$objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objPHPExcel, 'Xlsx');
+	$objWriter->save($file_export_tmp); //lưu vào file tạm trên server
+
+	// Download file
+	$download = new NukeViet\Files\Download($file_export_tmp, NV_ROOTDIR . "/" . NV_TEMP_DIR, $file_name_export);
+	$download->download_file();
+	exit();
 }
 
 function export_dailyreport($array_data, $total_sheet = 0, $total_by_team = 0)

@@ -214,7 +214,7 @@ if ($show_view) {
 		$view['number'] = $number++;
 		$view['banca_sale'] = empty($view['banca_sale']) ? 0 : number_format($view['banca_sale'], 0, ',', '.');
 		$view['sale_name'] =  displayName($array_code_users[$view['code']]) . ' <sub> (' . $view['code'] . ') </sub>';
-		$today = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME)) - 86400; //Cho phép sửa 2 ngày gần nhất
+		$today = mktime(0, 0, 0, nv_date('n', NV_CURRENTTIME), nv_date('j', NV_CURRENTTIME), nv_date('Y', NV_CURRENTTIME)) - (86400 * ($date_limit - 1)); //Cho phép sửa 2 ngày gần nhất
 		if ($view['date'] >= $today) {
 			$link_edit = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=report&amp;id=' . $view['id'];
 			$xtpl->assign('link_edit', $link_edit);

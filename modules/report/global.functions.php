@@ -40,7 +40,13 @@ foreach ($user_info['in_groups'] as $_group) {
 }
 
 //Định nghĩa các trường chứa dữ liệu
-$list_field_accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc'];
+$list_field_accepted = ['pl', 'dn', 'xstu', 'ipp', 'banca', 'ubank', 'courier', 'credit', 'smartpos', 'vpbank', 'sfc', 'fe'];
+
+// echo displayArray(get_field_rows());
+// die();
+
+//Giới hạn số ngày được sửa lại báo cáo, tính cả ngày hiện tại
+$date_limit = 3;
 
 /**
  * BEGIN KPI, TARGET
