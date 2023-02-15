@@ -94,11 +94,10 @@ if ($global_config['allowuserlogin']) {
 
 		//Tab Group Manager -> Bổ sung Quản lý Nhóm vào menu
 		if (!isset($user_info['group_manage'])) {
-			global $db, $user_info;
 			$user_info['group_manage'] = $db->query('SELECT COUNT(*) FROM nv4_users_groups_users WHERE userid=' . $user_info['userid'] . ' AND is_leader=1')->fetchColumn();
 		}
 		if ($user_info['group_manage'] > 0) {
-			$xtpl->assign('url_group_manager', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=groups');
+			$xtpl->assign('url_group_manager', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=users&' . NV_OP_VARIABLE . '=groups');
 			$xtpl->parse('signed.group_manager');
 		}
 
