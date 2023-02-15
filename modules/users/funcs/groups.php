@@ -360,6 +360,18 @@ if ($nv_Request->isset_request('gid,uid', 'post')) {
 		exit($lang_module['no_premission']);
 	}
 
+	// kiểm tra user_id thêm đã nằm trong nhóm khác chưa, nếu rồi thì báo lỗi
+	$result_user = $db->query('SELECT group_id FROM ' . NV_MOD_TABLE . '_groups_users WHERE approved =1 and group_id != ' . $gid . ' and userid=' . $uid);
+	if (!empty($result_user)) {
+		$__array_groups = [];
+		while ($_row = $result_user->fetch()) {
+			$__array_groups[] = $_row['group_id'];
+		}
+		$group_other = implode(',', $array_groups_user);
+		$message = sprintf($lang_module['in_other_group'], $group_other);
+		exit($message);
+	}
+
 	if ($groupsList[$gid]['idsite'] != $global_config['idsite'] and $groupsList[$gid]['idsite'] == 0) {
 		$row = $db->query('SELECT idsite FROM ' . NV_MOD_TABLE . ' WHERE userid=' . $uid)->fetch();
 		if (!empty($row)) {

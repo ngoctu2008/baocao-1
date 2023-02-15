@@ -10,7 +10,7 @@
  */
 
 if (!defined('NV_MAINFILE')) {
-    exit('Stop!!!');
+	exit('Stop!!!');
 }
 
 $lang_translator['author'] = 'VINADES.,JSC <contact@vinades.vn>';
@@ -399,3 +399,4 @@ $lang_module['verify_email_sent_error'] = 'Đã xảy ra lỗi kỹ thuật khi 
 
 $lang_module['code'] = 'Mã nhân viên';
 $lang_module['phone'] = 'Điện thoại';
+$lang_module['in_other_group'] = 'Tài khoản này đang thuộc nhóm %s. Vui lòng liên hệ quản trị xóa tài khoản ở nhóm cũ trước!';
