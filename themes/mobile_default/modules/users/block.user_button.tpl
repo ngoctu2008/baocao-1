@@ -51,7 +51,7 @@ function loginFormLoad() {
                     <li class="active"><a href="{URL_MODULE}">{LANG.user_info}</a></li>
                     <li><a href="{URL_HREF}editinfo">{LANG.editinfo}</a></li>
                     <!-- BEGIN: group_manager -->
-                    <li><a href="{url_group_manager}">{LANG.group_manage}1231</a></li>
+                    <li><a href="{url_group_manager}">{LANG.group_manage}</a></li>
                     <!-- END: group_manager -->
 
                     <!-- BEGIN: allowopenid --><li><a href="{URL_HREF}editinfo/openid">{LANG.openid_administrator}</a></li><!-- END: allowopenid -->
