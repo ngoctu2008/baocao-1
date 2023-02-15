@@ -1030,7 +1030,7 @@ function user_info($data, $array_field_config, $custom_fields, $types, $data_que
 	//Tab Group Manager -> Bổ sung Quản lý Nhóm vào menu
 	if (!isset($user_info['group_manage'])) {
 		global $db, $user_info;
-		$user_info['group_manage'] = $db->query('SELECT COUNT(*) FROM ' . NV_MOD_TABLE . '_groups_users WHERE userid=' . $user_info['userid'] . ' AND is_leader=1')->fetchColumn();
+		$user_info['group_manage'] = $db->query('SELECT COUNT(*) FROM nv4_users_groups_users WHERE userid=' . $user_info['userid'] . ' AND is_leader=1')->fetchColumn();
 	}
 	if ($user_info['group_manage'] > 0) {
 		$xtpl->assign('url_group_manager', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=groups');
