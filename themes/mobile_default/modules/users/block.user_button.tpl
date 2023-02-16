@@ -50,6 +50,10 @@ function loginFormLoad() {
                 <ul class="nv-list-item sm">
                     <li class="active"><a href="{URL_MODULE}">{LANG.user_info}</a></li>
                     <li><a href="{URL_HREF}editinfo">{LANG.editinfo}</a></li>
+                    <!-- BEGIN: group_manager -->
+                    <li><a href="{url_group_manager}">{LANG.group_manage}</a></li>
+                    <!-- END: group_manager -->
+
                     <!-- BEGIN: allowopenid --><li><a href="{URL_HREF}editinfo/openid">{LANG.openid_administrator}</a></li><!-- END: allowopenid -->
                     <!-- BEGIN: regroups --><li><a href="{URL_HREF}editinfo/group">{LANG.in_group}</a></li><!-- END: regroups -->
                 </ul>

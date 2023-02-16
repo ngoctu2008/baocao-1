@@ -37,6 +37,10 @@
                 <!-- BEGIN: edit_safemode -->
                 <li class="{SAFEMODE_ACTIVE}"><a data-toggle="tab" data-location="{EDITINFO_FORM}/safemode" href="#edit_safemode">{LANG.safe_mode}</a></li>
                 <!-- END: edit_safemode -->
+
+                <!-- BEGIN: group_manager -->
+                <li class="{GROUP_MANAGER}"><a href="{url_group_manager}">{LANG.group_manage}</a></li>
+                <!-- END: group_manager -->
             </ul></li>
     </ul>
     <div class="tab-content margin-bottom-lg">
