@@ -42,7 +42,7 @@
             <tr>
                 <td>{num}</td>
                 <!-- BEGIN: loop -->
-                <td class='{data_class}'>{field}:{value}</td>
+                <td class='{data_class}'><span class="text-success"> {field}: </span>{value}</td>
                 <!-- END: loop -->
                 <td><span id="txt-check"></span></td>
             </tr>

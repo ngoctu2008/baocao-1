@@ -55,6 +55,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 				$labels = array();
 				for ($row = $startRow; $row <= $highestRow; $row++) {
 					$col = 0;
+					$list_error = [];
 					for ($column = $startCol; $column != $highestColumn; $column++) {
 						// $array_data[$row][$col] = $objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
 						$_field = $objWorksheet->getCellByColumnAndRow($col, 1)->getValue();
@@ -66,10 +67,13 @@ if ($nv_Request->isset_request('submit', 'post')) {
 							$array_data[$row][$_field] = $_value;
 							if (empty($_value)) {
 								$check_empty = 1;
-								$array_data[$row]['error'] .= strval($_field) . '|';
+								$list_error[] = $_field;
 							}
 						}
 						$col++;
+					}
+					if (!empty($list_error)) {
+						$array_data[$row]['error'] = implode('|', $list_error);
 					}
 				}
 			}
@@ -89,29 +93,43 @@ if ($nv_Request->isset_request('submit', 'post')) {
 			$array_data = array();
 			$labels = array();
 
-
-
 			for ($row = $startRow; $row <= $highestRow; $row++) {
 				$col = 0;
-				for ($column = $startCol; $column != $highestColumn; $column++) {
-					// $array_data[$row][$col] = $objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
+				$tmp = array();
+				$check_empty = 0;
+				for ($column = $startCol; $column <= $highestColumn; $column++) {
 					$_field = $objWorksheet->getCellByColumnAndRow($col, 1)->getValue();
 					if (in_array($_field, $list_fields)) {
 						if (!in_array($_field, $labels)) {
 							$labels[] = $_field;
 						}
 						$_value = $objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
-						$array_data[$row][$_field] = $_value;
+						$tmp[$_field] = $_value;
+					}
+					if (empty(($_value))) {
+						$check_empty = 1;
 					}
 					$col++;
 				}
+				if (!$check_empty) {
+					$array_data[$row] = $tmp;
+				}
 			}
-			foreach ($variable as $key => $value) {
-				# code...
+
+			try {
+				$db->beginTransaction();
+				$sql = '';
+				foreach ($array_data as $row) {
+					$sql .= "INSERT INTO `nv4_vi_paid_row` (" . implode(',', $labels) . ") VALUES ('" . implode("','", $row) . "');";
+				}
+				$db->exec($sql);
+				$db->commit();
+			} catch (Exception $e) {
+				$db->rollBack();
+				$error[] = 'Có lỗi xảy ra trong quá trình ghi dữ liệu!' . $e->getMessage();
 			}
-			print_r($array_data);
-			exit();
 		} else {
+			$error[] = 'Không tìm thấy file lên hệ thống!';
 		}
 	}
 }

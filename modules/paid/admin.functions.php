@@ -53,12 +53,12 @@ function check_user($data)
 //Kiểm tra mã hợp đồng
 function check_app_id($data)
 {
-	global $db;
-	$stmt = $db->prepare('SELECT id FROM ' . NV_MOD_TABLE . '_row WHERE ext_app_id= :ext_app_id limit 1');
+	global $db, $module_data;
+	$stmt = $db->prepare('SELECT id FROM ' . NV_PREFIXLANG . '_' . $module_data . '_row WHERE ext_app_id= :ext_app_id limit 1');
 	$stmt->bindParam(':ext_app_id', $data, PDO::PARAM_STR);
 	$stmt->execute();
 	$result = $stmt->fetchColumn();
-	if (!empty($result)) {
+	if (empty($result)) {
 		return $data;
 	}
 	return '';
@@ -67,10 +67,13 @@ function check_app_id($data)
 //Kiểm tra - Chuyển đổi dữ liệu
 function check_data($field, $data)
 {
-	if ($field == 'ALLOCATIONDATE') {
+	if (strtoupper($field) == 'ALLOCATIONDATE') {
 		return convert_date($data);
-	} else if ($field == 'FV_ASSIGNED_TO') {
+	} else if (strtoupper($field) == 'FV_ASSIGNED_TO') {
 		return check_user($data);
+	}
+	if (strtoupper($field) == 'EXT_APP_ID') {
+		return check_app_id($data);
 	}
 	return $data;
 }
@@ -87,6 +90,7 @@ function write_data($labels, $array_data)
 	$newfile = 'blank.xlsx';
 	$file = 'import_paid_checked.xlsx';
 	$folder = NV_ROOTDIR . '/' . NV_TEMP_DIR . '/';
+	$list_fields = get_fields();
 
 	$objPHPExcel = \PhpOffice\PhpSpreadsheet\IOFactory::load($folder . $newfile);
 	//Xuất dữ liệu tại Sheet 1
@@ -101,14 +105,16 @@ function write_data($labels, $array_data)
 	$r = 1;
 	$c = 1;
 	foreach ($labels as $label) {
-		$objWorksheet->setCellValueByColumnAndRow($c, $r, $label); //Thứ tự
+		$objWorksheet->setCellValueByColumnAndRow($c, $r, $label);
 		$c++;
 	}
 	$r = 2;
 	foreach ($array_data as $row) {
 		$c = 1;
 		foreach ($row as $label => $value) {
-			$objWorksheet->setCellValueByColumnAndRow($c, $r, $value); //Thứ tự
+			if (in_array($label, $list_fields)) {
+				$objWorksheet->setCellValueByColumnAndRow($c, $r, $value);
+			}
 			$c++;
 		}
 		$r++;
