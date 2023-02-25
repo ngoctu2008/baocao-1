@@ -47,7 +47,6 @@ $lang_module['check_success_cofirm'] = 'Quá trình kiểm tra không phát hi�
 $lang_module['check_status'] = 'Trạng thái';
 $lang_module['check_status_ok'] = 'Hợp lệ';
 $lang_module['check_status_error'] = 'Lỗi';
-$lang_module['error_count_1'] = 'tài khoản bị lỗi. Vui lòng <strong>kiểm tra và hiệu chỉnh</strong> thông tin dựa trên chi tiết lỗi, <strong>chọn file tải lên</strong> và thực hiện <strong>Bắt đầu kiểm tra</strong> lại!';
 $lang_module['import_success'] = 'Thành công';
 $lang_module['import_wating'] = 'Đang tạo tài khoản...';
 $lang_module['import_wating_success'] = 'Tiến trình tạo tải khoản đã hoàn tất!';
