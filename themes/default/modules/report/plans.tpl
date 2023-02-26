@@ -49,10 +49,11 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-xs-6 col-sm-8 col-md-4">
-                                    <div class="form-group">
-                                        <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
-                                    </div>
+                                <div class="col-xs-6 col-sm-4 col-md-6">
+                                    <input class="btn btn-primary" type="submit" value="{LANG.search_submit}" />
+                                </div>
+                                <div class="col-xs-6 col-sm-4 col-md-6">
+                                    <button class="btn btn-primary" name="export" id="export">{LANG.extract}</button>
                                 </div>
                             </div>
                         </div>
@@ -61,18 +62,18 @@
                 <!-- //Table View -->
                 <form action="{NV_BASE_SITEURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
                     <div class="table-responsive">
-                        <table class="display responsive nowrap hover cell-border" id="table_view" style="width:100%">
+                        <table class="table table-hover table_responsive">
                             <thead>
                                 <tr>
-                                    <th>{LANG.date}</th>
-                                    <th>{LANG.sale_name}</th>
-                                    <th>{LANG.namecard}</th>
-                                    <th>{LANG.point_link}</th>
-                                    <th>{LANG.online}</th>
-                                    <th>{LANG.ads}</th>
-                                    <th>{LANG.ctv}</th>
-                                    <th>{LANG.cskh}</th>
-                                    <th>{LANG.telesale}</th>
+                                    <th class="text-center">{LANG.date}</th>
+                                    <th class="text-center">{LANG.sale_name}</th>
+                                    <th class="text-center">{LANG.namecard}</th>
+                                    <th class="text-center">{LANG.point_link}</th>
+                                    <th class="text-center">{LANG.online}</th>
+                                    <th class="text-center">{LANG.ads}</th>
+                                    <th class="text-center">{LANG.ctv}</th>
+                                    <th class="text-center">{LANG.cskh}</th>
+                                    <th class="text-center">{LANG.telesale}</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -85,18 +86,17 @@
                             <!-- END: generate_page -->
                             <tbody>
                                 <!-- BEGIN: loop -->
-                                <tr class="text-center">
-                                    <td> {VIEW.date_show} </td>
-                                    <td> {VIEW.sale_name} </td>
-                                    <td> {VIEW.namecard} </td>
-                                    <td> {VIEW.point_link} </td>
-                                    <td> {VIEW.online} </td>
-                                    <td> {VIEW.ads} </td>
-                                    <td> {VIEW.ctv} </td>
-                                    <td> {VIEW.cskh} </td>
-                                    <td> {VIEW.telesale} </td>
+                                <tr>
+                                    <td data-header="{LANG.date}" class="text-center"> {VIEW.date_show} </td>
+                                    <td data-header="{LANG.sale_name}" class="text-center"> {VIEW.sale_name} </td>
+                                    <td data-header="{LANG.namecard}" class="text-center">  {VIEW.namecard} </td>
+                                    <td data-header="{LANG.point_link}" class="text-center">  {VIEW.point_link} </td>
+                                    <td data-header="{LANG.online}" class="text-center">  {VIEW.online} </td>
+                                    <td data-header="{LANG.ads}" class="text-center">  {VIEW.ads} </td>
+                                    <td data-header="{LANG.ctv}" class="text-center">  {VIEW.ctv} </td>
+                                    <td data-header="{LANG.cskh}" class="text-center">  {VIEW.cskh} </td>
+                                    <td data-header="{LANG.telesale}" class="text-center">  {VIEW.telesale} </td>
                                     <td class="text-center"><i class="fa fa-edit fa-lg">&nbsp;</i> <a href="{VIEW.link_edit}#edit">{LANG.edit}</a> - <em class="fa fa-trash-o fa-lg">&nbsp;</em> <a href="{VIEW.link_delete}" onclick="return confirm(nv_is_del_confirm[0]);">{LANG.delete}</a></td>
-
                                 </tr>
                                 <!-- END: loop -->
                             </tbody>
@@ -162,14 +162,8 @@
 </div>
 
 <link type="text/css" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
-<link type="text/css" href="{NV_STATIC_URL}themes/{TEMPLATE}/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link type="text/css" href="{NV_STATIC_URL}themes/{TEMPLATE}/css/responsive.dataTables.min.css" rel="stylesheet" />
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
-
-
-<script type="text/javascript" src="{NV_STATIC_URL}themes/{TEMPLATE}/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="{NV_STATIC_URL}themes/{TEMPLATE}/js/dataTables.responsive.min.js"></script>
-<!-- <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script> -->
+<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -181,54 +175,5 @@
     });
 
 //]]>
-$(document).ready(function() {
-    var groupColumn = 0;
-    $('#table_view').DataTable({
-        <!-- BEGIN: IS_MANAGER -->
-        columnDefs: [{ visible: false, targets: groupColumn }],
-        drawCallback: function (settings) {
-            var api = this.api();
-            var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
-
-            api
-                .column(groupColumn, { page: 'current' })
-                .data()
-                .each(function (group, i) {
-                    if (last !== group) {
-                        $(rows)
-                            .eq(i)
-                            .before('<tr class="group"><td colspan="9">' + group + '</td></tr>');
-
-                        last = group;
-                    }
-                });
-        },
-        <!-- END: IS_MANAGER -->
-
-        searching: false,
-        order: [[0, 'desc']],
-        language: {
-            decimal: ',',
-            thousands: '.',
-        },
-        //fixedColumns
-        scrollY:        500,
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         false,
-        fixedColumns:   true,
-
-        <!-- BEGIN: IS_SALE -->
-        columnDefs: [
-            {
-                target: 1,
-                visible: false,
-                searchable: false,
-            }
-        ],
-        <!-- END: IS_SALE -->
-    });
-} );
 </script>
 <!-- END: main -->
