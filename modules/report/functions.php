@@ -140,6 +140,11 @@ function export_action_note($array_data)
 	exit();
 }
 
+function export_plans($array_data)
+{
+}
+
+
 function export_dailyreport($array_data, $total_sheet = 0, $total_by_team = 0)
 {
 	global $module_name, $lang_module, $user_info, $array_group_info;

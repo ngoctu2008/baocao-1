@@ -45,10 +45,10 @@
         <table class="table table-hover table_responsive">
             <thead>
                 <tr>
-                    <th>{LANG.number}</th>
-                    <th>{LANG.date}</th>
-                    <th>{LANG.sale_name}</th>
-                    <th>{LANG.note}</th>
+                    <th class="text-center">{LANG.number}</th>
+                    <th class="text-center">{LANG.date}</th>
+                    <th class="text-center">{LANG.sale_name}</th>
+                    <th class="text-center">{LANG.note}</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
